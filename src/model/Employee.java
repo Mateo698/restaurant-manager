@@ -7,13 +7,19 @@ public class Employee {
 	private int amountOrder;
 	
 	public Employee(String names, String lastNames, int id, int amountOrder) {
-		super();
 		this.names = names;
 		this.lastNames = lastNames;
 		this.id = id;
 		this.amountOrder = amountOrder;
 	}
 
+	public void updateInfo(String n, String ln, int id, int ao) {
+		setNames(n);
+		setLastNames(ln);
+		setId(id);
+		setAmountOrder(ao);
+	}
+	
 	public String getNames() {
 		return names;
 	}
