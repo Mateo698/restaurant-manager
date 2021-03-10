@@ -13,18 +13,6 @@ public class Restaurant {
 		setClients(new ArrayList<Client>());
 	}
 
-	public void addEmployee(String names, String lastNames, int ID, int amountOrder) {
-		employees.add(new Employee(names,lastNames,ID,amountOrder));
-	}
-	
-	public void deleteEmployee(int index) {
-		employees.remove(index);
-	}
-	
-	public void updateEmployee(int index,String name,String lastNames, int ID, int amountOrder) {
-		employees.get(index).updateInfo(name,lastNames,ID,amountOrder);
-	}
-	
 	public ArrayList<Employee> getEmployees() {
 		return employees;
 	}
@@ -47,7 +35,47 @@ public class Restaurant {
 
 	public void setClients(ArrayList<Client> clients) {
 		this.clients = clients;
+		
 	}
+	
+	public void addEmployee(String names, String lastNames, int ID, int amountOrder) {
+		employees.add(new Employee(names,lastNames,ID,amountOrder));
+		
+		
+	}
+	
+	public void deleteEmployee(int index) {
+		employees.remove(index);
+		
+	}
+	
+	public void updateEmployee(int index,String name,String lastNames, int ID, int amountOrder) {
+		employees.get(index).updateInfo(name,lastNames,ID,amountOrder);
+		
+	}
+	
+	public void addUser(String username, String password, String names, String lastNames, int ID, int amountOrder) {
+		users.add(new User(username, password, names, lastNames, ID, amountOrder));
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
