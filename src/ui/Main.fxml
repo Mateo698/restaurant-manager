@@ -5,30 +5,36 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="563.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="File">
+          <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="People">
             <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem mnemonicParsing="false" onAction="#MAINopenUSERMENU" style="-fx-color: #FFFFFF;" text="Users" />
+                  <MenuItem mnemonicParsing="false" onAction="#MAINopenEMPMENU" style="-fx-color: #FFFFFF;" text="Employees" />
+                  <MenuItem mnemonicParsing="false" onAction="#MAINopenCLMENU" style="-fx-color: #FFFFFF;" text="Clients" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Edit">
+          <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Items">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Products" />
+                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Ingredients" />
+                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Sizes" />
+                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Types" />
+                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Delete" />
+                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Delete" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Help">
+          <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Orders">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="About" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
    </top>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <BorderPane fx:id="mainPane" prefHeight="431.0" prefWidth="748.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

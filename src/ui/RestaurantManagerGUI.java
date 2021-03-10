@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
+import model.Employee;
 import model.Restaurant;
 import model.User;
 
@@ -36,13 +37,31 @@ public class RestaurantManagerGUI {
     private PasswordField LOGNpassPswrdField;
     
     @FXML
+    private TableView<Employee> EMPMENUtable;
+
+    @FXML
+    private TableColumn<Employee, String> EMPMENUnamesCol;
+
+    @FXML
+    private TableColumn<Employee, String> EMPMENUlastNamesCol;
+
+    @FXML
+    private TableColumn<Employee, Integer> EMPMENUidCol;
+
+    @FXML
+    private TableColumn<Employee, Integer> EMPMENUdelivOrdCol;
+    
+    @FXML
+    private BorderPane mainPane;
+    
+    @FXML
     private BorderPane welcomePane;
     
     private Restaurant restaurant;
     
     public RestaurantManagerGUI(Restaurant restaurant) {
     	this.restaurant = restaurant;
-    	
+    	restaurant.addUser("Admin", "123", "Nombre", "Apellido", 0, 0);
     }
     
     public void showLogin() throws IOException {
@@ -146,25 +165,48 @@ public class RestaurantManagerGUI {
     	
     }
     
+
+    @FXML
+    void MAINopenCLMENU(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void MAINopenEMPMENU(ActionEvent event) throws IOException {
+    	FXMLLoader empLoader = new FXMLLoader(getClass().getResource("EmployeeManager.fxml"));
+    	empLoader.setController(this);
+    	Parent addMain = empLoader.load();
+    	mainPane.getChildren().setAll(addMain);
+    }
+
+    @FXML
+    void MAINopenUSERMENU(ActionEvent event) {
+    	
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    @FXML
+    void EMPMENUaddBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void EMPMENUdbackBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void EMPMENUdeleteBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void EMPMENUdisableBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void EMPMENUeditBttn(ActionEvent event) {
+
+    }
+  
 }
