@@ -10,8 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="739.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="739.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="CENTER" prefHeight="642.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -118,9 +117,9 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="SIGNINsignInBttn" mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Sign In" />
+                  <Button mnemonicParsing="false" onAction="#goToLogin" style="-fx-background-color: #b59703;" text="Sign In" />
                   <Label text="                              " />
-                  <Button fx:id="SIGNINbackBttn" mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Back" />
+                  <Button mnemonicParsing="false" onAction="#goToLogin" style="-fx-background-color: #b59703;" text="Back" />
                </children>
             </HBox>
          </children>
