@@ -54,4 +54,11 @@ public class Order {
 		
 	}
 	
+	public void updateInfo(int code, String status, String footNote) {
+		setCode(code);
+		setStatus(status);
+		setFootNote(footNote);
+		
+	}
+	
 }

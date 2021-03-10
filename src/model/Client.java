@@ -86,4 +86,32 @@ public class Client {
 		this.lastModifiedUser = lastModifiedUser;
 	}
 	
+	public void updateInfo(String name, String lastName, int date, String addres, int phoneNumber, String footNotes, User originUser, User lastModifiedUser) {
+		setName(name);
+		setLastName(lastName);
+		setDate(date);
+		setAddres(addres);
+		setPhoneNumber(phoneNumber);
+		setFootNotes(footNotes);
+		setOriginUser(originUser);
+		setLastModifiedUser(lastModifiedUser);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

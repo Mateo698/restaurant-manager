@@ -25,4 +25,12 @@ public class User extends Employee{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	@Override
+	public void updateInfoUser(String username, String password, String names, String lastNames, int ID, int amountOrder) {
+		super.updateInfo(names, lastNames, ID, amountOrder);
+		setName(username);
+		setPassword(password);
+		
+	}
 }

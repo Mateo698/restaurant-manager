@@ -52,5 +52,7 @@ public class Employee {
 		this.amountOrder = amountOrder;
 	}
 	
-	
+	public void updateInfoUser(String username, String password, String names, String lastNames, int ID, int amountOrder) {
+		
+	}
 }
