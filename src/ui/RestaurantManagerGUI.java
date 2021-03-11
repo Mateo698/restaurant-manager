@@ -1,19 +1,25 @@
 package ui;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import model.Employee;
 import model.Restaurant;
 import model.User;
 
-public class RestaurantManagerGUI {
+public class RestaurantManagerGUI implements Initializable{
 	
 	@FXML
     private TextField SIGNINfirstNamesTxtField;
@@ -59,24 +65,21 @@ public class RestaurantManagerGUI {
     
     private Restaurant restaurant;
     
+    private Stage mainStage;
+    
     public RestaurantManagerGUI(Restaurant restaurant) {
     	this.restaurant = restaurant;
     	restaurant.addUser("Admin", "123", "Nombre", "Apellido", 0, 0);
     }
     
-    public void showLogin() throws IOException {
-    	FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
-    	loginLoader.setController(this);
-    	Parent addLogin = loginLoader.load();
-    	welcomePane.getChildren().setAll(addLogin);
-    	
-    }
+    
     
     public void goToLogin(ActionEvent event) throws IOException {
     	FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
     	loginLoader.setController(this);
     	Parent addLogin = loginLoader.load();
-    	welcomePane.getChildren().setAll(addLogin);
+    	Scene E = new Scene(addLogin);
+    	mainStage.setScene(E);
     	
     }
     
@@ -85,6 +88,8 @@ public class RestaurantManagerGUI {
 	    if(!SIGNINpassTxtField.getText().equals("") && !SIGNINusernameTxtField.getText().equals("") && !SIGNINfirstNamesTxtField.getText().equals("") && 
 	    		!SIGNINlastNamesTxtField.getText().equals("") && !SIGNINidTxtField.getText().equals("")) {	
     		
+	    	//ANOTALO AHI HOMBRE. VERIFICAR QUE NO HAYA USER REPETIDO. VERFICIAR ID QUE SEA NUMERO
+	    	
 	    	String username = SIGNINpassTxtField.getText();
 	    	String password = SIGNINusernameTxtField.getText();
 	    	String names = SIGNINfirstNamesTxtField.getText();
@@ -99,7 +104,7 @@ public class RestaurantManagerGUI {
 			alert.setContentText("The user was created succesfuly.");
 			alert.show();
 	    	
-	    	showLogin();
+
 	    }
 	    
 	    else {
@@ -111,14 +116,21 @@ public class RestaurantManagerGUI {
 			
 	    }
     	
+    	
+    	
     }
     
     @FXML
     public void goToSignin(ActionEvent event) throws IOException{
-    	FXMLLoader signinLoader = new FXMLLoader(getClass().getResource("SignIn.fxml"));
-    	signinLoader.setController(this);
-    	Parent addSignIn = signinLoader.load();
-    	welcomePane.getChildren().setAll(addSignIn);
+    	
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("Signin.fxml"));
+    	loader.setController(this);
+    	Parent root = loader.load();
+    	
+    	Scene e = new Scene(root);
+    	
+    	mainStage.setScene(e);
+    	
     	
     }
     
@@ -161,7 +173,8 @@ public class RestaurantManagerGUI {
     	FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
     	mainLoader.setController(this);
     	Parent addMain = mainLoader.load();
-    	welcomePane.getChildren().setAll(addMain);
+    	Scene E = new Scene(addMain);
+    	mainStage.setScene(E);
     	
     }
     
@@ -177,6 +190,10 @@ public class RestaurantManagerGUI {
     	empLoader.setController(this);
     	Parent addMain = empLoader.load();
     	mainPane.getChildren().setAll(addMain);
+    	mainStage.setHeight(mainPane.getHeight());
+    	mainStage.setWidth(mainPane.getWidth());
+    	//TRABAJO DE YULUKA HCAER QUE ESA VAINA HAGA RESIZE
+    	//INICIALIZAR LA TABLE VIEW CON LOS EMPLEAOS
     }
 
     @FXML
@@ -208,5 +225,21 @@ public class RestaurantManagerGUI {
     void EMPMENUeditBttn(ActionEvent event) {
 
     }
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		
+	}
+	
+	public void start() throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+    	loader.setController(this);
+    	Parent root = loader.load();
+    	mainStage = new Stage();
+    	Scene e = new Scene(root);
+    	mainStage.setScene(e);
+    	mainStage.show();
+	}
   
 }
