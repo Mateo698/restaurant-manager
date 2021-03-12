@@ -3,7 +3,10 @@ package ui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+
+import javax.swing.Timer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,6 +69,8 @@ public class RestaurantManagerGUI implements Initializable{
     private Restaurant restaurant;
     
     private Stage mainStage;
+    
+    private Stage popupStage;
     
     public RestaurantManagerGUI(Restaurant restaurant) {
     	this.restaurant = restaurant;
@@ -169,13 +174,18 @@ public class RestaurantManagerGUI implements Initializable{
 		}
     }
     
+    @FXML
+    private Label MAINlocalUserLabel;
+
+    @FXML
+    private Label MAINcurrentTimeLabel;
+    
     public void goToMain() throws IOException{
     	FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
     	mainLoader.setController(this);
     	Parent addMain = mainLoader.load();
     	Scene E = new Scene(addMain);
     	mainStage.setScene(E);
-    	
     }
     
 
@@ -190,25 +200,34 @@ public class RestaurantManagerGUI implements Initializable{
     	empLoader.setController(this);
     	Parent addMain = empLoader.load();
     	mainPane.getChildren().setAll(addMain);
-    	mainStage.setHeight(mainPane.getHeight());
-    	mainStage.setWidth(mainPane.getWidth());
     	//TRABAJO DE YULUKA HCAER QUE ESA VAINA HAGA RESIZE
     	//INICIALIZAR LA TABLE VIEW CON LOS EMPLEAOS
     }
 
     @FXML
-    void MAINopenUSERMENU(ActionEvent event) {
-    	
+    void MAINopenUSERMENU(ActionEvent event) throws IOException {
+    	FXMLLoader empLoader = new FXMLLoader(getClass().getResource("UserManager.fxml"));
+    	empLoader.setController(this);
+    	Parent addMain = empLoader.load();
+    	mainPane.getChildren().setAll(addMain);
     }
     
     @FXML
-    void EMPMENUaddBttn(ActionEvent event) {
-
+    void EMPMENUaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEmployeeWindow.fxml"));
+    	loader.setController(this);
+    	Parent root = loader.load();
+    	popupStage = new Stage();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	popupStage.show();
+    	mainStage.hide();
     }
 
     @FXML
     void EMPMENUdbackBttn(ActionEvent event) {
-
+    	
+    
     }
 
     @FXML
@@ -225,7 +244,29 @@ public class RestaurantManagerGUI implements Initializable{
     void EMPMENUeditBttn(ActionEvent event) {
 
     }
+    
+    @FXML
+    private TextField ADDEMPnamesTxtField;
 
+    @FXML
+    private TextField ADDEMPlastNamesTxtField;
+
+    @FXML
+    private TextField ADDEMPidTxtField;
+
+    @FXML
+    void ADDEMPaddBttn(ActionEvent event) {
+    	String names = ADDEMPnamesTxtField.getText();
+    	String lastNames = ADDEMPlastNamesTxtField.getText();
+    	String id = ADDEMPidTxtField.getText();
+    }
+
+    @FXML
+    void ADDEMPbackBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
