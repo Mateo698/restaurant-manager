@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="389.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -56,7 +55,16 @@
                   </Pane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="196.0" prefHeight="41.0" prefWidth="600.0">
+               <children>
+                  <Pane prefHeight="44.0" prefWidth="335.0">
+                     <children>
+                        <Label fx:id="ADDEMPstatusLabel" layoutX="154.0" layoutY="6.0" text="xd" textFill="WHITE" visible="false" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Pane prefHeight="94.0" prefWidth="321.0">
                      <children>

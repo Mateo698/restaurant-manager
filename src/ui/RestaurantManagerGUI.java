@@ -3,10 +3,7 @@ package ui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.ResourceBundle;
-
-import javax.swing.Timer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -200,6 +197,10 @@ public class RestaurantManagerGUI implements Initializable{
     	empLoader.setController(this);
     	Parent addMain = empLoader.load();
     	mainPane.getChildren().setAll(addMain);
+
+    	mainStage.setHeight(620);
+    	mainStage.setWidth(1099);
+    	mainStage.setResizable(false);
     	//TRABAJO DE YULUKA HCAER QUE ESA VAINA HAGA RESIZE
     	//INICIALIZAR LA TABLE VIEW CON LOS EMPLEAOS
     }
@@ -210,6 +211,10 @@ public class RestaurantManagerGUI implements Initializable{
     	empLoader.setController(this);
     	Parent addMain = empLoader.load();
     	mainPane.getChildren().setAll(addMain);
+    	
+    	mainStage.setWidth(1043);
+    	mainStage.setHeight(638);
+    	mainStage.setResizable(false);
     }
     
     @FXML
@@ -221,6 +226,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Scene e = new Scene(root);
     	popupStage.setScene(e);
     	popupStage.show();
+    	popupStage.setResizable(false);
     	mainStage.hide();
     }
 
@@ -253,13 +259,65 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     private TextField ADDEMPidTxtField;
+    
+    @FXML
+    private Label ADDEMPstatusLabel;
 
     @FXML
     void ADDEMPaddBttn(ActionEvent event) {
     	String names = ADDEMPnamesTxtField.getText();
     	String lastNames = ADDEMPlastNamesTxtField.getText();
     	String id = ADDEMPidTxtField.getText();
+
+
+    	boolean idIsAllNumber = true;
+    	boolean repeatedId = false;
+    	for(int i=0; i<id.length();i++) {
+    		if(id.charAt(i) > 57 || id.charAt(i) < 48) {
+    			idIsAllNumber = false;
+    		}
+    	}
+    	if(names.isEmpty()) {
+    		ADDEMPstatusLabel.setText("There are fields empty");
+    		ADDEMPstatusLabel.setVisible(true);
+    	}
+    	else {
+    		if(lastNames.isEmpty()) {
+    			ADDEMPstatusLabel.setText("There are fields empty");
+    			ADDEMPstatusLabel.setVisible(true);
+    		}
+    		else {
+    			if(idIsAllNumber && !id.isEmpty()) {
+    				int realId = Integer.parseInt(id);
+    				for(int i=0;i<restaurant.getEmployees().size();i++) {
+    					if(restaurant.getEmployees().get(i).getId() == realId) {
+    						repeatedId = true;
+    					}
+    				}
+    				if(!repeatedId) {
+    					
+    					restaurant.addEmployee(names, lastNames, realId, 0);
+    					ADDEMPstatusLabel.setText("Added new employee succesfully");
+    	    			ADDEMPstatusLabel.setVisible(true);
+    	    			ADDEMPidTxtField.setText("");
+    	    			ADDEMPlastNamesTxtField.setText("");
+    	    			ADDEMPnamesTxtField.setText("");
+    	    			
+    				}
+    				else {
+    					ADDEMPstatusLabel.setText("There is already a user with that ID");
+    	    			ADDEMPstatusLabel.setVisible(true);
+    				}
+    			}
+    			else {
+    				ADDEMPstatusLabel.setText("Please type numbers only in the ID field");
+        			ADDEMPstatusLabel.setVisible(true);
+    			}
+    		}
+    	}
+
     }
+
 
     @FXML
     void ADDEMPbackBttn(ActionEvent event) {
