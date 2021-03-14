@@ -151,7 +151,7 @@ public class RestaurantManagerGUI implements Initializable{
     	
     	if (!username.equals("") && !password.equals("") && usersAux.size()!=0) {
     		for (int i = 0; i < usersAux.size(); i++) {
-    			if(username.equalsIgnoreCase(usersAux.get(i).getName()) && password.equals(usersAux.get(i).getPassword())) {
+    			if(username.equalsIgnoreCase(usersAux.get(i).getUsername()) && password.equals(usersAux.get(i).getPassword())) {
     				localUser=usersAux.get(i);
     				goToMain();
     				
@@ -187,7 +187,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addMain = mainLoader.load();
     	Scene E = new Scene(addMain);
     	mainStage.setScene(E);
-    	MAINlocalUserLabel.setText(localUser.getName());
+    	MAINlocalUserLabel.setText(localUser.getUsername());
     	FXMLLoader mP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	mP.setController(this);
     	Parent addMainPane = mP.load();
@@ -258,12 +258,64 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     void EMPMENUdeleteBttn(ActionEvent event) {
-
+    	Employee auxEmployee = EMPMENUtable.getSelectionModel().getSelectedItem();
+    	if(auxEmployee != null) {
+    		if(auxEmployee.getNames().equals(localUser.getNames())) {
+    			Alert alertWarnings = new Alert(AlertType.WARNING);
+    	    	alertWarnings.setTitle("Error");
+    			alertWarnings.setHeaderText("You selected a local user");
+    			alertWarnings.setContentText("You can't delete a user that is using the program right now.");
+    			alertWarnings.show();
+    		}
+    		else {
+    			boolean leave = false;
+        		for(int i=0;i<restaurant.getEmployees().size() && !leave;i++) {
+        			if(restaurant.getEmployees().get(i).getNames().equals(auxEmployee.getNames())) {
+        				restaurant.deleteEmployee(i);
+        				leave = true;
+        			}
+        		}
+        		EMPMENUtable.refresh();
+    		}
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("No user selected");
+			alertWarnings.setHeaderText("You haven't selected a user to delete.");
+			alertWarnings.setContentText("Please select a user to use the delete button.");
+			alertWarnings.show();
+    	}
     }
 
     @FXML
     void EMPMENUdisableBttn(ActionEvent event) {
-
+    	Employee auxEmployee = EMPMENUtable.getSelectionModel().getSelectedItem();
+    	if(auxEmployee != null) {
+    		if(auxEmployee.getNames().equals(localUser.getNames())) {
+    			Alert alertWarnings = new Alert(AlertType.WARNING);
+    	    	alertWarnings.setTitle("Error");
+    			alertWarnings.setHeaderText("You selected a local user");
+    			alertWarnings.setContentText("You can't disable a user that is using the program right now.");
+    			alertWarnings.show();
+    		}
+    		else {
+    			boolean leave = false;
+        		for(int i=0;i<restaurant.getEmployees().size() && !leave;i++) {
+        			if(restaurant.getEmployees().get(i).getNames().equals(auxEmployee.getNames())) {
+        				restaurant.disableEmployee(i);
+        				leave = true;
+        			}
+        		}
+        		EMPMENUtable.refresh();
+    		}
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("No user selected");
+			alertWarnings.setHeaderText("You haven't selected a user to disable.");
+			alertWarnings.setContentText("Please select a user to use the delete button.");
+			alertWarnings.show();
+    	}
     }
 
     @FXML

@@ -5,12 +5,14 @@ public class Employee {
 	private String lastNames;
 	private int id;
 	private int amountOrder;
+	private boolean status;
 	
 	public Employee(String names, String lastNames, int id, int amountOrder) {
 		this.names = names;
 		this.lastNames = lastNames;
 		this.id = id;
 		this.amountOrder = amountOrder;
+		status = true;
 	}
 
 	public void updateInfo(String n, String ln, int id, int ao) {
@@ -18,6 +20,14 @@ public class Employee {
 		setLastNames(ln);
 		setId(id);
 		setAmountOrder(ao);
+	}
+	
+	public void setStatus(boolean newStatus) {
+		status = newStatus;
+	}
+	
+	public boolean getStatus() {
+		return status;
 	}
 	
 	public String getNames() {

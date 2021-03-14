@@ -61,6 +61,14 @@ public class Restaurant {
 		
 	}
 	
+	public void disableEmployee(int index) {
+		employees.get(index).setStatus(false);
+	}
+	
+	public void enableEmployee(int index) {
+		employees.get(index).setStatus(true);
+	}
+	
 	public void updateEmployee(int index,String name,String lastNames, int ID, int amountOrder) {
 		employees.get(index).updateInfo(name,lastNames,ID,amountOrder);
 		
