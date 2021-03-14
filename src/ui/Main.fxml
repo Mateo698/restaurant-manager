@@ -22,10 +22,9 @@
           </Menu>
           <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Items">
             <items>
-              <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Products" />
-                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Ingredients" />
-                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Sizes" />
-                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Types" />
+              <MenuItem fx:id="MAINopenPRODUCTS" mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Products" />
+                  <MenuItem fx:id="MAINopenINGR" mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Ingredients" />
+                  <MenuItem fx:id="MAINopen" mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Types" />
                   <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Delete" />
                   <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Delete" />
             </items>

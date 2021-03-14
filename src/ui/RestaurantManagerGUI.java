@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Employee;
@@ -62,6 +63,8 @@ public class RestaurantManagerGUI implements Initializable{
     
     @FXML
     private BorderPane welcomePane;
+    
+    private User localUser;
     
     private Restaurant restaurant;
     
@@ -149,6 +152,7 @@ public class RestaurantManagerGUI implements Initializable{
     	if (!username.equals("") && !password.equals("") && usersAux.size()!=0) {
     		for (int i = 0; i < usersAux.size(); i++) {
     			if(username.equalsIgnoreCase(usersAux.get(i).getName()) && password.equals(usersAux.get(i).getPassword())) {
+    				localUser=usersAux.get(i);
     				goToMain();
     				
     			}
@@ -183,12 +187,24 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addMain = mainLoader.load();
     	Scene E = new Scene(addMain);
     	mainStage.setScene(E);
+    	MAINlocalUserLabel.setText(localUser.getName());
+    	FXMLLoader mP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	mP.setController(this);
+    	Parent addMainPane = mP.load();
+    	mainPane.getChildren().setAll(addMainPane);
     }
     
 
     @FXML
-    void MAINopenCLMENU(ActionEvent event) {
+    void MAINopenCLMENU(ActionEvent event) throws IOException {
+    	FXMLLoader clLoader = new FXMLLoader(getClass().getResource("ClientsManager.fxml"));
+    	clLoader.setController(this);
+    	Parent addMain = clLoader.load();
+    	mainPane.getChildren().setAll(addMain);
 
+    	mainStage.setHeight(729);
+    	mainStage.setWidth(1182);
+    	mainStage.setResizable(false);
     }
 
     @FXML
@@ -198,7 +214,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addMain = empLoader.load();
     	mainPane.getChildren().setAll(addMain);
 
-    	mainStage.setHeight(620);
+    	mainStage.setHeight(700);
     	mainStage.setWidth(1099);
     	mainStage.setResizable(false);
     	//TRABAJO DE YULUKA HCAER QUE ESA VAINA HAGA RESIZE
@@ -212,10 +228,12 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addMain = empLoader.load();
     	mainPane.getChildren().setAll(addMain);
     	
-    	mainStage.setWidth(1043);
-    	mainStage.setHeight(638);
+    	mainStage.setWidth(1182);
+    	mainStage.setHeight(729);
     	mainStage.setResizable(false);
     }
+    
+    
     
     @FXML
     void EMPMENUaddBttn(ActionEvent event) throws IOException {
@@ -231,9 +249,11 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void EMPMENUdbackBttn(ActionEvent event) {
-    	
-    
+    void EMPMENUdbackBttn(ActionEvent event) throws IOException {
+    	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	lP.setController(this);
+    	Parent addMain = lP.load();
+    	mainPane.getChildren().setAll(addMain);
     }
 
     @FXML
@@ -323,6 +343,122 @@ public class RestaurantManagerGUI implements Initializable{
     void ADDEMPbackBttn(ActionEvent event) {
     	popupStage.close();
     	mainStage.show();
+    }
+    
+    @FXML
+    private TableColumn<?, ?> USERMANusernameCol;
+
+    @FXML
+    private TableColumn<?, ?> USERMANnamesCol;
+
+    @FXML
+    private TableColumn<?, ?> USERMANlastNamesCol;
+
+    @FXML
+    private TableColumn<?, ?> USERMANidCol;
+
+    @FXML
+    void USERMENUaddBttn(ActionEvent event) {
+    	
+    }
+
+    @FXML
+    void USERMENUbackBttn(ActionEvent event) throws IOException {
+    	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	lP.setController(this);
+    	Parent addMain = lP.load();
+    	mainPane.getChildren().setAll(addMain);
+    }
+
+    @FXML
+    void USERMENUdeleteBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void USERMENUdisableBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void USERMENUtBttn(ActionEvent event) {
+
+    }
+    
+    @FXML
+    private TextField ADDUSERusernameTxField;
+
+    @FXML
+    private PasswordField ADDUSERpasswordTxtField;
+
+    @FXML
+    private TextField ADDUSERnamesTxtField;
+
+    @FXML
+    private TextField ADDUSERlastNamesTxtFIeld;
+
+    @FXML
+    private TextField ADDUSERidTxtField;
+
+    @FXML
+    void ADDUSERaddBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ADDUSERbackBttn(ActionEvent event) {
+
+    }
+    
+    @FXML
+    private TableView<?> CLMENUtable;
+
+    @FXML
+    private TableColumn<?, ?> CLMENUlastNAmesCol;
+
+    @FXML
+    private TableColumn<?, ?> CLMENUidCol;
+
+    @FXML
+    private TableColumn<?, ?> CLMENUaddressCol;
+
+    @FXML
+    private TableColumn<?, ?> CLMENUphoneNumberCol;
+
+    @FXML
+    private TableColumn<?, ?> CLMENUfootnoteCol;
+
+    @FXML
+    void CLMENUaddBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void CLMENUbackBttn(ActionEvent event) throws IOException {
+    	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	lP.setController(this);
+    	Parent addMain = lP.load();
+    	mainPane.getChildren().setAll(addMain);
+    }
+
+    @FXML
+    void CLMENUdeletBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void CLMENUdisableBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void CLMENUeditBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void CLMENUselectedClient(MouseEvent event) {
+
     }
     
 	@Override

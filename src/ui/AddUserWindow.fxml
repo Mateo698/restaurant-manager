@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="579.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="65.0" prefWidth="579.0" style="-fx-background-color: #b59703;" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="New User">
+               <font>
+                  <Font name="Sylfaen" size="39.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="421.0">
+                     <children>
+                        <Label layoutX="121.0" layoutY="42.0" text="Username" textFill="WHITE" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="408.0">
+                     <children>
+                        <TextField fx:id="ADDUSERusernameTxField" layoutX="67.0" layoutY="38.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="25.0" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="421.0">
+                     <children>
+                        <Label layoutX="121.0" layoutY="42.0" text="Password" textFill="WHITE" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="408.0">
+                     <children>
+                        <PasswordField fx:id="ADDUSERpasswordTxtField" layoutX="67.0" layoutY="32.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="421.0">
+                     <children>
+                        <Label layoutX="130.0" layoutY="42.0" text="Names" textFill="WHITE" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="408.0">
+                     <children>
+                        <TextField fx:id="ADDUSERnamesTxtField" layoutX="67.0" layoutY="38.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="421.0">
+                     <children>
+                        <Label layoutX="119.0" layoutY="42.0" text="Last names" textFill="WHITE" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="408.0">
+                     <children>
+                        <TextField fx:id="ADDUSERlastNamesTxtFIeld" layoutX="67.0" layoutY="38.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="421.0">
+                     <children>
+                        <Label layoutX="142.0" layoutY="42.0" text="ID" textFill="WHITE" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="408.0">
+                     <children>
+                        <TextField fx:id="ADDUSERidTxtField" layoutX="67.0" layoutY="38.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="391.0">
+                     <children>
+                        <Button layoutX="121.0" layoutY="38.0" mnemonicParsing="false" onAction="#ADDUSERaddBttn" style="-fx-background-color: #b59703;" text="Add" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="384.0">
+                     <children>
+                        <Button layoutX="117.0" layoutY="38.0" mnemonicParsing="false" onAction="#ADDUSERbackBttn" style="-fx-background-color: #b59703;" text="Back" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
