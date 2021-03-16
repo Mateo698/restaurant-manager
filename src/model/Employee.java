@@ -1,6 +1,9 @@
 package model;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable{
+	private static final long serialVersionUID = 1;
 	private String names;
 	private String lastNames;
 	private int id;

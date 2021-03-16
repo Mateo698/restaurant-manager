@@ -1,6 +1,9 @@
 package model;
 
-public class Date {
+import java.io.Serializable;
+
+public class Date implements Serializable{
+	private static final long serialVersionUID = 1;
 	private int day;
 	private int month;
 	private int year;

@@ -33,7 +33,7 @@
          <children>
             <TableView fx:id="CLMENUtable" onMouseClicked="#CLMENUselectedClient" prefHeight="583.0" prefWidth="1062.0">
               <columns>
-                <TableColumn prefWidth="134.0" text="Names" />
+                <TableColumn fx:id="CLMENUnameCol" prefWidth="134.0" text="Names" />
                 <TableColumn fx:id="CLMENUlastNAmesCol" prefWidth="174.0" text="Last names" />
                   <TableColumn fx:id="CLMENUidCol" prefWidth="151.0" text="ID" />
                   <TableColumn fx:id="CLMENUaddressCol" prefWidth="217.0" text="Address" />

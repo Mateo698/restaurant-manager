@@ -1,24 +1,27 @@
 package model;
 
-public class Client {
+import java.io.Serializable;
+
+public class Client implements Serializable{
+	private static final long serialVersionUID = 1;
 	private String name;
 	private String lastName;
-	private int date;
-	private String addres;
-	private int phoneNumber;
-	private String footNotes;
+	private String id;
+	private String address;
+	private String phoneNumber;
+	private String footNote;
 	private User originUser;
 	private User lastModifiedUser;
 	
-	public Client(String name, String lastName, int date, String addres, int phoneNumber, String footNotes, User originUser, User lastModifiedUser) {
+	public Client(String name, String lastName,String id, String addres, String phoneNumber, String footNotes, User originUser) {
 		this.name = name;
 		this.lastName = lastName;
-		this.date = date;
-		this.addres = addres;
+		this.id = id;
+		this.address = addres;
 		this.phoneNumber = phoneNumber;
-		this.footNotes = footNotes;
+		this.footNote = footNotes;
 		this.originUser = originUser;
-		this.lastModifiedUser = lastModifiedUser;
+		this.lastModifiedUser = originUser;
 		
 	}
 
@@ -38,36 +41,36 @@ public class Client {
 		this.lastName = lastName;
 	}
 
-	public int getDate() {
-		return date;
+	public String getId() {
+		return id;
 	}
 
-	public void setDate(int date) {
-		this.date = date;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getAddres() {
-		return addres;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAddres(String addres) {
-		this.addres = addres;
+	public void setAddress(String addres) {
+		this.address = addres;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getFootNotes() {
-		return footNotes;
+	public String getFootNote() {
+		return footNote;
 	}
 
-	public void setFootNotes(String footNotes) {
-		this.footNotes = footNotes;
+	public void setFootNote(String footNotes) {
+		this.footNote = footNotes;
 	}
 
 	public User getOriginUser() {
@@ -86,13 +89,13 @@ public class Client {
 		this.lastModifiedUser = lastModifiedUser;
 	}
 	
-	public void updateInfo(String name, String lastName, int date, String addres, int phoneNumber, String footNotes, User originUser, User lastModifiedUser) {
+	public void updateInfo(String name, String lastName, String Id, String addres, String phoneNumber, String footNotes, User originUser, User lastModifiedUser) {
 		setName(name);
 		setLastName(lastName);
-		setDate(date);
-		setAddres(addres);
+		setId(Id);
+		setAddress(addres);
 		setPhoneNumber(phoneNumber);
-		setFootNotes(footNotes);
+		setFootNote(footNotes);
 		setOriginUser(originUser);
 		setLastModifiedUser(lastModifiedUser);
 		

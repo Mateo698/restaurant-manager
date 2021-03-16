@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +15,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import model.Client;
 import model.Employee;
 import model.Restaurant;
 import model.User;
@@ -74,6 +78,12 @@ public class RestaurantManagerGUI implements Initializable{
     
     public RestaurantManagerGUI(Restaurant restaurant) {
     	this.restaurant = restaurant;
+    	try {
+			restaurant.loadData();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	restaurant.addUser("Admin", "123", "Nombre", "Apellido", 0, 0);
     }
     
@@ -201,10 +211,23 @@ public class RestaurantManagerGUI implements Initializable{
     	clLoader.setController(this);
     	Parent addMain = clLoader.load();
     	mainPane.getChildren().setAll(addMain);
+    	
+    	ObservableList<Client> observableList;
+    	observableList = FXCollections.observableArrayList(restaurant.getClients());
+    	
+		
+		CLMENUnameCol.setCellValueFactory(new PropertyValueFactory<Client,String>("name")); 
+		CLMENUlastNAmesCol.setCellValueFactory(new PropertyValueFactory<Client,String>("lastName"));
+		CLMENUidCol.setCellValueFactory(new PropertyValueFactory<Client,String>("id"));
+		CLMENUphoneNumberCol.setCellValueFactory(new PropertyValueFactory<Client,String>("phone"));
+		CLMENUaddressCol.setCellValueFactory(new PropertyValueFactory<Client,String>("address"));
+		CLMENUfootnoteCol.setCellValueFactory(new PropertyValueFactory<Client,String>("footNote"));
+		CLMENUtable.setItems(observableList);
 
     	mainStage.setHeight(729);
     	mainStage.setWidth(1182);
     	mainStage.setResizable(false);
+    	restaurant.saveData();
     }
 
     @FXML
@@ -463,22 +486,25 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    private TableView<?> CLMENUtable;
+    private TableView<Client> CLMENUtable;
 
     @FXML
-    private TableColumn<?, ?> CLMENUlastNAmesCol;
+    private TableColumn<Client, String> CLMENUnameCol;
+    
+    @FXML
+    private TableColumn<Client, String> CLMENUlastNAmesCol;
 
     @FXML
-    private TableColumn<?, ?> CLMENUidCol;
+    private TableColumn<Client, String> CLMENUidCol;
 
     @FXML
-    private TableColumn<?, ?> CLMENUaddressCol;
+    private TableColumn<Client, String> CLMENUaddressCol;
 
     @FXML
-    private TableColumn<?, ?> CLMENUphoneNumberCol;
+    private TableColumn<Client, String> CLMENUphoneNumberCol;
 
     @FXML
-    private TableColumn<?, ?> CLMENUfootnoteCol;
+    private TableColumn<Client, String> CLMENUfootnoteCol;
 
     @FXML
     void CLMENUaddBttn(ActionEvent event) {
