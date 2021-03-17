@@ -146,7 +146,24 @@ public class Restaurant {
 	}
 	
 	public void addClient(String name, String lastName, String id, String addres, String phoneNumber, String footNotes, User originUser, User lastModifiedUser) {
-		clients.add(new Client(name,lastName,id,addres,phoneNumber,footNotes,originUser));
+		boolean added = false;
+		if(clients.size()==0) {
+			clients.add(new Client(name,lastName,id,addres,phoneNumber,footNotes,originUser));
+			added = true;
+		}
+		else {		
+			Client c = new Client(name,lastName,id,addres,phoneNumber,footNotes,originUser);
+			for(int i=0;i<clients.size() && !added;i++) {
+				int compare = clients.get(i).compareTo(c);
+				if(compare>0) {
+					clients.add(i, c);
+					added = true;
+				}
+			}
+		}
+		if(!added) {
+			clients.add(new Client(name,lastName,id,addres,phoneNumber,footNotes,originUser));
+		}
 		
 	}
 	
@@ -178,22 +195,28 @@ public class Restaurant {
 	public void saveData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(EMP_NAME_FILE));
 	    oos.writeObject(employees);
-	    oos = null;
+	    oos.close();
+
 	    oos = new ObjectOutputStream(new FileOutputStream(USERS_NAME_FILE));
 	    oos.writeObject(users);
-	    oos = null;
+	    oos.close();
+
 	    oos = new ObjectOutputStream(new FileOutputStream(CLIENTS_NAME_FILE));
 	    oos.writeObject(clients);
-	    oos = null;
+	    oos.close();
+
 	    oos = new ObjectOutputStream(new FileOutputStream(ORDERS_NAME_FILE));
 	    oos.writeObject(orders);
-	    oos = null;
+	    oos.close();
+
 	    oos = new ObjectOutputStream(new FileOutputStream(ING_NAME_FILE));
 	    oos.writeObject(ingredients);
-	    oos = null;
+	    oos.close();
+
 	    oos = new ObjectOutputStream(new FileOutputStream(PRO_NAME_FILE));
 	    oos.writeObject(products);
-	    oos = null;
+	    oos.close();
+
 	    oos = new ObjectOutputStream(new FileOutputStream(TYPES_NAME_FILE));
 	    oos.writeObject(types);
 	    oos.close();
@@ -209,13 +232,13 @@ public class Restaurant {
 			ois = null;
 			f = null;
 		}
-		//f = new File(USERS_NAME_FILE);
-		/**if(f.exists()){
+		f = new File(USERS_NAME_FILE);
+		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 			users = (ArrayList)ois.readObject();
 			ois = null;
 			f = null;
-		}**/
+		}
 		f = new File(CLIENTS_NAME_FILE);
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
