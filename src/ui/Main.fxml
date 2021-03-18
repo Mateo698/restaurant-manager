@@ -23,11 +23,9 @@
           </Menu>
           <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Items">
             <items>
-              <MenuItem fx:id="MAINopenPRODUCTS" mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Products" />
-                  <MenuItem fx:id="MAINopenINGR" mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Ingredients" />
-                  <MenuItem fx:id="MAINopen" mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Types" />
-                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Delete" />
-                  <MenuItem mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#MAINopenPRODUCTS" style="-fx-color: #FFFFFF;" text="Products" />
+                  <MenuItem mnemonicParsing="false" onAction="#MAINopenINGR" style="-fx-color: #FFFFFF;" text="Ingredients" />
+                  <MenuItem mnemonicParsing="false" onAction="#MAINopenTYPES" style="-fx-color: #FFFFFF;" text="Types" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Orders">
@@ -39,14 +37,7 @@
       </MenuBar>
    </top>
    <center>
-      <BorderPane fx:id="MAINmainPane" prefHeight="474.0" prefWidth="869.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
-         <bottom>
-            <Button mnemonicParsing="false" text="Log out" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-         </bottom></BorderPane>
+      <BorderPane fx:id="MAINmainPane" prefHeight="474.0" prefWidth="869.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER" />
    </center>
    <bottom>
       <HBox alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="869.0" style="-fx-background-color: #000000;" BorderPane.alignment="CENTER">
@@ -60,7 +51,15 @@
                   </Label>
                </children>
             </Pane>
-            <Pane prefHeight="43.0" prefWidth="450.0" />
+            <Pane prefHeight="43.0" prefWidth="450.0">
+               <children>
+                  <Button layoutX="94.0" layoutY="5.0" mnemonicParsing="false" onAction="#MAINlogout" prefHeight="5.0" prefWidth="143.0" text="Log out">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
             <Label fx:id="MAINcurrentTimeLabel" text="Hour here lol" textFill="WHITE">
                <font>
                   <Font size="18.0" />

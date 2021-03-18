@@ -63,6 +63,21 @@ public class RestaurantManagerGUI implements Initializable{
     private TableColumn<Employee, Integer> EMPMENUdelivOrdCol;
     
     @FXML
+    private TableView<User> USERMENUtable;
+
+    @FXML
+    private TableColumn<User, String> USERMANusernameCol;
+
+    @FXML
+    private TableColumn<User, String> USERMANnamesCol;
+
+    @FXML
+    private TableColumn<User, String> USERMANlastNamesCol;
+
+    @FXML
+    private TableColumn<User, String> USERMANidCol;
+    
+    @FXML
     private BorderPane MAINmainPane;
     
     @FXML
@@ -87,7 +102,13 @@ public class RestaurantManagerGUI implements Initializable{
     	restaurant.addUser("Admin", "123", "Nombre", "Apellido", 0, 0);
     }
     
-    
+    public void showLogin() throws IOException{
+    	FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
+    	loginLoader.setController(this);
+    	Parent addLogin = loginLoader.load();
+    	Scene E = new Scene(addLogin);
+    	mainStage.setScene(E);
+    }
     
     public void goToLogin(ActionEvent event) throws IOException {
     	FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
@@ -114,11 +135,18 @@ public class RestaurantManagerGUI implements Initializable{
 	    	
 	    	restaurant.addUser(username, password, names, lastNames, ID, amountOrder);
 	    	
+	    	SIGNINpassTxtField.setText("");
+	    	SIGNINusernameTxtField.setText("");
+	    	SIGNINfirstNamesTxtField.setText("");
+	    	SIGNINlastNamesTxtField.setText("");
+	    	SIGNINidTxtField.setText("");
+	    	
 	    	Alert alert= new Alert(AlertType.INFORMATION);
 	    	alert.setTitle("User created");
 			alert.setContentText("The user was created succesfuly.");
 			alert.show();
 	    	
+			showLogin();
 
 	    }
 	    
@@ -206,16 +234,19 @@ public class RestaurantManagerGUI implements Initializable{
     
 
     @FXML
-    void MAINopenCLMENU(ActionEvent event) throws IOException {
+    public void MAINopenCLMENU(ActionEvent event) throws IOException {
     	FXMLLoader clLoader = new FXMLLoader(getClass().getResource("ClientsManager.fxml"));
     	clLoader.setController(this);
     	Parent addMain = clLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
     	
+    	CLinitializeTableView();
+    }
+    
+    public void CLinitializeTableView() {
     	ObservableList<Client> observableList;
     	observableList = FXCollections.observableArrayList(restaurant.getClients());
     	
-		
 		CLMENUnameCol.setCellValueFactory(new PropertyValueFactory<Client,String>("name")); 
 		CLMENUlastNAmesCol.setCellValueFactory(new PropertyValueFactory<Client,String>("lastName"));
 		CLMENUidCol.setCellValueFactory(new PropertyValueFactory<Client,String>("id"));
@@ -223,11 +254,6 @@ public class RestaurantManagerGUI implements Initializable{
 		CLMENUaddressCol.setCellValueFactory(new PropertyValueFactory<Client,String>("address"));
 		CLMENUfootnoteCol.setCellValueFactory(new PropertyValueFactory<Client,String>("footNote"));
 		CLMENUtable.setItems(observableList);
-
-    	mainStage.setHeight(729);
-    	mainStage.setWidth(1182);
-    	mainStage.setResizable(false);
-    	restaurant.saveData();
     }
 
     @FXML
@@ -237,19 +263,73 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addMain = empLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
     	
-    	//TRABAJO DE YULUKA HCAER QUE ESA VAINA HAGA RESIZE
-    	//INICIALIZAR LA TABLE VIEW CON LOS EMPLEAOS
+    	EMPinitializeTableView();
+    	
+    }
+    
+    public void EMPinitializeTableView() {
+    	ObservableList<Employee> EMPobservableList;
+    	EMPobservableList = FXCollections.observableArrayList(restaurant.getEmployees());
+    	
+    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("names"));
+    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("lastName"));
+    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("id"));
+    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("amountOrder"));
+    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("status"));
+    	EMPMENUtable.setItems(EMPobservableList);
+    	
     }
 
     @FXML
-    void MAINopenUSERMENU(ActionEvent event) throws IOException {
-    	FXMLLoader empLoader = new FXMLLoader(getClass().getResource("UserManager.fxml"));
-    	empLoader.setController(this);
-    	Parent addMain = empLoader.load();
+    public void MAINopenUSERMENU(ActionEvent event) throws IOException {
+    	FXMLLoader usrLoader = new FXMLLoader(getClass().getResource("UserManager.fxml"));
+    	usrLoader.setController(this);
+    	Parent addMain = usrLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
     	
     }
     
+    public void USRinitializeTableView() {
+    	ObservableList<User> USRobservableList;
+    	USRobservableList = FXCollections.observableArrayList(restaurant.getUsers());
+    	
+    	USERMANusernameCol.setCellValueFactory(new PropertyValueFactory<User,String>("username"));
+    	USERMANnamesCol.setCellValueFactory(new PropertyValueFactory<User,String>("names"));
+    	USERMANlastNamesCol.setCellValueFactory(new PropertyValueFactory<User,String>("lastName"));
+    	USERMANidCol.setCellValueFactory(new PropertyValueFactory<User,String>("id"));
+    	USERMENUtable.setItems(USRobservableList);
+    	
+    }
+    
+    @FXML
+    public void MAINopenINGR(ActionEvent event) throws IOException {
+    	FXMLLoader ingrLoader = new FXMLLoader(getClass().getResource("IngredientManager.fxml"));
+    	ingrLoader.setController(this);
+    	Parent addMain = ingrLoader.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    	
+    }
+
+    @FXML
+    public void MAINopenPRODUCTS(ActionEvent event) throws IOException {
+    	
+    }
+
+    @FXML
+    public void MAINopenTYPES(ActionEvent event) throws IOException {
+    	FXMLLoader typsLoader = new FXMLLoader(getClass().getResource("TypeManager.fxml"));
+    	typsLoader.setController(this);
+    	Parent addMain = typsLoader.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    	
+    }
+
+    
+    @FXML
+    public void MAINlogout(ActionEvent event) throws IOException{
+    	showLogin();
+    
+    }
     
     
     @FXML
@@ -413,18 +493,6 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.close();
     	mainStage.show();
     }
-    
-    @FXML
-    private TableColumn<?, ?> USERMANusernameCol;
-
-    @FXML
-    private TableColumn<?, ?> USERMANnamesCol;
-
-    @FXML
-    private TableColumn<?, ?> USERMANlastNamesCol;
-
-    @FXML
-    private TableColumn<?, ?> USERMANidCol;
 
     @FXML
     void USERMENUaddBttn(ActionEvent event) {

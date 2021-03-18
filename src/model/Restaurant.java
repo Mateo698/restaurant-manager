@@ -73,9 +73,6 @@ public class Restaurant {
 		this.ingredients = ingredients;
 	}
 
-
-
-
 //Stashed changes
 	public ArrayList<Order> getOrders() {
 		return orders;
