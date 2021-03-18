@@ -63,7 +63,7 @@ public class RestaurantManagerGUI implements Initializable{
     private TableColumn<Employee, Integer> EMPMENUdelivOrdCol;
     
     @FXML
-    private BorderPane mainPane;
+    private BorderPane MAINmainPane;
     
     @FXML
     private BorderPane welcomePane;
@@ -201,7 +201,7 @@ public class RestaurantManagerGUI implements Initializable{
     	FXMLLoader mP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	mP.setController(this);
     	Parent addMainPane = mP.load();
-    	mainPane.getChildren().setAll(addMainPane);
+    	MAINmainPane.getChildren().setAll(addMainPane);
     }
     
 
@@ -210,7 +210,7 @@ public class RestaurantManagerGUI implements Initializable{
     	FXMLLoader clLoader = new FXMLLoader(getClass().getResource("ClientsManager.fxml"));
     	clLoader.setController(this);
     	Parent addMain = clLoader.load();
-    	mainPane.getChildren().setAll(addMain);
+    	MAINmainPane.getChildren().setAll(addMain);
     	
     	ObservableList<Client> observableList;
     	observableList = FXCollections.observableArrayList(restaurant.getClients());
@@ -235,11 +235,8 @@ public class RestaurantManagerGUI implements Initializable{
     	FXMLLoader empLoader = new FXMLLoader(getClass().getResource("EmployeeManager.fxml"));
     	empLoader.setController(this);
     	Parent addMain = empLoader.load();
-    	mainPane.getChildren().setAll(addMain);
-
-    	mainStage.setHeight(700);
-    	mainStage.setWidth(1099);
-    	mainStage.setResizable(false);
+    	MAINmainPane.getChildren().setAll(addMain);
+    	
     	//TRABAJO DE YULUKA HCAER QUE ESA VAINA HAGA RESIZE
     	//INICIALIZAR LA TABLE VIEW CON LOS EMPLEAOS
     }
@@ -249,11 +246,8 @@ public class RestaurantManagerGUI implements Initializable{
     	FXMLLoader empLoader = new FXMLLoader(getClass().getResource("UserManager.fxml"));
     	empLoader.setController(this);
     	Parent addMain = empLoader.load();
-    	mainPane.getChildren().setAll(addMain);
+    	MAINmainPane.getChildren().setAll(addMain);
     	
-    	mainStage.setWidth(1182);
-    	mainStage.setHeight(729);
-    	mainStage.setResizable(false);
     }
     
     
@@ -276,7 +270,7 @@ public class RestaurantManagerGUI implements Initializable{
     	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	lP.setController(this);
     	Parent addMain = lP.load();
-    	mainPane.getChildren().setAll(addMain);
+    	MAINmainPane.getChildren().setAll(addMain);
     }
 
     @FXML
@@ -442,7 +436,7 @@ public class RestaurantManagerGUI implements Initializable{
     	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	lP.setController(this);
     	Parent addMain = lP.load();
-    	mainPane.getChildren().setAll(addMain);
+    	MAINmainPane.getChildren().setAll(addMain);
     }
 
     @FXML
@@ -516,7 +510,7 @@ public class RestaurantManagerGUI implements Initializable{
     	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	lP.setController(this);
     	Parent addMain = lP.load();
-    	mainPane.getChildren().setAll(addMain);
+    	MAINmainPane.getChildren().setAll(addMain);
     }
 
     @FXML

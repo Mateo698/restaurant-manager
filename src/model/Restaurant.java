@@ -36,6 +36,7 @@ public class Restaurant {
 		clients.add(new Client("Pepe", "Run", "123123", "Aqui","3117762577","Por ahi", new User("Admin", "123", "Nombre", "Apellido", 0, 0) ));
 	}
 	
+//Updated upstream
 	
 
 	public ArrayList<Product> getProducts() {
@@ -74,6 +75,8 @@ public class Restaurant {
 
 
 
+
+//Stashed changes
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
