@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import model.Client;
 import model.Employee;
 import model.Restaurant;
+import model.Type;
 import model.User;
 
 public class RestaurantManagerGUI implements Initializable{
@@ -82,6 +83,78 @@ public class RestaurantManagerGUI implements Initializable{
     
     @FXML
     private BorderPane welcomePane;
+    
+    @FXML
+    private Label MAINlocalUserLabel;
+
+    @FXML
+    private Label MAINcurrentTimeLabel;
+    
+    @FXML
+    private TextField ADDEMPnamesTxtField;
+
+    @FXML
+    private TextField ADDEMPlastNamesTxtField;
+
+    @FXML
+    private TextField ADDEMPidTxtField;
+    
+    @FXML
+    private Label ADDEMPstatusLabel;
+
+    @FXML
+    private TextField ADDUSERusernameTxField;
+
+    @FXML
+    private PasswordField ADDUSERpasswordTxtField;
+
+    @FXML
+    private TextField ADDUSERnamesTxtField;
+
+    @FXML
+    private TextField ADDUSERlastNamesTxtFIeld;
+
+    @FXML
+    private TextField ADDUSERidTxtField;
+
+    @FXML
+    private TableView<Client> CLMENUtable;
+
+    @FXML
+    private TableColumn<Client, String> CLMENUnameCol;
+    
+    @FXML
+    private TableColumn<Client, String> CLMENUlastNAmesCol;
+
+    @FXML
+    private TableColumn<Client, String> CLMENUidCol;
+
+    @FXML
+    private TableColumn<Client, String> CLMENUaddressCol;
+
+    @FXML
+    private TableColumn<Client, String> CLMENUphoneNumberCol;
+
+    @FXML
+    private TableColumn<Client, String> CLMENUfootnoteCol;
+    
+    @FXML
+    private TableView<Type> TYPEMENUtable;
+
+    @FXML
+    private Button TYPEMENUaddBttn;
+
+    @FXML
+    private Button TYPEMENUeditBttn;
+
+    @FXML
+    private Button TYPEMENUdeleteBttn;
+
+    @FXML
+    private Button TYPEMENUdisableBttn;
+
+    @FXML
+    private Button TYPEMENUbackBttn;
     
     private User localUser;
     
@@ -212,13 +285,7 @@ public class RestaurantManagerGUI implements Initializable{
 			
 		}
     }
-    
-    @FXML
-    private Label MAINlocalUserLabel;
 
-    @FXML
-    private Label MAINcurrentTimeLabel;
-    
     public void goToMain() throws IOException{
     	FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("Main.fxml"));
     	mainLoader.setController(this);
@@ -314,7 +381,7 @@ public class RestaurantManagerGUI implements Initializable{
     public void MAINopenPRODUCTS(ActionEvent event) throws IOException {
     	
     }
-
+    
     @FXML
     public void MAINopenTYPES(ActionEvent event) throws IOException {
     	FXMLLoader typsLoader = new FXMLLoader(getClass().getResource("TypeManager.fxml"));
@@ -333,7 +400,7 @@ public class RestaurantManagerGUI implements Initializable{
     
     
     @FXML
-    void EMPMENUaddBttn(ActionEvent event) throws IOException {
+    public void EMPMENUaddBttn(ActionEvent event) throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("AddEmployeeWindow.fxml"));
     	loader.setController(this);
     	Parent root = loader.load();
@@ -346,7 +413,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void EMPMENUdbackBttn(ActionEvent event) throws IOException {
+    public void EMPMENUdbackBttn(ActionEvent event) throws IOException {
     	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	lP.setController(this);
     	Parent addMain = lP.load();
@@ -354,7 +421,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void EMPMENUdeleteBttn(ActionEvent event) {
+    public void EMPMENUdeleteBttn(ActionEvent event) {
     	Employee auxEmployee = EMPMENUtable.getSelectionModel().getSelectedItem();
     	if(auxEmployee != null) {
     		if(auxEmployee.getNames().equals(localUser.getNames())) {
@@ -385,7 +452,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void EMPMENUdisableBttn(ActionEvent event) {
+    public void EMPMENUdisableBttn(ActionEvent event) {
     	Employee auxEmployee = EMPMENUtable.getSelectionModel().getSelectedItem();
     	if(auxEmployee != null) {
     		if(auxEmployee.getNames().equals(localUser.getNames())) {
@@ -416,24 +483,12 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void EMPMENUeditBttn(ActionEvent event) {
+    public void EMPMENUeditBttn(ActionEvent event) {
 
     }
-    
-    @FXML
-    private TextField ADDEMPnamesTxtField;
 
     @FXML
-    private TextField ADDEMPlastNamesTxtField;
-
-    @FXML
-    private TextField ADDEMPidTxtField;
-    
-    @FXML
-    private Label ADDEMPstatusLabel;
-
-    @FXML
-    void ADDEMPaddBttn(ActionEvent event) {
+    public void ADDEMPaddBttn(ActionEvent event) {
     	String names = ADDEMPnamesTxtField.getText();
     	String lastNames = ADDEMPlastNamesTxtField.getText();
     	String id = ADDEMPidTxtField.getText();
@@ -489,18 +544,18 @@ public class RestaurantManagerGUI implements Initializable{
 
 
     @FXML
-    void ADDEMPbackBttn(ActionEvent event) {
+    public void ADDEMPbackBttn(ActionEvent event) {
     	popupStage.close();
     	mainStage.show();
     }
 
     @FXML
-    void USERMENUaddBttn(ActionEvent event) {
+    public void USERMENUaddBttn(ActionEvent event) {
     	
     }
 
     @FXML
-    void USERMENUbackBttn(ActionEvent event) throws IOException {
+    public void USERMENUbackBttn(ActionEvent event) throws IOException {
     	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	lP.setController(this);
     	Parent addMain = lP.load();
@@ -508,73 +563,37 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void USERMENUdeleteBttn(ActionEvent event) {
+    public void USERMENUdeleteBttn(ActionEvent event) {
 
     }
 
     @FXML
-    void USERMENUdisableBttn(ActionEvent event) {
+    public void USERMENUdisableBttn(ActionEvent event) {
 
     }
 
     @FXML
-    void USERMENUtBttn(ActionEvent event) {
-
-    }
-    
-    @FXML
-    private TextField ADDUSERusernameTxField;
-
-    @FXML
-    private PasswordField ADDUSERpasswordTxtField;
-
-    @FXML
-    private TextField ADDUSERnamesTxtField;
-
-    @FXML
-    private TextField ADDUSERlastNamesTxtFIeld;
-
-    @FXML
-    private TextField ADDUSERidTxtField;
-
-    @FXML
-    void ADDUSERaddBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ADDUSERbackBttn(ActionEvent event) {
+    public void USERMENUtBttn(ActionEvent event) {
 
     }
     
     @FXML
-    private TableView<Client> CLMENUtable;
-
-    @FXML
-    private TableColumn<Client, String> CLMENUnameCol;
-    
-    @FXML
-    private TableColumn<Client, String> CLMENUlastNAmesCol;
-
-    @FXML
-    private TableColumn<Client, String> CLMENUidCol;
-
-    @FXML
-    private TableColumn<Client, String> CLMENUaddressCol;
-
-    @FXML
-    private TableColumn<Client, String> CLMENUphoneNumberCol;
-
-    @FXML
-    private TableColumn<Client, String> CLMENUfootnoteCol;
-
-    @FXML
-    void CLMENUaddBttn(ActionEvent event) {
+    public void ADDUSERaddBttn(ActionEvent event) {
 
     }
 
     @FXML
-    void CLMENUbackBttn(ActionEvent event) throws IOException {
+    public void ADDUSERbackBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void CLMENUaddBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void CLMENUbackBttn(ActionEvent event) throws IOException {
     	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	lP.setController(this);
     	Parent addMain = lP.load();
@@ -582,45 +601,27 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void CLMENUdeletBttn(ActionEvent event) {
+    public void CLMENUdeletBttn(ActionEvent event) {
 
     }
 
     @FXML
-    void CLMENUdisableBttn(ActionEvent event) {
+    public void CLMENUdisableBttn(ActionEvent event) {
 
     }
 
     @FXML
-    void CLMENUeditBttn(ActionEvent event) {
+    public void CLMENUeditBttn(ActionEvent event) {
 
     }
 
     @FXML
-    void CLMENUselectedClient(MouseEvent event) {
+    public void CLMENUselectedClient(MouseEvent event) {
 
     }
     
     @FXML
-    private TableView<?> TYPEMENUtable;
-
-    @FXML
-    private Button TYPEMENUaddBttn;
-
-    @FXML
-    private Button TYPEMENUeditBttn;
-
-    @FXML
-    private Button TYPEMENUdeleteBttn;
-
-    @FXML
-    private Button TYPEMENUdisableBttn;
-
-    @FXML
-    private Button TYPEMENUbackBttn;
-
-    @FXML
-    void TYPEMENUselectedType(MouseEvent event) {
+    public void TYPEMENUselectedType(MouseEvent event) {
 
     }
     
