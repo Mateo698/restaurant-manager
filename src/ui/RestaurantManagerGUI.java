@@ -8,24 +8,28 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+
 import model.BaseProduct;
 import model.Client;
 import model.Employee;
 import model.Ingredient;
-import model.Product;
 import model.Restaurant;
 import model.Type;
 import model.User;
@@ -211,6 +215,7 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     private TextField EDITUSERidTxtField;
+
     
     private User localUser;
     
@@ -357,6 +362,9 @@ public class RestaurantManagerGUI implements Initializable{
     	mP.setController(this);
     	Parent addMainPane = mP.load();
     	MAINmainPane.getChildren().setAll(addMainPane);
+    	
+    	
+        
     }
     
 
@@ -444,6 +452,12 @@ public class RestaurantManagerGUI implements Initializable{
     public void ORDERinitializeTableView() {
     	
     }
+    
+
+    @FXML
+    void MAINopenPRODUCTS(ActionEvent event) {
+
+    }
 
     @FXML
     public void MAINopenINGR(ActionEvent event) throws IOException {
@@ -508,16 +522,18 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     public void BASEPRODUCTinitializeTableView() {
-    	ObservableList<BaseProduct> PRODUCTobservableList;
-    	PRODUCTobservableList = FXCollections.observableArrayList(restaurant.getBaseProducts());
+
+    	ObservableList<BaseProduct> BASEPRODUCTobservableList;
+    	BASEPRODUCTobservableList = FXCollections.observableArrayList(restaurant.getBaseProducts());
     	
     	BASEPRODUCTMANnameCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("name"));
-    	BASEPRODUCTMANsizeCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("size"));
-    	BASEPRODUCTMANpriceCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("price"));
     	BASEPRODUCTMANamountCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("amountOrdered"));
     	BASEPRODUCTMANingredientCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("ingredients"));
     	BASEPRODUCTMANtypeCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("type"));
-    	BASEPRODUCTMENUtable.setItems(PRODUCTobservableList);
+
+
+    	BASEPRODUCTMENUtable.setItems(BASEPRODUCTobservableList);
+
     	
     }
     
@@ -769,20 +785,21 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    public void USERMENUdeleteBttn(ActionEvent event) {
+    public void USERMENUdeleteBttn(ActionEvent event) throws IOException {
     	int index = USERMENUtable.getSelectionModel().getSelectedIndex();
     	restaurant.deleteUser(index);
-    	USERMENUtable.refresh();
+    	USERinitializeTableView();
+    	restaurant.saveData();
     }
 
     @FXML
     public void USERMENUdisableBttn(ActionEvent event) {
-
+    	
     }
 
     @FXML
     public void USERMENUeditBttn(ActionEvent event) {
-    	User auxEmployee = USERMENUtable.getSelectionModel().getSelectedItem();
+    	
     	
     }
     
@@ -894,6 +911,8 @@ public class RestaurantManagerGUI implements Initializable{
 		
 		
 	}
+	
+
 	
 	public void start() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));

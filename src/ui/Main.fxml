@@ -23,7 +23,8 @@
           </Menu>
           <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Items">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#MAINopenPRODUCTS" style="-fx-color: #FFFFFF;" text="Products" />
+              <MenuItem mnemonicParsing="false" onAction="#MAINopenBASEPRODUCTS" style="-fx-color: #FFFFFF;" text="Base products" />
+                  <MenuItem mnemonicParsing="false" onAction="#MAINopenPRODUCTS" style="-fx-color: #FFFFFF;" text="Products" />
                   <MenuItem mnemonicParsing="false" onAction="#MAINopenINGR" style="-fx-color: #FFFFFF;" text="Ingredients" />
                   <MenuItem mnemonicParsing="false" onAction="#MAINopenTYPES" style="-fx-color: #FFFFFF;" text="Types" />
             </items>

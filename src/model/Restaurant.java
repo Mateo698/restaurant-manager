@@ -16,13 +16,17 @@ public class Restaurant {
 	private ArrayList<Order> orders;
 	private ArrayList<Ingredient> ingredients;
 	private ArrayList<BaseProduct> baseProducts;
+<<<<<<< Updated upstream
+=======
+	private ArrayList<Product> products;
+>>>>>>> Stashed changes
 	private ArrayList<Type> types;
 	private String EMP_NAME_FILE = "data/employeees.lol";
 	private String USERS_NAME_FILE = "data/user.lol";
 	private String CLIENTS_NAME_FILE = "data/clients.lol";
 	private String ORDERS_NAME_FILE = "data/orders.lol";
 	private String ING_NAME_FILE = "data/ingredients.lol";
-	private String PRO_NAME_FILE = "data/rpoducts.lol";
+	private String BPRO_NAME_FILE = "data/baseproducts.lol";
 	private String TYPES_NAME_FILE = "data/types.lol";
 	
 	public Restaurant() {
@@ -33,6 +37,7 @@ public class Restaurant {
 		setIngredients(new ArrayList<Ingredient>());
 		setBaseProducts(new ArrayList<BaseProduct>());
 		setTypes(new ArrayList<Type>());
+		setProducts(new ArrayList<Product>());
 	}
 	
 //Updated upstream
@@ -72,7 +77,7 @@ public class Restaurant {
 		this.ingredients = ingredients;
 	}
 
-//Stashed changes
+
 	public ArrayList<Order> getOrders() {
 		return orders;
 	}
@@ -177,7 +182,7 @@ public class Restaurant {
 	}
 	
 	public void addOrder(int code, String status, String footNote) {
-		orders.add(new Order(code,status,footNote));
+		orders.add(new Order(code,footNote));
 		
 	}
 	
@@ -212,7 +217,11 @@ public class Restaurant {
 	    oos.writeObject(ingredients);
 	    oos.close();
 
+<<<<<<< Updated upstream
 	    oos = new ObjectOutputStream(new FileOutputStream(PRO_NAME_FILE));
+=======
+	    oos = new ObjectOutputStream(new FileOutputStream(BPRO_NAME_FILE));
+>>>>>>> Stashed changes
 	    oos.writeObject(baseProducts);
 	    oos.close();
 
@@ -266,12 +275,20 @@ public class Restaurant {
 			ois = null;
 			f = null;
 		}
-		f = new File(PRO_NAME_FILE);
+		f = new File(BPRO_NAME_FILE);
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
 			baseProducts = (ArrayList)ois.readObject();
 			ois.close();
 		}
 		
+	}
+
+	public ArrayList<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(ArrayList<Product> products) {
+		this.products = products;
 	}
 }

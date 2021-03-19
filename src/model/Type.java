@@ -6,6 +6,7 @@ public class Type implements Serializable{
 	private static final long serialVersionUID = 1;
 	private String name;
 
+
 	public Type(String name) {
 		this.name = name;
 	}
@@ -18,5 +19,6 @@ public class Type implements Serializable{
 		this.name = name;
 	}
 	
+
 	
 }
