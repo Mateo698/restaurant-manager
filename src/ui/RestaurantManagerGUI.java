@@ -250,7 +250,7 @@ public class RestaurantManagerGUI implements Initializable{
 		CLMENUnameCol.setCellValueFactory(new PropertyValueFactory<Client,String>("name")); 
 		CLMENUlastNAmesCol.setCellValueFactory(new PropertyValueFactory<Client,String>("lastName"));
 		CLMENUidCol.setCellValueFactory(new PropertyValueFactory<Client,String>("id"));
-		CLMENUphoneNumberCol.setCellValueFactory(new PropertyValueFactory<Client,String>("phone"));
+		CLMENUphoneNumberCol.setCellValueFactory(new PropertyValueFactory<Client,String>("phoneNumber"));
 		CLMENUaddressCol.setCellValueFactory(new PropertyValueFactory<Client,String>("address"));
 		CLMENUfootnoteCol.setCellValueFactory(new PropertyValueFactory<Client,String>("footNote"));
 		CLMENUtable.setItems(observableList);

@@ -17,13 +17,13 @@ public class Restaurant {
 	private ArrayList<Ingredient> ingredients;
 	private ArrayList<Product> products;
 	private ArrayList<Type> types;
-	private String EMP_NAME_FILE = "data/employees.lol";
-	private String USERS_NAME_FILE = "data/employees.lol";
-	private String CLIENTS_NAME_FILE = "data/employees.lol";
-	private String ORDERS_NAME_FILE = "data/employees.lol";
-	private String ING_NAME_FILE = "data/employees.lol";
-	private String PRO_NAME_FILE = "data/employees.lol";
-	private String TYPES_NAME_FILE = "data/employees.lol";
+	private String EMP_NAME_FILE = "data/employeees.lol";
+	private String USERS_NAME_FILE = "data/user.lol";
+	private String CLIENTS_NAME_FILE = "data/clients.lol";
+	private String ORDERS_NAME_FILE = "data/orders.lol";
+	private String ING_NAME_FILE = "data/ingredients.lol";
+	private String PRO_NAME_FILE = "data/rpoducts.lol";
+	private String TYPES_NAME_FILE = "data/types.lol";
 	
 	public Restaurant() {
 		setEmployees(new ArrayList<Employee>());
@@ -33,7 +33,6 @@ public class Restaurant {
 		setIngredients(new ArrayList<Ingredient>());
 		setProducts(new ArrayList<Product>());
 		setTypes(new ArrayList<Type>());
-		clients.add(new Client("Pepe", "Run", "123123", "Aqui","3117762577","Por ahi", new User("Admin", "123", "Nombre", "Apellido", 0, 0) ));
 	}
 	
 //Updated upstream
