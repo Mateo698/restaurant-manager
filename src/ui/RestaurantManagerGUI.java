@@ -21,6 +21,8 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Client;
 import model.Employee;
+import model.Ingredient;
+import model.Product;
 import model.Restaurant;
 import model.Type;
 import model.User;
@@ -140,6 +142,9 @@ public class RestaurantManagerGUI implements Initializable{
     
     @FXML
     private TableView<Type> TYPEMENUtable;
+        
+    @FXML
+    private TableColumn<Type, String> TYPEMANnameCol;
 
     @FXML
     private Button TYPEMENUaddBttn;
@@ -155,6 +160,36 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     private Button TYPEMENUbackBttn;
+    
+    @FXML
+    private TableView<Ingredient> INGRMENUtable;
+
+    @FXML
+    private Button INGRMENUaddBttn;
+
+    @FXML
+    private Button INGRMENUeditBttn;
+    
+    @FXML
+    private TableView<Product> PRODUCTMENUtable;
+    
+    @FXML
+    private TableColumn<Product, String> PRODUCTMANnameCol;
+
+    @FXML
+    private TableColumn<Product, String> PRODUCTMANsizeCol;
+
+    @FXML
+    private TableColumn<Product, String> PRODUCTMANpriceCol;
+
+    @FXML
+    private TableColumn<Product, String> PRODUCTMANamountCol;
+
+    @FXML
+    private TableColumn<Product, String> PRODUCTMANingredientCol;
+
+    @FXML
+    private TableColumn<Product, String> PRODUCTMANtypeCol;
     
     private User localUser;
     
@@ -339,7 +374,7 @@ public class RestaurantManagerGUI implements Initializable{
     	EMPobservableList = FXCollections.observableArrayList(restaurant.getEmployees());
     	
     	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("names"));
-    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("lastName"));
+    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("lastNames"));
     	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("id"));
     	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("amountOrder"));
     	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("status"));
@@ -354,20 +389,21 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addMain = usrLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
     	
+    	USERinitializeTableView();
     }
     
-    public void USRinitializeTableView() {
+    public void USERinitializeTableView() {
     	ObservableList<User> USRobservableList;
     	USRobservableList = FXCollections.observableArrayList(restaurant.getUsers());
     	
     	USERMANusernameCol.setCellValueFactory(new PropertyValueFactory<User,String>("username"));
     	USERMANnamesCol.setCellValueFactory(new PropertyValueFactory<User,String>("names"));
-    	USERMANlastNamesCol.setCellValueFactory(new PropertyValueFactory<User,String>("lastName"));
+    	USERMANlastNamesCol.setCellValueFactory(new PropertyValueFactory<User,String>("lastNames"));
     	USERMANidCol.setCellValueFactory(new PropertyValueFactory<User,String>("id"));
     	USERMENUtable.setItems(USRobservableList);
     	
     }
-    
+
     @FXML
     public void MAINopenINGR(ActionEvent event) throws IOException {
     	FXMLLoader ingrLoader = new FXMLLoader(getClass().getResource("IngredientManager.fxml"));
@@ -377,6 +413,26 @@ public class RestaurantManagerGUI implements Initializable{
     	
     }
 
+    @FXML
+    public void INGRMENUbackBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void INGRMENUdeleteBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void INGRMENUdisableBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void INGRMENUselectedIngr(MouseEvent event) {
+
+    }    
+    
     @FXML
     public void MAINopenPRODUCTS(ActionEvent event) throws IOException {
     	
@@ -388,6 +444,16 @@ public class RestaurantManagerGUI implements Initializable{
     	typsLoader.setController(this);
     	Parent addMain = typsLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
+    	
+    	TYPEinitializeTableView();
+    }
+ 
+    public void TYPEinitializeTableView() {
+    	ObservableList<Type> TYPEobservableList;
+    	TYPEobservableList = FXCollections.observableArrayList(restaurant.getTypes());
+    	
+    	TYPEMANnameCol.setCellValueFactory(new PropertyValueFactory<Type,String>("name"));
+    	TYPEMENUtable.setItems(TYPEobservableList);
     	
     }
 

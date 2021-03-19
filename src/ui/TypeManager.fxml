@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="686.0" prefWidth="1215.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="686.0" prefWidth="1215.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <HBox alignment="CENTER" prefHeight="78.0" prefWidth="1215.0" style="-fx-background-color: #b59703;" BorderPane.alignment="CENTER">
          <children>
@@ -33,7 +33,7 @@
          <children>
             <TableView fx:id="TYPEMENUtable" onMouseClicked="#TYPEMENUselectedType" prefHeight="608.0" prefWidth="1057.0">
                <columns>
-                  <TableColumn prefWidth="1051.0" text="Type name" />
+                  <TableColumn fx:id="TYPEMANnameCol" prefWidth="1051.0" text="Type name" />
                </columns>
             </TableView>
             <VBox prefHeight="608.0" prefWidth="168.0">
