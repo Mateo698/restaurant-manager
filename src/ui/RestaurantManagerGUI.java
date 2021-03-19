@@ -165,6 +165,9 @@ public class RestaurantManagerGUI implements Initializable{
     private TableView<Ingredient> INGRMENUtable;
 
     @FXML
+    private TableColumn<Ingredient, String> INGRMANnameCol;
+
+    @FXML
     private Button INGRMENUaddBttn;
 
     @FXML
@@ -411,11 +414,34 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addMain = ingrLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
     	
+    	INGRinitializeTableView();
     }
-
+    
+    public void INGRinitializeTableView() {
+    	ObservableList<Ingredient> INGRobservableList;
+    	INGRobservableList = FXCollections.observableArrayList(restaurant.getIngredients());
+    	
+    	INGRMANnameCol.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
+    	INGRMENUtable.setItems(INGRobservableList);
+    	
+    }
+    
     @FXML
-    public void INGRMENUbackBttn(ActionEvent event) {
+    public void INGRMENUaddBttn(ActionEvent event) {
 
+    }
+    
+    @FXML
+    public void INGRMENUeditBttn(ActionEvent event) {
+
+    }
+    
+    @FXML
+    public void INGRMENUbackBttn(ActionEvent event) throws IOException{
+    	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	lP.setController(this);
+    	Parent addMain = lP.load();
+    	MAINmainPane.getChildren().setAll(addMain);
     }
 
     @FXML
@@ -435,9 +461,57 @@ public class RestaurantManagerGUI implements Initializable{
     
     @FXML
     public void MAINopenPRODUCTS(ActionEvent event) throws IOException {
+    	FXMLLoader productLoader = new FXMLLoader(getClass().getResource("ProductManager.fxml"));
+    	productLoader.setController(this);
+    	Parent addMain = productLoader.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    	
+    	PRODUCTinitializeTableView();
+    }
+    
+    public void PRODUCTinitializeTableView() {
+    	ObservableList<Product> PRODUCTobservableList;
+    	PRODUCTobservableList = FXCollections.observableArrayList(restaurant.getProducts());
+    	
+    	PRODUCTMANnameCol.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
+    	PRODUCTMANsizeCol.setCellValueFactory(new PropertyValueFactory<Product,String>("size"));
+    	PRODUCTMANpriceCol.setCellValueFactory(new PropertyValueFactory<Product,String>("price"));
+    	PRODUCTMANamountCol.setCellValueFactory(new PropertyValueFactory<Product,String>("amountOrdered"));
+    	PRODUCTMANingredientCol.setCellValueFactory(new PropertyValueFactory<Product,String>("ingredients"));
+    	PRODUCTMANtypeCol.setCellValueFactory(new PropertyValueFactory<Product,String>("type"));
+    	PRODUCTMENUtable.setItems(PRODUCTobservableList);
     	
     }
     
+    @FXML
+    public void PRODUCTMENUaddBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void PRODUCTMENUbackBttn(ActionEvent event) throws IOException{
+    	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	lP.setController(this);
+    	Parent addMain = lP.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    	
+    }
+
+    @FXML
+    public void PRODUCTMENUdeleteBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void PRODUCTMENUdisableBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void PRODUCTMENUeditBttn(ActionEvent event) {
+
+    }
+
     @FXML
     public void MAINopenTYPES(ActionEvent event) throws IOException {
     	FXMLLoader typsLoader = new FXMLLoader(getClass().getResource("TypeManager.fxml"));
@@ -456,7 +530,35 @@ public class RestaurantManagerGUI implements Initializable{
     	TYPEMENUtable.setItems(TYPEobservableList);
     	
     }
+    
+    @FXML
+    public void TYPEMENUaddBttn(ActionEvent event) {
 
+    }
+
+    @FXML
+    public void TYPEMENUbackBttn(ActionEvent event) throws IOException{
+    	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	lP.setController(this);
+    	Parent addMain = lP.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    	
+    }
+
+    @FXML
+    public void TYPEMENUdeleteBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void TYPEMENUdisableBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    public void TYPEMENUeditBttn(ActionEvent event) {
+
+    }
     
     @FXML
     public void MAINlogout(ActionEvent event) throws IOException{

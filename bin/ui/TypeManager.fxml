@@ -40,27 +40,27 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="TYPEMENUaddBttn" mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Add" />
+                        <Button mnemonicParsing="false" onAction="#TYPEMENUaddBttn" style="-fx-background-color: #b59703;" text="Add" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="TYPEMENUeditBttn" mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Edit" />
+                        <Button mnemonicParsing="false" onAction="#TYPEMENUeditBttn" style="-fx-background-color: #b59703;" text="Edit" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="TYPEMENUdeleteBttn" mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Delete" />
+                        <Button mnemonicParsing="false" onAction="#TYPEMENUdeleteBttn" style="-fx-background-color: #b59703;" text="Delete" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="TYPEMENUdisableBttn" mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Disable" />
+                        <Button mnemonicParsing="false" onAction="#TYPEMENUdisableBttn" style="-fx-background-color: #b59703;" text="Disable" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="TYPEMENUbackBttn" mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Back" />
+                        <Button mnemonicParsing="false" onAction="#TYPEMENUbackBttn" style="-fx-background-color: #b59703;" text="Back" />
                      </children>
                   </HBox>
                </children>
