@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="729.0" prefWidth="1182.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #b59703;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="87.0" fitWidth="133.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../icons/product.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="57.0" prefWidth="527.0" text="       Base Product manager">
+               <font>
+                  <Font name="Sylfaen" size="46.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="BASEPRODUCTMENUtable" prefHeight="654.0" prefWidth="1064.0">
+              <columns>
+                <TableColumn fx:id="BASEPRODUCTMANnameCol" prefWidth="286.0" text="Name" />
+                <TableColumn fx:id="BASEPRODUCTMANsizeCol" prefWidth="119.0" text="Size" />
+                  <TableColumn fx:id="BASEPRODUCTMANpriceCol" prefWidth="112.0" text="Price" />
+                  <TableColumn fx:id="BASEPRODUCTMANamountCol" prefWidth="106.0" text="Amount ordered" />
+                  <TableColumn fx:id="BASEPRODUCTMANingredientCol" minWidth="0.0" prefWidth="215.0" text="Ingredients" />
+                  <TableColumn fx:id="BASEPRODUCTMANtypeCol" prefWidth="221.0" text="Type" />
+              </columns>
+            </TableView>
+            <VBox alignment="CENTER" prefHeight="654.0" prefWidth="126.0" style="-fx-background-color: #000000;">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#BASEPRODUCTMENUaddBttn" style="-fx-background-color: #b59703;" text="Add" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#BASEPRODUCTMENUdeleteBttn" style="-fx-background-color: #b59703;" text="Delete" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#BASEPRODUCTMENUdisableBttn" style="-fx-background-color: #b59703;" text="Disable" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#BASEPRODUCTMENUbackBttn" style="-fx-background-color: #b59703;" text="Back" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>
