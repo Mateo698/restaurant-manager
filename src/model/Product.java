@@ -4,7 +4,7 @@ public class Product {
 	private BaseProduct baseProduct;
 	private Size productSize;
 	private String name;
-	double double 
+	double double x;
 	
-	public Product
+	
 }

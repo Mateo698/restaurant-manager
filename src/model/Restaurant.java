@@ -15,7 +15,7 @@ public class Restaurant {
 	private ArrayList<Client> clients;
 	private ArrayList<Order> orders;
 	private ArrayList<Ingredient> ingredients;
-	private ArrayList<Product> products;
+	private ArrayList<BaseProduct> baseProducts;
 	private ArrayList<Type> types;
 	private String EMP_NAME_FILE = "data/employeees.lol";
 	private String USERS_NAME_FILE = "data/user.lol";
@@ -31,21 +31,21 @@ public class Restaurant {
 		setClients(new ArrayList<Client>());
 		setOrders(new ArrayList<Order>());
 		setIngredients(new ArrayList<Ingredient>());
-		setProducts(new ArrayList<Product>());
+		setBaseProducts(new ArrayList<BaseProduct>());
 		setTypes(new ArrayList<Type>());
 	}
 	
 //Updated upstream
 	
 
-	public ArrayList<Product> getProducts() {
-		return products;
+	public ArrayList<BaseProduct> getBaseProducts() {
+		return baseProducts;
 	}
 
 
 
-	public void setProducts(ArrayList<Product> products) {
-		this.products = products;
+	public void setBaseProducts(ArrayList<BaseProduct> products) {
+		this.baseProducts = products;
 	}
 
 
@@ -213,7 +213,7 @@ public class Restaurant {
 	    oos.close();
 
 	    oos = new ObjectOutputStream(new FileOutputStream(PRO_NAME_FILE));
-	    oos.writeObject(products);
+	    oos.writeObject(baseProducts);
 	    oos.close();
 
 	    oos = new ObjectOutputStream(new FileOutputStream(TYPES_NAME_FILE));
@@ -269,7 +269,7 @@ public class Restaurant {
 		f = new File(PRO_NAME_FILE);
 		if(f.exists()){
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			products = (ArrayList)ois.readObject();
+			baseProducts = (ArrayList)ois.readObject();
 			ois.close();
 		}
 		

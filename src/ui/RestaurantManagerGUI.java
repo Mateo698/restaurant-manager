@@ -21,6 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.BaseProduct;
 import model.Client;
 import model.Employee;
 import model.Ingredient;
@@ -176,25 +177,25 @@ public class RestaurantManagerGUI implements Initializable{
     private Button INGRMENUeditBttn;
     
     @FXML
-    private TableView<Product> PRODUCTMENUtable;
+    private TableView<BaseProduct> BASEPRODUCTMENUtable;
     
     @FXML
-    private TableColumn<Product, String> PRODUCTMANnameCol;
+    private TableColumn<BaseProduct, String> BASEPRODUCTMANnameCol;
 
     @FXML
-    private TableColumn<Product, String> PRODUCTMANsizeCol;
+    private TableColumn<BaseProduct, String> BASEPRODUCTMANsizeCol;
 
     @FXML
-    private TableColumn<Product, String> PRODUCTMANpriceCol;
+    private TableColumn<BaseProduct, String> BASEPRODUCTMANpriceCol;
 
     @FXML
-    private TableColumn<Product, String> PRODUCTMANamountCol;
+    private TableColumn<BaseProduct, String> BASEPRODUCTMANamountCol;
 
     @FXML
-    private TableColumn<Product, String> PRODUCTMANingredientCol;
+    private TableColumn<BaseProduct, String> BASEPRODUCTMANingredientCol;
 
     @FXML
-    private TableColumn<Product, String> PRODUCTMANtypeCol;
+    private TableColumn<BaseProduct, String> BASEPRODUCTMANtypeCol;
     
     @FXML
     private TextField EDITUSERusernameTxtField;
@@ -497,36 +498,36 @@ public class RestaurantManagerGUI implements Initializable{
     }    
     
     @FXML
-    public void MAINopenPRODUCTS(ActionEvent event) throws IOException {
-    	FXMLLoader productLoader = new FXMLLoader(getClass().getResource("ProductManager.fxml"));
+    public void MAINopenBASEPRODUCTS(ActionEvent event) throws IOException {
+    	FXMLLoader productLoader = new FXMLLoader(getClass().getResource("BaseProductManager.fxml"));
     	productLoader.setController(this);
     	Parent addMain = productLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
     	
-    	PRODUCTinitializeTableView();
+    	BASEPRODUCTinitializeTableView();
     }
     
-    public void PRODUCTinitializeTableView() {
-    	ObservableList<Product> PRODUCTobservableList;
-    	PRODUCTobservableList = FXCollections.observableArrayList(restaurant.getProducts());
+    public void BASEPRODUCTinitializeTableView() {
+    	ObservableList<BaseProduct> PRODUCTobservableList;
+    	PRODUCTobservableList = FXCollections.observableArrayList(restaurant.getBaseProducts());
     	
-    	PRODUCTMANnameCol.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
-    	PRODUCTMANsizeCol.setCellValueFactory(new PropertyValueFactory<Product,String>("size"));
-    	PRODUCTMANpriceCol.setCellValueFactory(new PropertyValueFactory<Product,String>("price"));
-    	PRODUCTMANamountCol.setCellValueFactory(new PropertyValueFactory<Product,String>("amountOrdered"));
-    	PRODUCTMANingredientCol.setCellValueFactory(new PropertyValueFactory<Product,String>("ingredients"));
-    	PRODUCTMANtypeCol.setCellValueFactory(new PropertyValueFactory<Product,String>("type"));
-    	PRODUCTMENUtable.setItems(PRODUCTobservableList);
+    	BASEPRODUCTMANnameCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("name"));
+    	BASEPRODUCTMANsizeCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("size"));
+    	BASEPRODUCTMANpriceCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("price"));
+    	BASEPRODUCTMANamountCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("amountOrdered"));
+    	BASEPRODUCTMANingredientCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("ingredients"));
+    	BASEPRODUCTMANtypeCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("type"));
+    	BASEPRODUCTMENUtable.setItems(PRODUCTobservableList);
     	
     }
     
     @FXML
-    public void PRODUCTMENUaddBttn(ActionEvent event) {
+    public void BASEPRODUCTMENUaddBttn(ActionEvent event) {
 
     }
 
     @FXML
-    public void PRODUCTMENUbackBttn(ActionEvent event) throws IOException{
+    public void BASEPRODUCTMENUbackBttn(ActionEvent event) throws IOException{
     	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	lP.setController(this);
     	Parent addMain = lP.load();
@@ -535,17 +536,17 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    public void PRODUCTMENUdeleteBttn(ActionEvent event) {
+    public void BASEPRODUCTMENUdeleteBttn(ActionEvent event) {
 
     }
 
     @FXML
-    public void PRODUCTMENUdisableBttn(ActionEvent event) {
+    public void BASEPRODUCTMENUdisableBttn(ActionEvent event) {
 
     }
 
     @FXML
-    public void PRODUCTMENUeditBttn(ActionEvent event) {
+    public void BASEPRODUCTMENUeditBttn(ActionEvent event) {
 
     }
 
