@@ -5,7 +5,7 @@ public class User extends Employee {
 	private String username;
 	private String password;
 	
-	public User(String username, String password, String names, String lastNames, int id, int amountOrder) {
+	public User(String username, String password, String names, String lastNames, String id, int amountOrder) {
 		super(names, lastNames, id, amountOrder);
 		this.username = username;
 		this.password = password;
@@ -28,7 +28,7 @@ public class User extends Employee {
 	}
 	
 	@Override
-	public void updateInfoUser(String username, String password, String names, String lastNames, int ID, int amountOrder) {
+	public void updateInfoUser(String username, String password, String names, String lastNames, String ID, int amountOrder) {
 		super.updateInfo(names, lastNames, ID, amountOrder);
 		setName(username);
 		setPassword(password);

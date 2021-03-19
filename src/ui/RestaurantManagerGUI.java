@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Client;
 import model.Employee;
 import model.Ingredient;
@@ -60,7 +62,7 @@ public class RestaurantManagerGUI implements Initializable{
     private TableColumn<Employee, String> EMPMENUlastNamesCol;
 
     @FXML
-    private TableColumn<Employee, Integer> EMPMENUidCol;
+    private TableColumn<Employee, String> EMPMENUidCol;
 
     @FXML
     private TableColumn<Employee, Integer> EMPMENUdelivOrdCol;
@@ -194,6 +196,21 @@ public class RestaurantManagerGUI implements Initializable{
     @FXML
     private TableColumn<Product, String> PRODUCTMANtypeCol;
     
+    @FXML
+    private TextField EDITUSERusernameTxtField;
+
+    @FXML
+    private TextField EDITUSERpasswordTxtField;
+
+    @FXML
+    private TextField EDITUSERnamesTxtField;
+
+    @FXML
+    private TextField EDITUSERlastNamesTxtFIled;
+
+    @FXML
+    private TextField EDITUSERidTxtField;
+    
     private User localUser;
     
     private Restaurant restaurant;
@@ -210,7 +227,8 @@ public class RestaurantManagerGUI implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	restaurant.addUser("Admin", "123", "Nombre", "Apellido", 0, 0);
+
+    	
     }
     
     public void showLogin() throws IOException{
@@ -219,6 +237,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addLogin = loginLoader.load();
     	Scene E = new Scene(addLogin);
     	mainStage.setScene(E);
+
     }
     
     public void goToLogin(ActionEvent event) throws IOException {
@@ -237,15 +256,15 @@ public class RestaurantManagerGUI implements Initializable{
     		
 	    	//ANOTALO AHI HOMBRE. VERIFICAR QUE NO HAYA USER REPETIDO. VERFICIAR ID QUE SEA NUMERO
 	    	
-	    	String username = SIGNINpassTxtField.getText();
-	    	String password = SIGNINusernameTxtField.getText();
+	    	String username = SIGNINusernameTxtField.getText();
+	    	String password = SIGNINpassTxtField.getText();
 	    	String names = SIGNINfirstNamesTxtField.getText();
 	    	String lastNames = SIGNINlastNamesTxtField.getText();
-	    	int ID = Integer.parseInt(SIGNINidTxtField.getText());
+	    	String ID = SIGNINidTxtField.getText();
 	    	int amountOrder = 0;
 	    	
 	    	restaurant.addUser(username, password, names, lastNames, ID, amountOrder);
-	    	
+	    	restaurant.saveData();
 	    	SIGNINpassTxtField.setText("");
 	    	SIGNINusernameTxtField.setText("");
 	    	SIGNINfirstNamesTxtField.setText("");
@@ -299,19 +318,21 @@ public class RestaurantManagerGUI implements Initializable{
     	Alert alertWarnings = new Alert(AlertType.WARNING);
     	
     	if (!username.equals("") && !password.equals("") && usersAux.size()!=0) {
-    		for (int i = 0; i < usersAux.size(); i++) {
+    		boolean found = false;
+    		for (int i = 0; i < usersAux.size() && !false; i++) {
     			if(username.equalsIgnoreCase(usersAux.get(i).getUsername()) && password.equals(usersAux.get(i).getPassword())) {
     				localUser=usersAux.get(i);
-    				goToMain();
-    				
+    				found = true;
     			}
-    			
-    			else {
-    				alertWarnings.setTitle("Problems with the given infomation!");
-    				alertWarnings.setHeaderText("The username or the password is wrong");
-    				alertWarnings.setContentText("The username or the password you wrote is wrong");
-    				alertWarnings.show();
-    			}
+    		}
+    		if(found) {
+    			goToMain();
+    		}
+    		else{
+    			alertWarnings.setTitle("Problems with the given infomation!");
+				alertWarnings.setHeaderText("The username or the password is wrong");
+				alertWarnings.setContentText("The username or the password you wrote is wrong");
+				alertWarnings.show();
     		}
 		}
 		
@@ -393,6 +414,7 @@ public class RestaurantManagerGUI implements Initializable{
     	MAINmainPane.getChildren().setAll(addMain);
     	
     	USERinitializeTableView();
+    	restaurant.saveData();
     }
     
     public void USERinitializeTableView() {
@@ -404,6 +426,21 @@ public class RestaurantManagerGUI implements Initializable{
     	USERMANlastNamesCol.setCellValueFactory(new PropertyValueFactory<User,String>("lastNames"));
     	USERMANidCol.setCellValueFactory(new PropertyValueFactory<User,String>("id"));
     	USERMENUtable.setItems(USRobservableList);
+    	
+    }
+    
+    @FXML
+    void MAINopenREPORT(ActionEvent event) {
+    	
+    }
+    
+
+    @FXML
+    void MAINopenORDERMANAGER(ActionEvent event) {
+
+    }
+    
+    public void ORDERinitializeTableView() {
     	
     }
 
@@ -680,15 +717,15 @@ public class RestaurantManagerGUI implements Initializable{
     		}
     		else {
     			if(idIsAllNumber && !id.isEmpty()) {
-    				int realId = Integer.parseInt(id);
+    				
     				for(int i=0;i<restaurant.getEmployees().size();i++) {
-    					if(restaurant.getEmployees().get(i).getId() == realId) {
+    					if(restaurant.getEmployees().get(i).getId().equals(id)) {
     						repeatedId = true;
     					}
     				}
     				if(!repeatedId) {
     					
-    					restaurant.addEmployee(names, lastNames, realId, 0);
+    					restaurant.addEmployee(names, lastNames, id, 0);
     					ADDEMPstatusLabel.setText("Added new employee succesfully");
     	    			ADDEMPstatusLabel.setVisible(true);
     	    			ADDEMPidTxtField.setText("");
@@ -732,7 +769,9 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     public void USERMENUdeleteBttn(ActionEvent event) {
-
+    	int index = USERMENUtable.getSelectionModel().getSelectedIndex();
+    	restaurant.deleteUser(index);
+    	USERMENUtable.refresh();
     }
 
     @FXML
@@ -741,24 +780,80 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    public void USERMENUtBttn(ActionEvent event) {
-
+    public void USERMENUeditBttn(ActionEvent event) {
+    	User auxEmployee = USERMENUtable.getSelectionModel().getSelectedItem();
+    	
     }
     
     @FXML
     public void ADDUSERaddBttn(ActionEvent event) {
-
+    	
     }
 
     @FXML
     public void ADDUSERbackBttn(ActionEvent event) {
+    	
+    }
+    
+    @FXML
+    void USERselectedUser(MouseEvent event) throws IOException {
+    	if(event.getClickCount() == 2) {
+    		User auxUser = USERMENUtable.getSelectionModel().getSelectedItem();
+    		if(auxUser.getUsername().equals(localUser.getUsername())) {
+    			Alert alertWarnings = new Alert(AlertType.WARNING);
+    	    	alertWarnings.setTitle("Error");
+    			alertWarnings.setHeaderText("You selected a local user");
+    			alertWarnings.setContentText("You can't edit a user that is using the program right now.");
+    			alertWarnings.show();
+    		}
+    		else {
+    			FXMLLoader loader = new FXMLLoader(getClass().getResource("EditUserWindow.fxml"));
+    			loader.setController(this);
+    			Parent root = loader.load();
+    			Scene e = new Scene(root);
+    			popupStage = new Stage();
+    			popupStage.setScene(e);
+    			EDITUSERusernameTxtField.setText(auxUser.getUsername());
+    			EDITUSERpasswordTxtField.setText(auxUser.getPassword());
+    			EDITUSERnamesTxtField.setText(auxUser.getNames());
+    			EDITUSERlastNamesTxtFIled.setText(auxUser.getLastNames());
+    			String x = auxUser.getId() + "";
+    			EDITUSERidTxtField.setText(x);
+    			popupStage.show();
+    			popupStage.setResizable(false);
+    			mainStage.hide();
+    		}
+    	}
+    }
+    
+    @FXML
+    void EDITUSERcancelBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
+    }
 
+    @FXML
+    void EDITUSERdoneBttn(ActionEvent event) throws IOException {
+    	int index = USERMENUtable.getSelectionModel().getSelectedIndex();
+    	int x = USERMENUtable.getSelectionModel().getSelectedItem().getAmountOrder();
+    	String newUsername = EDITUSERusernameTxtField.getText();
+    	String newPass = EDITUSERpasswordTxtField.getText();
+    	String newNames = EDITUSERnamesTxtField.getText();
+    	String lastNames = EDITUSERlastNamesTxtFIled.getText();
+    	String id = EDITUSERidTxtField.getText();
+    	restaurant.updateUser(index, newUsername, newPass, newNames, lastNames, id, x);
+    	popupStage.close();
+    	mainStage.show();
+    	USERMENUtable.refresh();
+    	restaurant.saveData();
     }
 
     @FXML
     public void CLMENUaddBttn(ActionEvent event) {
 
     }
+    
+    
 
     @FXML
     public void CLMENUbackBttn(ActionEvent event) throws IOException {
@@ -807,6 +902,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Scene e = new Scene(root);
     	mainStage.setScene(e);
     	mainStage.show();
+    	restaurant.saveData();
 	}
   
 }

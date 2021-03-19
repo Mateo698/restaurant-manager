@@ -106,7 +106,7 @@ public class Restaurant {
 		
 	}
 	
-	public void addEmployee(String names, String lastNames, int ID, int amountOrder) {
+	public void addEmployee(String names, String lastNames, String ID, int amountOrder) {
 		employees.add(new Employee(names,lastNames,ID,amountOrder));
 		
 	}
@@ -124,12 +124,12 @@ public class Restaurant {
 		employees.get(index).setStatus(true);
 	}
 	
-	public void updateEmployee(int index,String name,String lastNames, int ID, int amountOrder) {
+	public void updateEmployee(int index,String name,String lastNames, String ID, int amountOrder) {
 		employees.get(index).updateInfo(name,lastNames,ID,amountOrder);
 		
 	}
 	
-	public void addUser(String username, String password, String names, String lastNames, int ID, int amountOrder) {
+	public void addUser(String username, String password, String names, String lastNames, String ID, int amountOrder) {
 		users.add(new User(username, password, names, lastNames, ID, amountOrder));
 		
 	}
@@ -139,7 +139,7 @@ public class Restaurant {
 		
 	}
 	
-	public void updateUser(int index, String username, String password, String names, String lastNames, int ID, int amountOrder) {
+	public void updateUser(int index, String username, String password, String names, String lastNames, String ID, int amountOrder) {
 		users.get(index).updateInfoUser(username,password,names, lastNames, ID, amountOrder);
 		
 	}
