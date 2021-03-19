@@ -601,6 +601,29 @@ public class RestaurantManagerGUI implements Initializable{
 
     }
     
+    @FXML
+    private TableView<?> TYPEMENUtable;
+
+    @FXML
+    private Button TYPEMENUaddBttn;
+
+    @FXML
+    private Button TYPEMENUeditBttn;
+
+    @FXML
+    private Button TYPEMENUdeleteBttn;
+
+    @FXML
+    private Button TYPEMENUdisableBttn;
+
+    @FXML
+    private Button TYPEMENUbackBttn;
+
+    @FXML
+    void TYPEMENUselectedType(MouseEvent event) {
+
+    }
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
