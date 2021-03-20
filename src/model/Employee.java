@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Employee implements Serializable{
 	private static final long serialVersionUID = 1;
@@ -9,13 +10,29 @@ public class Employee implements Serializable{
 	private String id;
 	private int amountOrder;
 	private boolean status;
+	private ArrayList<Order> deliveredOrders;
 	
-	public Employee(String names, String lastNames, String id, int amountOrder) {
+	public Employee(String names, String lastNames, String id) {
 		this.names = names;
 		this.lastNames = lastNames;
 		this.id = id;
-		this.amountOrder = amountOrder;
+		this.amountOrder = 0;
 		status = true;
+		deliveredOrders = new ArrayList<Order>();
+	}
+	
+	public void addOrder(Order newOrder) {
+		deliveredOrders.add(newOrder);
+		amountOrder = deliveredOrders.size();
+	}
+	
+	public ArrayList<Order> getDeliveredOrder() {
+		return deliveredOrders;
+	}
+	
+	public void setDeliveredOrder(ArrayList<Order> x) {
+		deliveredOrders = x;
+		amountOrder = x.size();
 	}
 
 	public void updateInfo(String n, String ln, String id, int ao) {

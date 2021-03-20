@@ -31,14 +31,11 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="BASEPRODUCTMENUtable" prefHeight="654.0" prefWidth="1064.0">
+            <TableView fx:id="BASEPRODUCTMENUtable" onMouseClicked="#BASEPRODUCTselectedItem" prefHeight="654.0" prefWidth="1064.0">
               <columns>
-                <TableColumn fx:id="BASEPRODUCTMANnameCol" prefWidth="286.0" text="Name" />
-                <TableColumn fx:id="BASEPRODUCTMANsizeCol" prefWidth="119.0" text="Size" />
-                  <TableColumn fx:id="BASEPRODUCTMANpriceCol" prefWidth="112.0" text="Price" />
-                  <TableColumn fx:id="BASEPRODUCTMANamountCol" prefWidth="106.0" text="Amount ordered" />
-                  <TableColumn fx:id="BASEPRODUCTMANingredientCol" minWidth="0.0" prefWidth="215.0" text="Ingredients" />
-                  <TableColumn fx:id="BASEPRODUCTMANtypeCol" prefWidth="221.0" text="Type" />
+                <TableColumn fx:id="BASEPRODUCTMANnameCol" prefWidth="290.0" text="Name" />
+                  <TableColumn fx:id="BASEPRODUCTMANtypeCol" prefWidth="258.0" text="Type" />
+                  <TableColumn fx:id="BASEPRODUCTMANingredientCol" minWidth="0.0" prefWidth="511.0" text="Ingredients" />
               </columns>
             </TableView>
             <VBox alignment="CENTER" prefHeight="654.0" prefWidth="126.0" style="-fx-background-color: #000000;">

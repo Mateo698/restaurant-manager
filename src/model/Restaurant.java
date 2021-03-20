@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,8 +48,8 @@ public class Restaurant {
 		return baseProducts;
 	}
 	
-	public void addBaseProduct(String name, int price, ArrayList<Ingredient> ingList,Type type) {
-		baseProducts.add(new BaseProduct(name, price, ingList, type));
+	public void addBaseProduct(String name, ArrayList<Ingredient> ingList,Type type) {
+		baseProducts.add(new BaseProduct(name, ingList, type));
 	}
 
 
@@ -114,8 +115,8 @@ public class Restaurant {
 		
 	}
 	
-	public void addEmployee(String names, String lastNames, String ID, int amountOrder) {
-		employees.add(new Employee(names,lastNames,ID,amountOrder));
+	public void addEmployee(String names, String lastNames, String ID) {
+		employees.add(new Employee(names,lastNames,ID));
 		
 	}
 	
@@ -137,8 +138,8 @@ public class Restaurant {
 		
 	}
 	
-	public void addUser(String username, String password, String names, String lastNames, String ID, int amountOrder) {
-		users.add(new User(username, password, names, lastNames, ID, amountOrder));
+	public void addUser(String username, String password, String names, String lastNames, String ID) {
+		users.add(new User(username, password, names, lastNames, ID));
 		
 	}
 	
@@ -326,4 +327,121 @@ public class Restaurant {
 		ingredients.get(index).setName(text);
 		
 	}
+
+	public ArrayList<Employee> generateReport(String[] parts1, String[] parts2) {
+		String[] fromTime = parts1[0].split(":");
+		String[] fromDate = parts1[1].split("/");
+		String[] toTime = parts2[0].split(":");
+		String[] toDate = parts2[1].split("/");
+		ArrayList<Employee> ordersBetween = new ArrayList<Employee>();
+		Date fromRealDate = new Date(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
+		Date toRealDate = new Date(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
+		for(int i=0;i<employees.size();i++) {
+			Employee auxEmp = employees.get(i);
+			ArrayList<Order> auxOrder = auxEmp.getDeliveredOrder();
+			ArrayList<Order> newOrder = new ArrayList<Order>();
+			for(int j=0;j<auxOrder.size();j++) {
+				if(auxOrder.get(j).getOriginTime().compareTo(toRealDate)<0 && auxOrder.get(j).getOriginTime().compareTo(fromRealDate)>0) {
+					newOrder.add(auxOrder.get(j));
+				}
+			}
+			auxEmp.setDeliveredOrder(newOrder);
+			ordersBetween.add(auxEmp);
+		}
+		return ordersBetween;
+	}
+	
+	public void exportData(File f,ArrayList<Employee> reportEmp) throws FileNotFoundException{
+	    PrintWriter pw = new PrintWriter(f);
+	    pw.write("Names,LastNames,ID,AmountOrdered");
+	    for(int i=0;i<reportEmp.size();i++){
+	      Employee myEmp = reportEmp.get(i);
+	      pw.println(myEmp.getNames()+","+myEmp.getLastNames()+","+myEmp.getId()+","+myEmp.getAmountOrder());
+	    }
+
+	    pw.close();
+	  }
+
+	public ArrayList<Order> generateOrderReport(String[] parts1, String[] parts2) {
+		String[] fromTime = parts1[0].split(":");
+		String[] fromDate = parts1[1].split("/");
+		String[] toTime = parts2[0].split(":");
+		String[] toDate = parts2[1].split("/");
+		Date fromRealDate = new Date(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
+		Date toRealDate = new Date(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
+		ArrayList<Order> auxOrder = new ArrayList<Order>();
+		for(int i=0;i<orders.size();i++) {
+			if(orders.get(i).getOriginTime().compareTo(toRealDate)<0 && orders.get(i).getOriginTime().compareTo(fromRealDate)>0) {
+				auxOrder.add(orders.get(i));
+			}
+		}
+		return auxOrder;
+	}
+
+	public void exportOrderData(File f, ArrayList<Order> reportOrd) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(f);
+	    pw.write("Nombre del cliente,Direccion,Telefono,Empleado que lo entrega,Estado,Fecha,Observaciones,Productos");
+	    for(int i=0;i<reportOrd.size();i++){
+	      Order myOrd = reportOrd.get(i);
+	      String products = "";
+	      for(int j=0;j<myOrd.getProducts().size();j++) {
+	    	  products = myOrd.getProducts().get(j).getName() + "," + myOrd.getProductQuantity().get(j) + "," +myOrd.getProducts().get(j).getProductPrice();
+	      }
+	      pw.println(myOrd.getStringClient()+","+myOrd.getOriginClient().getAddress()+","+myOrd.getOriginClient().getPhoneNumber()+","+myOrd.getStringEmployee()+","+myOrd.getStatus()+","+myOrd.getOriginTime().intoString()+","+myOrd.getFootNote()+products);
+	    }
+
+	    pw.close();
+	}
+
+	public ArrayList<Product> generateProductsReport(String[] parts1, String[] parts2) {
+		String[] fromTime = parts1[0].split(":");
+		String[] fromDate = parts1[1].split("/");
+		String[] toTime = parts2[0].split(":");
+		String[] toDate = parts2[1].split("/");
+		Date fromRealDate = new Date(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
+		Date toRealDate = new Date(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
+		ArrayList<Product> auxPro = new ArrayList<Product>();
+		for(int i=0;i<products.size();i++) {
+			Product aux = products.get(i);
+			ArrayList<Date> datesAux = new ArrayList<Date>();
+			for(int j=0;j<aux.getDates().size();j++) {
+				if(aux.getDates().get(j).compareTo(toRealDate)<0 && aux.getDates().get(j).compareTo(fromRealDate)>0) {
+					datesAux.add(aux.getDates().get(j));
+				}
+			}
+			aux.setProductsDate(datesAux);
+			auxPro.add(aux);
+		}
+		
+		return auxPro;
+	}
+
+	public void exportProductsData(File f, ArrayList<Product> reportPro) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(f);
+	    pw.write("Nombre del producto,Cantidad,Total");
+	    for(int i=0;i<reportPro.size();i++){
+	      Product myPro = reportPro.get(i);
+	      double total = myPro.getAmountOrdered() * myPro.getProductPrice();
+	      pw.println(myPro.getName()+","+myPro.getAmountOrdered()+","+total);
+	    }
+
+	    pw.close();
+		
+	}
+
+	public void deleteBaseProduct(int selectedIndex) {
+		baseProducts.remove(selectedIndex);
+		
+	}
+
+	  /**public void importData(String fileName) throws IOException{
+	    BufferedReader br = new BufferedReader(new FileReader(fileName));
+	    String line = br.readLine();
+	    while(line!=null){
+	      String[] parts = line.split(";");
+	      addContact(parts[0],parts[1]);
+	      line = br.readLine();
+	    }
+	    br.close();
+	  }**/
 }

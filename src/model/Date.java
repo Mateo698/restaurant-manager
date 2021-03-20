@@ -10,13 +10,18 @@ public class Date implements Serializable{
 	private int hour;
 	private int minutes;
 
-	public Date(int day, int month, int year, int hour, int minutes) {
+	public Date(int hour, int minutes,int day, int month, int year) {
 		this.day = day;
 		this.month = month;
 		this.year = year;
 		this.hour = hour;
 		this.minutes = minutes;
 	
+	}
+	
+	public String intoString() {
+		String x = hour+"/"+minutes+" "+day+"/"+month+"/"+year;
+		return x;
 	}
 
 	public int getDay() {
@@ -57,5 +62,50 @@ public class Date implements Serializable{
 
 	public void setMinutes(int minutes) {
 		this.minutes = minutes;
+	}
+	
+	public int compareTo(Date otherDate) {
+		if(otherDate.getYear()>year) {
+			return -1;
+		}
+		else if(otherDate.getYear()<year){
+			return 1;
+		}
+		else {
+			if(otherDate.getMonth()>month) {
+				return -1;
+			}
+			else if(otherDate.getMonth()<month) {
+				return 1;
+			}
+			else {
+				if(otherDate.getDay()>day) {
+					return -1;
+				}
+				else if(otherDate.getDay()<day) {
+					return 1;
+				}
+				else {
+					if(otherDate.getHour()>hour) {
+						return -1;
+					}
+					else if(otherDate.getHour()<hour) {
+						return 1;
+					}
+					else {
+						if(otherDate.getMinutes()>minutes) {
+							return -1;
+						}
+						else if(otherDate.getMinutes()>minutes) {
+							return 1;
+						}
+						else {
+							return 0;
+						}
+					}
+				}
+			}
+		}
+		
 	}
 }

@@ -1,14 +1,16 @@
 package ui;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,8 +29,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
 import model.BaseProduct;
 import model.Client;
 import model.Employee;
@@ -193,15 +195,6 @@ public class RestaurantManagerGUI implements Initializable{
     private TableColumn<BaseProduct, String> BASEPRODUCTMANnameCol;
 
     @FXML
-    private TableColumn<BaseProduct, String> BASEPRODUCTMANsizeCol;
-
-    @FXML
-    private TableColumn<BaseProduct, String> BASEPRODUCTMANpriceCol;
-
-    @FXML
-    private TableColumn<BaseProduct, String> BASEPRODUCTMANamountCol;
-
-    @FXML
     private TableColumn<BaseProduct, String> BASEPRODUCTMANingredientCol;
 
     @FXML
@@ -277,7 +270,40 @@ public class RestaurantManagerGUI implements Initializable{
     @FXML
     private TextField EDITINGnameTxtField;
     
+    @FXML
+    private TextField EMPREPORTfromTxtFIeld;
+
+    @FXML
+    private TextField EMPREPORTtoTxtField;
     
+    @FXML
+    private TextField ORDERREPORTfromTxtFIeld;
+
+    @FXML
+    private TextField ORDERREPORTtoTxtField;
+    
+    @FXML
+    private TextField PROREPORTfromTxtFIeld;
+
+    @FXML
+    private TextField PROREPORTtoTxtField;
+    
+    @FXML
+    private TextField ADDBASEPROnameTxtField;
+
+    @FXML
+    private ComboBox<Type> ADDBASEPROtypeCB;
+
+    @FXML
+    private ComboBox<Ingredient> ADDBASEPROingredientCB;
+
+    @FXML
+    private TableView<Ingredient> ADDBASEPROingTable;
+    
+    @FXML
+    private TableColumn<Ingredient, String> ADDBASEPROingCol;
+    
+    private ArrayList<Ingredient> ADDBASEPROlist;
     
     private User localUser;
     
@@ -295,9 +321,7 @@ public class RestaurantManagerGUI implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	BaseProduct b = new BaseProduct("Papa", 3200, null, new Type("Secundario"));
-    	Size s = new Size("Mediano");
-    	restaurant.addProduct(b, s, 3200);
+    	
     	
     }
     
@@ -331,9 +355,9 @@ public class RestaurantManagerGUI implements Initializable{
 	    	String names = SIGNINfirstNamesTxtField.getText();
 	    	String lastNames = SIGNINlastNamesTxtField.getText();
 	    	String ID = SIGNINidTxtField.getText();
-	    	int amountOrder = 0;
+
 	    	
-	    	restaurant.addUser(username, password, names, lastNames, ID, amountOrder);
+	    	restaurant.addUser(username, password, names, lastNames, ID);
 	    	restaurant.saveData();
 	    	SIGNINpassTxtField.setText("");
 	    	SIGNINusernameTxtField.setText("");
@@ -427,7 +451,6 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addMainPane = mP.load();
     	MAINmainPane.getChildren().setAll(addMainPane);
     	
-    	
         
     }
     
@@ -471,10 +494,9 @@ public class RestaurantManagerGUI implements Initializable{
     	EMPobservableList = FXCollections.observableArrayList(restaurant.getEmployees());
     	
     	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("names"));
-    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("lastNames"));
-    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("id"));
-    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("amountOrder"));
-    	EMPMENUnamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("status"));
+    	EMPMENUlastNamesCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("lastNames"));
+    	EMPMENUidCol.setCellValueFactory(new PropertyValueFactory<Employee,String>("id"));
+    	EMPMENUdelivOrdCol.setCellValueFactory(new PropertyValueFactory<Employee,Integer>("amountOrder"));
     	EMPMENUtable.setItems(EMPobservableList);
     	
     }
@@ -503,18 +525,152 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void MAINopenREPORTEMP(ActionEvent event) {
+    void MAINopenREPORTEMP(ActionEvent event) throws IOException {
+    	FXMLLoader usrLoader = new FXMLLoader(getClass().getResource("EmployeeReport.fxml"));
+    	usrLoader.setController(this);
+    	Parent addMain = usrLoader.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+    	LocalDateTime now = LocalDateTime.now();  
+    	String date = dtf.format(now);
+    	EMPREPORTfromTxtFIeld.setText("00:00-"+date);
+    	EMPREPORTtoTxtField.setText("23:59-"+date);
+    }
+    
+    @FXML
+    void EMPREPORTbackBttn(ActionEvent event) throws IOException {
+    	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	lP.setController(this);
+    	Parent addMain = lP.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    }
+
+    @FXML
+    void EMPREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
+    	String from = EMPREPORTfromTxtFIeld.getText();
+    	String to = EMPREPORTtoTxtField.getText();
+    	if(from.equals("") || to.equals("")) {
+    		String[] parts1 = from.split("-");
+    		String[] parts2 = to.split("-");
+    		ArrayList<Employee> reportEmp = restaurant.generateReport(parts1,parts2);
+    		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+    		FileChooser fc = new FileChooser();
+    		fc.getExtensionFilters().add(extFilter);
+        	File f = fc.showSaveDialog(mainStage);
+        	restaurant.exportData(f, reportEmp);
+        	EMPREPORTfromTxtFIeld.setText("");
+			EMPREPORTtoTxtField.setText("");
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Wrong input");
+			alertWarnings.setContentText("Please type a correct time and date.");
+			alertWarnings.show();
+			EMPREPORTfromTxtFIeld.setText("");
+			EMPREPORTtoTxtField.setText("");
+    	}
     	
     }
     
     @FXML
-    void MAINopenREPORTORDER(ActionEvent event) {
-    	
+    void MAINopenREPORTORDER(ActionEvent event) throws IOException {
+    	FXMLLoader  x = new FXMLLoader(getClass().getResource("OrderReport.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	mainStage.setScene(e);
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+    	LocalDateTime now = LocalDateTime.now();  
+    	String date = dtf.format(now);
+    	ORDERREPORTfromTxtFIeld.setText("00:00-"+date);
+    	ORDERREPORTtoTxtField.setText("29:59-"+date);
     }
     
     @FXML
-    void MAINopenREPORTPRO(ActionEvent event) {
-    	
+    void ORDERREPORTbackBttn(ActionEvent event) throws IOException {
+    	FXMLLoader  x = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	mainStage.setScene(e);
+    }
+
+    @FXML
+    void ORDERREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
+    	String from = ORDERREPORTfromTxtFIeld.getText();
+    	String to = ORDERREPORTtoTxtField.getText();
+    	if(from.equals("") || to.equals("")) {
+    		String[] parts1 = from.split("-");
+    		String[] parts2 = to.split("-");
+    		ArrayList<Order> reportOrd = restaurant.generateOrderReport(parts1,parts2);
+    		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+    		FileChooser fc = new FileChooser();
+    		fc.getExtensionFilters().add(extFilter);
+        	File f = fc.showSaveDialog(mainStage);
+        	restaurant.exportOrderData(f, reportOrd);
+        	ORDERREPORTfromTxtFIeld.setText("");
+        	ORDERREPORTtoTxtField.setText("");
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Wrong input");
+			alertWarnings.setContentText("Please type a correct time and date.");
+			alertWarnings.show();
+			ORDERREPORTfromTxtFIeld.setText("");
+        	ORDERREPORTtoTxtField.setText("");
+    	}
+    }
+    
+    @FXML
+    void MAINopenREPORTPRO(ActionEvent event) throws IOException {
+    	FXMLLoader  x = new FXMLLoader(getClass().getResource("ProductsReport.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	mainStage.setScene(e);
+    	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
+    	LocalDateTime now = LocalDateTime.now();  
+    	String date = dtf.format(now);
+    	ORDERREPORTfromTxtFIeld.setText("00:00-"+date);
+    	ORDERREPORTtoTxtField.setText("29:59-"+date);
+    }
+    
+    @FXML
+    void PROREPORTbackBttn(ActionEvent event) throws IOException {
+    	FXMLLoader  x = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	mainStage.setScene(e);
+    }
+
+    @FXML
+    void PROREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
+    	String from = PROREPORTfromTxtFIeld.getText();
+    	String to = PROREPORTtoTxtField.getText();
+    	if(from.equals("") || to.equals("")) {
+    		String[] parts1 = from.split("-");
+    		String[] parts2 = to.split("-");
+    		ArrayList<Product> reportPro = restaurant.generateProductsReport(parts1,parts2);
+    		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+    		FileChooser fc = new FileChooser();
+    		fc.getExtensionFilters().add(extFilter);
+        	File f = fc.showSaveDialog(mainStage);
+        	restaurant.exportProductsData(f, reportPro);
+        	PROREPORTfromTxtFIeld.setText("");
+        	PROREPORTtoTxtField.setText("");
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Wrong input");
+			alertWarnings.setContentText("Please type a correct time and date.");
+			alertWarnings.show();
+			PROREPORTfromTxtFIeld.setText("");
+        	PROREPORTtoTxtField.setText("");
+    	}
     }
     
 
@@ -688,9 +844,8 @@ public class RestaurantManagerGUI implements Initializable{
     	BASEPRODUCTobservableList = FXCollections.observableArrayList(restaurant.getBaseProducts());
     	
     	BASEPRODUCTMANnameCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("name"));
-    	BASEPRODUCTMANamountCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("amountOrdered"));
-    	BASEPRODUCTMANingredientCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("ingredients"));
-    	BASEPRODUCTMANtypeCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("type"));
+    	BASEPRODUCTMANingredientCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("ingredientsString"));
+    	BASEPRODUCTMANtypeCol.setCellValueFactory(new PropertyValueFactory<BaseProduct,String>("typeString"));
 
 
     	BASEPRODUCTMENUtable.setItems(BASEPRODUCTobservableList);
@@ -699,8 +854,80 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    public void BASEPRODUCTMENUaddBttn(ActionEvent event) {
+    public void BASEPRODUCTMENUaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader x = new FXMLLoader(getClass().getResource("AddBaseProduct.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	ADDBASEPROinitializeTableView();
+    	popupStage.show();
+    	mainStage.hide();
+    	ADDBASEPROlist.clear();
+    	ADDBASEPROnameTxtField.setText("");
+    }
+    
+    public void ADDBASEPROinitializeTableView() {
+    	ObservableList<Ingredient> observableList;
+    	observableList = FXCollections.observableArrayList(restaurant.getIngredients());
+    	
+    	ADDBASEPROingCol.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
+    	ADDBASEPROingTable.setItems(observableList);
+    	ObservableList<Type> typeList = FXCollections.observableList(restaurant.getTypes());
+    	ADDBASEPROtypeCB.setItems(typeList);
+    	ObservableList<Ingredient> ingList = FXCollections.observableList(restaurant.getIngredients());
+    	ADDBASEPROingredientCB.setItems(ingList);
+    }
+    
+    @FXML
+    void ADDBASEPROaddIngBttn(ActionEvent event) {
+    	Ingredient selected = ADDBASEPROingredientCB.getSelectionModel().getSelectedItem();
+    	ADDBASEPROlist.add(selected);
+    	ADDBASEPROingredientCB.getSelectionModel().clearSelection();
+    	ADDBASEPROingredientCB.setValue(null);
+    	ObservableList<Ingredient> ingList = FXCollections.observableList(restaurant.getIngredients());
+    	ADDBASEPROingredientCB.setItems(ingList);
+    	ADDBASEPROinitializeTableView();
+    	
+    }
 
+    @FXML
+    void ADDBASEPRObackBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
+    }
+
+    @FXML
+    void ADDBASEPROdoneBttn(ActionEvent event) {
+    	if(ADDBASEPROnameTxtField.getText().equals("")) {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Missing fields");
+			alertWarnings.setContentText("Please fill all the fields.");
+			alertWarnings.show();
+    	}
+    	else {
+    		if(ADDBASEPROtypeCB.getSelectionModel().getSelectedItem() == null) {
+    			Alert alertWarnings = new Alert(AlertType.WARNING);
+    	    	alertWarnings.setTitle("Error");
+    			alertWarnings.setHeaderText("Missing fields");
+    			alertWarnings.setContentText("Please fill all the fields.");
+    			alertWarnings.show();
+    		}
+    		else {
+    			if(ADDBASEPROlist.size()==0) {
+    				Alert alertWarnings = new Alert(AlertType.WARNING);
+        	    	alertWarnings.setTitle("Error");
+        			alertWarnings.setHeaderText("Missing fields");
+        			alertWarnings.setContentText("Please fill all the fields.");
+        			alertWarnings.show();
+    			}
+    			else {
+    				restaurant.addBaseProduct(ADDBASEPROnameTxtField.getText(), ADDBASEPROlist, ADDBASEPROtypeCB.getSelectionModel().getSelectedItem());
+    				BASEPRODUCTinitializeTableView();
+    			}
+    		}
+    	}
     }
 
     @FXML
@@ -714,12 +941,15 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     public void BASEPRODUCTMENUdeleteBttn(ActionEvent event) {
-
+    	if(BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem()!=null) {
+    		restaurant.deleteBaseProduct(BASEPRODUCTMENUtable.getSelectionModel().getSelectedIndex());
+    		BASEPRODUCTinitializeTableView();
+    	}
     }
 
     @FXML
     public void BASEPRODUCTMENUdisableBttn(ActionEvent event) {
-
+    	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     @FXML
@@ -908,7 +1138,7 @@ public class RestaurantManagerGUI implements Initializable{
     				}
     				if(!repeatedId) {
     					
-    					restaurant.addEmployee(names, lastNames, id, 0);
+    					restaurant.addEmployee(names, lastNames, id);
     					ADDEMPstatusLabel.setText("Added new employee succesfully");
     	    			ADDEMPstatusLabel.setVisible(true);
     	    			ADDEMPidTxtField.setText("");
