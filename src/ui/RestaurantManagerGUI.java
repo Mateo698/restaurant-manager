@@ -303,6 +303,21 @@ public class RestaurantManagerGUI implements Initializable{
     @FXML
     private TableColumn<Ingredient, String> ADDBASEPROingCol;
     
+    @FXML
+    private TextField EDITBASEPROnameTxtField;
+
+    @FXML
+    private ComboBox<Type> EDITBASEPROtypeCB;
+
+    @FXML
+    private ComboBox<Ingredient> EDITBASEPROingredientCB;
+
+    @FXML
+    private TableView<Ingredient> EDITBASEPROingTable;
+
+    @FXML
+    private TableColumn<Ingredient, String> EDITBASEPROingCol;
+    
     private ArrayList<Ingredient> ADDBASEPROlist;
     
     private User localUser;
@@ -869,7 +884,7 @@ public class RestaurantManagerGUI implements Initializable{
     
     public void ADDBASEPROinitializeTableView() {
     	ObservableList<Ingredient> observableList;
-    	observableList = FXCollections.observableArrayList(restaurant.getIngredients());
+    	observableList = FXCollections.observableArrayList(ADDBASEPROlist);
     	
     	ADDBASEPROingCol.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
     	ADDBASEPROingTable.setItems(observableList);
@@ -925,6 +940,8 @@ public class RestaurantManagerGUI implements Initializable{
     			else {
     				restaurant.addBaseProduct(ADDBASEPROnameTxtField.getText(), ADDBASEPROlist, ADDBASEPROtypeCB.getSelectionModel().getSelectedItem());
     				BASEPRODUCTinitializeTableView();
+    				popupStage.close();
+    		    	mainStage.show();
     			}
     		}
     	}
@@ -953,9 +970,64 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    public void BASEPRODUCTMENUeditBttn(ActionEvent event) {
-
+    void BASEPRODUCTselectedItem(MouseEvent event) throws IOException {
+    	if(event.getClickCount() == 2 && BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem()!=null) {
+    		FXMLLoader x = new FXMLLoader(getClass().getResource("EditBaseProduct.fxml"));
+    		x.setController(this);
+    		Parent root = x.load();
+    		Scene e = new Scene(root);
+    		popupStage.setScene(e);
+    		mainStage.hide();
+    		EDITBASEPROinitializeTableView();
+    		EDITBASEPROnameTxtField.setText(BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getName());
+        	EDITBASEPROtypeCB.setValue(BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getType());
+    		ADDBASEPROlist = (ArrayList<Ingredient>) BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getIngredients();
+    		
+    	}
     }
+    
+    public void EDITBASEPROinitializeTableView() {
+    	
+    	ObservableList<Ingredient> observableList;
+    	observableList = FXCollections.observableArrayList(ADDBASEPROlist);
+    	
+    	EDITBASEPROingCol.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
+    	EDITBASEPROingTable.setItems(observableList);
+    	ObservableList<Type> typeList = FXCollections.observableList(restaurant.getTypes());
+    	EDITBASEPROtypeCB.setItems(typeList);
+    	ObservableList<Ingredient> ingList = FXCollections.observableList(restaurant.getIngredients());
+    	EDITBASEPROingredientCB.setItems(ingList);
+    }
+    
+    @FXML
+    void EDITBASEPROaddIngBttn(ActionEvent event) {
+    	Ingredient selected = ADDBASEPROingredientCB.getSelectionModel().getSelectedItem();
+    	ADDBASEPROlist.add(selected);
+    	EDITBASEPROingredientCB.getSelectionModel().clearSelection();
+    	EDITBASEPROingredientCB.setValue(null);
+    	ObservableList<Ingredient> ingList = FXCollections.observableList(restaurant.getIngredients());
+    	ADDBASEPROingredientCB.setItems(ingList);
+    	ADDBASEPROinitializeTableView();
+    }
+
+    @FXML
+    void EDITBASEPRObackBttn(ActionEvent event) {
+    	ADDBASEPROlist.clear();
+    	popupStage.hide();
+    	mainStage.show();
+    }
+
+    @FXML
+    void EDITBASEPROdoneBttn(ActionEvent event) {
+    	int index = BASEPRODUCTMENUtable.getSelectionModel().getSelectedIndex();
+    	restaurant.getBaseProducts().get(index).setIngredients(ADDBASEPROlist);
+    	restaurant.getBaseProducts().get(index).setName(EDITBASEPROnameTxtField.getText());
+    	restaurant.getBaseProducts().get(index).setType(EDITBASEPROtypeCB.getSelectionModel().getSelectedItem());
+    	popupStage.hide();
+    	mainStage.show();
+    	BASEPRODUCTinitializeTableView();
+    }
+    
 
     @FXML
     public void MAINopenTYPES(ActionEvent event) throws IOException {
@@ -978,7 +1050,7 @@ public class RestaurantManagerGUI implements Initializable{
     
     @FXML
     public void TYPEMENUaddBttn(ActionEvent event) {
-
+    	
     }
 
     @FXML
