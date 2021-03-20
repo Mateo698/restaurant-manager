@@ -30,36 +30,36 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView prefHeight="608.0" prefWidth="1057.0">
+            <TableView fx:id="ORDERMANtable" prefHeight="608.0" prefWidth="1057.0">
                <columns>
-                  <TableColumn prefWidth="1051.0" text="Orders" />
+                  <TableColumn fx:id="ORDERMANcodeCol" prefWidth="134.0" text="Code" />
+                  <TableColumn fx:id="ORDERMANstatusCol" prefWidth="145.0" text="Status" />
+                  <TableColumn fx:id="ORDERMANfootnoteCol" prefWidth="271.0" text="Footnote" />
+                  <TableColumn fx:id="ORDERMANdateCol" prefWidth="156.0" text="Date" />
+                  <TableColumn fx:id="ORDERMANclientNote" prefWidth="163.0" text="Client" />
+                  <TableColumn fx:id="ORDERMANempCol" prefWidth="201.0" text="Employee" />
                </columns>
             </TableView>
-            <VBox prefHeight="608.0" prefWidth="168.0">
+            <VBox alignment="CENTER" prefHeight="608.0" prefWidth="168.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Add" />
+                        <Button mnemonicParsing="false" onAction="#ORDERMANaddBttn" style="-fx-background-color: #b59703;" text="Add" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#ORDERMANdeleteBttn" style="-fx-background-color: #b59703;" text="Delete" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#ORDERMANdisableBttn" style="-fx-background-color: #b59703;" text="Disable" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Button" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Button mnemonicParsing="false" style="-fx-background-color: #b59703;" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#ORDERMANbackBttn" style="-fx-background-color: #b59703;" text="Back" />
                      </children>
                   </HBox>
                </children>

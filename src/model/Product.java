@@ -10,6 +10,15 @@ public class Product {
 		this.setBaseProduct(baseProduct);
 		this.setProductSize(productSize);
 		this.setProductPrice(productPrice);
+		setName(baseProduct.getName() +"  "+ productSize.getName());
+	}
+	
+	public String getBaseProductName() {
+		return baseProduct.getName()
+;	}
+	
+	public String getSizeName() {
+		return productSize.getName();
 	}
 
 	public double getProductPrice() {
@@ -34,6 +43,14 @@ public class Product {
 
 	public void setBaseProduct(BaseProduct baseProduct) {
 		this.baseProduct = baseProduct;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	

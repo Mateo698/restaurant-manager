@@ -17,10 +17,9 @@
          <children>
             <ImageView fitHeight="78.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../icons/type.png" />
-               </image>
-            </ImageView>
-            <Label text="       Type manager">
+                  <Image url="@../../icons/productFinal.png" />
+               </image></ImageView>
+            <Label text="     Product manager">
                <font>
                   <Font name="Sylfaen" size="46.0" />
                </font>
@@ -31,31 +30,34 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="TYPEMENUtable" onMouseClicked="#TYPEMENUselectedType" prefHeight="608.0" prefWidth="1057.0">
+            <TableView fx:id="PROMANtable" onMouseClicked="#PROMANselectedProduct" prefHeight="608.0" prefWidth="1057.0">
                <columns>
-                  <TableColumn fx:id="TYPEMANnameCol" prefWidth="1051.0" text="Type name" />
+                  <TableColumn fx:id="PROMANnameCol" prefWidth="285.0" text="Name" />
+                  <TableColumn fx:id="PROMANpriceCol" prefWidth="249.0" text="Price" />
+                  <TableColumn fx:id="PROMANsizeCol" prefWidth="230.0" text="Size" />
+                  <TableColumn fx:id="PROMANbaseProcol" prefWidth="287.0" text="Base product" />
                </columns>
             </TableView>
             <VBox alignment="CENTER" prefHeight="608.0" prefWidth="168.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#TYPEMENUaddBttn" style="-fx-background-color: #b59703;" text="Add" />
+                        <Button mnemonicParsing="false" onAction="#PROMANaddBttn" style="-fx-background-color: #b59703;" text="Add" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#TYPEMENUdeleteBttn" style="-fx-background-color: #b59703;" text="Delete" />
+                        <Button mnemonicParsing="false" onAction="#PROMANdeleteBttn" style="-fx-background-color: #b59703;" text="Delete" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#TYPEMENUdisableBttn" style="-fx-background-color: #b59703;" text="Disable" />
+                        <Button mnemonicParsing="false" onAction="#PROMANdisableBttn" style="-fx-background-color: #b59703;" text="Disable" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#TYPEMENUbackBttn" style="-fx-background-color: #b59703;" text="Back" />
+                        <Button mnemonicParsing="false" onAction="#PROMANbackBttn" style="-fx-background-color: #b59703;" text="Back" />
                      </children>
                   </HBox>
                </children>

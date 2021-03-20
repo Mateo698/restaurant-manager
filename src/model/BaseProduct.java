@@ -13,13 +13,13 @@ public class BaseProduct implements Serializable{
 	private List<Ingredient> ingredients;
 	private Type type;
 	
-	public BaseProduct(String name, int price, int amountOrdered, Type type) {
+	public BaseProduct(String name, int price, ArrayList<Ingredient> ingList, Type type) {
 		this.name = name;
 		this.price = price;
-		this.amountOrdered = amountOrdered;
+		this.amountOrdered =0;
 		this.type=type;
 		
-		ingredients = new ArrayList<Ingredient>();
+		this.ingredients = ingList;
 	}
 
 	public String getName() {

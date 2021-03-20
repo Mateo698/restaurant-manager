@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Restaurant {
 	private ArrayList<Employee> employees;
@@ -16,11 +17,9 @@ public class Restaurant {
 	private ArrayList<Order> orders;
 	private ArrayList<Ingredient> ingredients;
 	private ArrayList<BaseProduct> baseProducts;
-<<<<<<< Updated upstream
-=======
 	private ArrayList<Product> products;
->>>>>>> Stashed changes
 	private ArrayList<Type> types;
+	private ArrayList<Size> sizes;
 	private String EMP_NAME_FILE = "data/employeees.lol";
 	private String USERS_NAME_FILE = "data/user.lol";
 	private String CLIENTS_NAME_FILE = "data/clients.lol";
@@ -38,6 +37,7 @@ public class Restaurant {
 		setBaseProducts(new ArrayList<BaseProduct>());
 		setTypes(new ArrayList<Type>());
 		setProducts(new ArrayList<Product>());
+		setSizes(new ArrayList<Size>());
 	}
 	
 //Updated upstream
@@ -46,7 +46,10 @@ public class Restaurant {
 	public ArrayList<BaseProduct> getBaseProducts() {
 		return baseProducts;
 	}
-
+	
+	public void addBaseProduct(String name, int price, ArrayList<Ingredient> ingList,Type type) {
+		baseProducts.add(new BaseProduct(name, price, ingList, type));
+	}
 
 
 	public void setBaseProducts(ArrayList<BaseProduct> products) {
@@ -217,11 +220,8 @@ public class Restaurant {
 	    oos.writeObject(ingredients);
 	    oos.close();
 
-<<<<<<< Updated upstream
-	    oos = new ObjectOutputStream(new FileOutputStream(PRO_NAME_FILE));
-=======
+
 	    oos = new ObjectOutputStream(new FileOutputStream(BPRO_NAME_FILE));
->>>>>>> Stashed changes
 	    oos.writeObject(baseProducts);
 	    oos.close();
 
@@ -290,5 +290,24 @@ public class Restaurant {
 
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
+	}
+
+	public List<Size> getSizes() {
+		List Lsizes = (List)sizes;
+		return Lsizes;
+	}
+
+	public void setSizes(ArrayList<Size> sizes) {
+		this.sizes = sizes;
+	}
+
+	public void addProduct(BaseProduct pr,Size sz,double price) {
+		products.add(new Product(pr,sz,price));
+		
+	}
+
+	public void deleteProduct(int index) {
+		products.remove(index);
+		
 	}
 }

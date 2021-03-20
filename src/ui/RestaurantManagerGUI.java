@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
@@ -30,7 +33,10 @@ import model.BaseProduct;
 import model.Client;
 import model.Employee;
 import model.Ingredient;
+import model.Order;
+import model.Product;
 import model.Restaurant;
+import model.Size;
 import model.Type;
 import model.User;
 
@@ -216,6 +222,54 @@ public class RestaurantManagerGUI implements Initializable{
     @FXML
     private TextField EDITUSERidTxtField;
 
+    @FXML
+    private TableView<Order> ORDERMANtable;
+
+    @FXML
+    private TableColumn<Order, Integer> ORDERMANcodeCol;
+
+    @FXML
+    private TableColumn<Order, String> ORDERMANstatusCol;
+
+    @FXML
+    private TableColumn<Order, String> ORDERMANfootnoteCol;
+
+    @FXML
+    private TableColumn<Order, String> ORDERMANdateCol;
+
+    @FXML
+    private TableColumn<Order, String> ORDERMANclientNote;
+
+    @FXML
+    private TableColumn<Order, String> ORDERMANempCol;
+    
+
+    @FXML
+    private TableView<Product> PROMANtable;
+
+    @FXML
+    private TableColumn<Product, String> PROMANnameCol;
+
+    @FXML
+    private TableColumn<Product, Double> PROMANpriceCol;
+
+    @FXML
+    private TableColumn<Product, String> PROMANsizeCol;
+
+    @FXML
+    private TableColumn<Product, String> PROMANbaseProcol;
+    
+    @FXML
+    private TextField ADDPROnameTxtField;
+
+    @FXML
+    private TextField ADDPROpriceTxtField;
+
+    @FXML
+    private ComboBox<Size> ADDPROsizeCB;
+
+    @FXML
+    private ComboBox<BaseProduct> ADDPRObaseProCB;
     
     private User localUser;
     
@@ -233,7 +287,9 @@ public class RestaurantManagerGUI implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+    	BaseProduct b = new BaseProduct("Papa", 3200, null, new Type("Secundario"));
+    	Size s = new Size("Mediano");
+    	restaurant.addProduct(b, s, 3200);
     	
     }
     
@@ -455,8 +511,13 @@ public class RestaurantManagerGUI implements Initializable{
     
 
     @FXML
-    void MAINopenPRODUCTS(ActionEvent event) {
-
+    void MAINopenPRODUCTS(ActionEvent event) throws IOException {
+    	FXMLLoader proLoader = new FXMLLoader(getClass().getResource("ProductManager.fxml"));
+    	proLoader.setController(this);
+    	Parent addMain = proLoader.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    	
+    	PROMANinitializeTable();
     }
 
     @FXML
@@ -708,6 +769,11 @@ public class RestaurantManagerGUI implements Initializable{
     public void EMPMENUeditBttn(ActionEvent event) {
 
     }
+    
+    @FXML
+    void EMPMENUselectedEmp(MouseEvent event) {
+
+    }
 
     @FXML
     public void ADDEMPaddBttn(ActionEvent event) {
@@ -905,6 +971,93 @@ public class RestaurantManagerGUI implements Initializable{
     public void TYPEMENUselectedType(MouseEvent event) {
 
     }
+    
+    @FXML
+    void ORDERMANaddBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ORDERMANbackBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ORDERMANdeleteBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void ORDERMANdisableBttn(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void PROMANaddBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void PROMANbackBttn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void PROMANdeleteBttn(ActionEvent event) {
+    	int index = PROMANtable.getSelectionModel().getSelectedIndex();
+    	restaurant.deleteProduct(index);
+    	PROMANinitializeTable();
+    }
+
+    private void PROMANinitializeTable() {
+    	ObservableList<Product> observableList;
+    	observableList = FXCollections.observableArrayList(restaurant.getProducts());
+		PROMANnameCol.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
+		PROMANpriceCol.setCellValueFactory(new PropertyValueFactory<Product,Double>("price"));
+		PROMANsizeCol.setCellValueFactory(new PropertyValueFactory<Product,String>("sizeName"));
+		PROMANbaseProcol.setCellValueFactory(new PropertyValueFactory<Product,String>("baseProductName"));
+		PROMANtable.setItems(observableList);
+	}
+
+	@FXML
+    void PROMANdisableBttn(ActionEvent event) {
+
+    }
+    
+
+    @FXML
+    void PROMANselectedProduct(MouseEvent event) throws IOException {
+    	if(event.getClickCount() == 2) {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddProductWindow.fxml"));
+    		loader.setController(this);
+    		Parent root = loader.load();
+    		Scene e = new Scene(root);
+    		popupStage = new Stage();
+    		popupStage.setScene(e);;
+    		ObservableList<Size> sizeList = FXCollections.observableList(restaurant.getSizes());
+    		ADDPROsizeCB.setItems(sizeList);
+    		ObservableList<BaseProduct> baseProList = FXCollections.observableList(restaurant.getBaseProducts());
+    		ADDPRObaseProCB.setItems(baseProList);
+    		popupStage.show();
+    		popupStage.setResizable(false);
+    		mainStage.hide();
+
+    	}
+    }
+    
+    @FXML
+    void ADDPRObackBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
+    }
+
+    @FXML
+    void ADDPROdoneBttn(ActionEvent event) {
+    	restaurant.addProduct(ADDPRObaseProCB.getSelectionModel().getSelectedItem(), ADDPROsizeCB.getSelectionModel().getSelectedItem(), Double.parseDouble(ADDPROpriceTxtField.getText()));
+    	popupStage.close();
+    	mainStage.show();
+    }
+
     
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
