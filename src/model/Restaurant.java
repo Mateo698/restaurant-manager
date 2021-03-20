@@ -184,8 +184,8 @@ public class Restaurant {
 		
 	}
 	
-	public void addOrder(int code, String status, String footNote) {
-		orders.add(new Order(code,footNote));
+	public void addOrder(int code, String footNote,Date originDate,List<Product> products,List<Integer> productsQuantity,Client originClient,Employee originEmployee) {
+		orders.add(new Order(code, footNote,originDate,products,productsQuantity,originClient,originEmployee));
 		
 	}
 	
@@ -292,6 +292,7 @@ public class Restaurant {
 		this.products = products;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Size> getSizes() {
 		List Lsizes = (List)sizes;
 		return Lsizes;
@@ -308,6 +309,21 @@ public class Restaurant {
 
 	public void deleteProduct(int index) {
 		products.remove(index);
+		
+	}
+
+	public void addIngredient(String text) {
+		ingredients.add(new Ingredient(text));
+		
+	}
+
+	public void deleteIngredient(int index) {
+		ingredients.remove(index);
+		
+	}
+
+	public void updateIngredient(int index, String text) {
+		ingredients.get(index).setName(text);
 		
 	}
 }

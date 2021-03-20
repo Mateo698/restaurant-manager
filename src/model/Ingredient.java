@@ -7,10 +7,9 @@ public class Ingredient implements Serializable{
 	private int code;
 	private String name;
 
-	public Ingredient(String name,int code) {
+	public Ingredient(String name) {
 		super();
 		this.name = name;
-		this.code = code;
 	}
 
 	public String getName() {

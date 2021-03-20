@@ -32,7 +32,13 @@
           <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Orders">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#MAINopenORDERMANAGER" style="-fx-color: #FFFFFF;" text="Manager" />
-                  <MenuItem mnemonicParsing="false" onAction="#MAINopenREPORT" style="-fx-color: #FFFFFF;" text="Generate report" />
+                  <Menu mnemonicParsing="false" style="-fx-color: #FFFFFF;" text="Reports">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#MAINopenREPORTORDER" text="Order" />
+                        <MenuItem mnemonicParsing="false" onAction="#MAINopenREPORTEMP" style="-fx-color: #FFFFFF;" text="Employees" />
+                        <MenuItem mnemonicParsing="false" onAction="#MAINopenREPORTPRO" text="Products" />
+                    </items>
+                  </Menu>
             </items>
           </Menu>
         </menus>

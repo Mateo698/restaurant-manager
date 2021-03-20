@@ -238,7 +238,7 @@ public class RestaurantManagerGUI implements Initializable{
     private TableColumn<Order, String> ORDERMANdateCol;
 
     @FXML
-    private TableColumn<Order, String> ORDERMANclientNote;
+    private TableColumn<Order, String> ORDERMANclientCol;
 
     @FXML
     private TableColumn<Order, String> ORDERMANempCol;
@@ -264,12 +264,20 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     private TextField ADDPROpriceTxtField;
+    
+    @FXML
+    private TextField ADDINGnameTxtField;
 
     @FXML
     private ComboBox<Size> ADDPROsizeCB;
 
     @FXML
     private ComboBox<BaseProduct> ADDPRObaseProCB;
+    
+    @FXML
+    private TextField EDITINGnameTxtField;
+    
+    
     
     private User localUser;
     
@@ -495,18 +503,42 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void MAINopenREPORT(ActionEvent event) {
+    void MAINopenREPORTEMP(ActionEvent event) {
+    	
+    }
+    
+    @FXML
+    void MAINopenREPORTORDER(ActionEvent event) {
+    	
+    }
+    
+    @FXML
+    void MAINopenREPORTPRO(ActionEvent event) {
     	
     }
     
 
     @FXML
-    void MAINopenORDERMANAGER(ActionEvent event) {
-
+    void MAINopenORDERMANAGER(ActionEvent event) throws IOException {
+    	FXMLLoader orderLoader = new FXMLLoader(getClass().getResource("OrderManager.fxml"));
+    	orderLoader.setController(this);
+    	Parent addMain = orderLoader.load();
+    	MAINmainPane.getChildren().setAll(addMain);
+    	
+    	ORDERinitializeTableView();;
     }
     
     public void ORDERinitializeTableView() {
+    	ObservableList<Order> USRobservableList;
+    	USRobservableList = FXCollections.observableArrayList(restaurant.getOrders());
     	
+    	ORDERMANcodeCol.setCellValueFactory(new PropertyValueFactory<Order,Integer>("username"));
+    	ORDERMANstatusCol.setCellValueFactory(new PropertyValueFactory<Order,String>("status"));
+    	ORDERMANfootnoteCol.setCellValueFactory(new PropertyValueFactory<Order,String>("footnote"));
+    	ORDERMANdateCol.setCellValueFactory(new PropertyValueFactory<Order,String>("stringTime"));
+    	ORDERMANclientCol.setCellValueFactory(new PropertyValueFactory<Order,String>("stringClient"));
+    	ORDERMANempCol.setCellValueFactory(new PropertyValueFactory<Order,String>("stringEmployee"));
+    	ORDERMANtable.setItems(USRobservableList);
     }
     
 
@@ -540,14 +572,55 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    public void INGRMENUaddBttn(ActionEvent event) {
-
+    public void INGRMENUaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader x = new FXMLLoader(getClass().getResource("AddIngredientWindow.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	popupStage.show();
+    	mainStage.hide();
     }
     
     @FXML
-    public void INGRMENUeditBttn(ActionEvent event) {
-
+    void ADDINGaddBttn(ActionEvent event) {
+    	if(!ADDINGnameTxtField.getText().equals("")) {
+    		boolean found = false;
+        	for(int i=0;i<restaurant.getIngredients().size() && !found;i++) {
+        		if(ADDINGnameTxtField.getText().equals(restaurant.getIngredients().get(i).getName())) {
+        			found = true;
+        		}
+        	}
+        	if(!found) {
+        		restaurant.addIngredient(ADDINGnameTxtField.getText());
+        		popupStage.close();
+            	mainStage.show();
+            	INGRinitializeTableView();
+        	}
+        	else {
+        		Alert alertWarnings = new Alert(AlertType.WARNING);
+    	    	alertWarnings.setTitle("Error");
+    			alertWarnings.setHeaderText("Repeated ingredient");
+    			alertWarnings.setContentText("There is already a ingredient with that name.");
+    			alertWarnings.show();
+        	}
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Empty field");
+			alertWarnings.setContentText("Please fill all the fields.");
+			alertWarnings.show();
+    	}
+    	
     }
+
+    @FXML
+    void ADDINGcancelBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
+    }
+    
     
     @FXML
     public void INGRMENUbackBttn(ActionEvent event) throws IOException{
@@ -559,18 +632,45 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     public void INGRMENUdeleteBttn(ActionEvent event) {
-
+    	int index = INGRMENUtable.getSelectionModel().getSelectedIndex();
+    	restaurant.deleteIngredient(index);
+    	INGRinitializeTableView();
     }
 
     @FXML
     public void INGRMENUdisableBttn(ActionEvent event) {
-
+    	////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     @FXML
-    public void INGRMENUselectedIngr(MouseEvent event) {
+    public void INGRMENUselectedIngr(MouseEvent event) throws IOException {
+    	Ingredient auxIng = INGRMENUtable.getSelectionModel().getSelectedItem();
+    	if(event.getClickCount() == 2) {
+    		FXMLLoader x = new FXMLLoader(getClass().getResource("EditIngredientWindow.fxml"));
+    		x.setController(this);
+    		Parent root = x.load();
+    		Scene e = new Scene(root);
+    		popupStage.setScene(e);
+    		mainStage.hide();
+    		EDITINGnameTxtField.setText(auxIng.getName());
+    		popupStage.show();
+    	}
+    }
+    
+    @FXML
+    void EDITINGaddBttn(ActionEvent event) {
+    	int index = INGRMENUtable.getSelectionModel().getSelectedIndex();
+    	restaurant.updateIngredient(index,EDITINGnameTxtField.getText());
+    	popupStage.close();
+    	mainStage.show();
+    	INGRinitializeTableView();
+    }
 
-    }    
+    @FXML
+    void EDITINGcancelBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
+    }
     
     @FXML
     public void MAINopenBASEPRODUCTS(ActionEvent event) throws IOException {
