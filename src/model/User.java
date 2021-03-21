@@ -29,7 +29,7 @@ public class User extends Employee {
 	
 	@Override
 	public void updateInfoUser(String username, String password, String names, String lastNames, String ID, int amountOrder) {
-		super.updateInfo(names, lastNames, ID, amountOrder);
+		super.updateInfo(names, lastNames, ID);
 		setName(username);
 		setPassword(password);
 		

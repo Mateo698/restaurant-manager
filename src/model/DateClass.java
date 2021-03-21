@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Date implements Serializable{
+public class DateClass implements Serializable{
 	private static final long serialVersionUID = 1;
 	private int day;
 	private int month;
@@ -10,7 +10,7 @@ public class Date implements Serializable{
 	private int hour;
 	private int minutes;
 
-	public Date(int hour, int minutes,int day, int month, int year) {
+	public DateClass(int hour, int minutes,int day, int month, int year) {
 		this.day = day;
 		this.month = month;
 		this.year = year;
@@ -64,7 +64,7 @@ public class Date implements Serializable{
 		this.minutes = minutes;
 	}
 	
-	public int compareTo(Date otherDate) {
+	public int compareTo(DateClass otherDate) {
 		if(otherDate.getYear()>year) {
 			return -1;
 		}

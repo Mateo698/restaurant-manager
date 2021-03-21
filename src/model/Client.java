@@ -89,14 +89,13 @@ public class Client implements Serializable,Comparable<Client>{
 		this.lastModifiedUser = lastModifiedUser;
 	}
 	
-	public void updateInfo(String name, String lastName, String Id, String addres, String phoneNumber, String footNotes, User originUser, User lastModifiedUser) {
+	public void updateInfo(String name, String lastName, String Id, String addres, String phoneNumber, String footNotes, User lastModifiedUser) {
 		setName(name);
 		setLastName(lastName);
 		setId(Id);
 		setAddress(addres);
 		setPhoneNumber(phoneNumber);
 		setFootNote(footNotes);
-		setOriginUser(originUser);
 		setLastModifiedUser(lastModifiedUser);
 		
 	}

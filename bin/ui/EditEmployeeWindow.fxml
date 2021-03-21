@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <VBox alignment="TOP_CENTER" prefHeight="389.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="335.0">
+                     <children>
+                        <Label layoutX="138.0" layoutY="42.0" text="Names" textFill="WHITE" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="329.0">
+                     <children>
+                        <TextField fx:id="EDITEMPnamesTxtField" layoutX="74.0" layoutY="38.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="335.0">
+                     <children>
+                        <Label layoutX="121.0" layoutY="42.0" text="Last Names" textFill="WHITE" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="329.0">
+                     <children>
+                        <TextField fx:id="EDITEMPlastNamesTxtField" layoutX="74.0" layoutY="38.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="335.0">
+                     <children>
+                        <Label layoutX="146.0" layoutY="42.0" text="ID" textFill="WHITE" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="329.0">
+                     <children>
+                        <TextField fx:id="EDITEMPidTxtField" layoutX="74.0" layoutY="38.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="196.0" prefHeight="41.0" prefWidth="600.0">
+               <children>
+                  <Pane prefHeight="44.0" prefWidth="335.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="94.0" prefWidth="321.0">
+                     <children>
+                        <Button layoutX="126.0" layoutY="35.0" mnemonicParsing="false" onAction="#EDITEMPaddBttn" style="-fx-background-color: #b59703;" text="Edit" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="94.0" prefWidth="316.0">
+                     <children>
+                        <Button layoutX="123.0" layoutY="35.0" mnemonicParsing="false" onAction="#EDITEMPbackBttn" style="-fx-background-color: #b59703;" text="Back" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+   <top>
+      <HBox alignment="CENTER" prefHeight="63.0" prefWidth="600.0" style="-fx-background-color: #b59703;" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Edit employee">
+               <font>
+                  <Font name="Sylfaen" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

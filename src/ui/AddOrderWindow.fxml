@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1069.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <HBox alignment="CENTER" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #b59703;" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Add order">
+               <font>
+                  <Font name="Sylfaen" size="37.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="419.0">
+                     <children>
+                        <Label layoutX="120.0" layoutY="37.0" text="Client" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="441.0">
+                     <children>
+                        <ComboBox fx:id="ADDORDclientCB" layoutX="36.0" layoutY="38.0" prefWidth="150.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="184.0" prefWidth="474.0">
+               <children>
+                  <Pane prefHeight="184.0" prefWidth="335.0">
+                     <children>
+                        <Label layoutX="91.0" layoutY="79.0" text="Add product" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="21.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="259.0" layoutY="45.0" text="Product" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="254.0" layoutY="128.0" text="Quantity" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="184.0" prefWidth="392.0">
+                     <children>
+                        <ComboBox fx:id="ADDORDproductCB" layoutX="58.0" layoutY="45.0" prefWidth="150.0" />
+                        <Button layoutX="270.0" layoutY="80.0" mnemonicParsing="false" onAction="#ADDORDaddProductsBttn" style="-fx-background-color: #b59703;" text="Add" />
+                        <TextField fx:id="ADDORDquantityTXtField" layoutX="59.0" layoutY="126.0" promptText="Quantity" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="346.0">
+                     <children>
+                        <Label layoutX="59.0" layoutY="37.0" text="Deliver employee" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="386.0">
+                     <children>
+                        <ComboBox fx:id="ADDORDdeliverEmployee" layoutX="50.0" layoutY="38.0" prefWidth="150.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="332.0">
+                     <children>
+                        <Label layoutX="82.0" layoutY="37.0" text="Date of order" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="394.0">
+                     <children>
+                        <Label fx:id="ADDORDdateLabel" layoutX="115.0" layoutY="35.0" text="Date" textFill="WHITE">
+                           <font>
+                              <Font size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="332.0">
+                     <children>
+                        <Label layoutX="114.0" layoutY="37.0" text="Code:" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="394.0">
+                     <children>
+                        <Label fx:id="ADDORDcodeLabel" layoutX="113.0" layoutY="37.0" text="Code" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="332.0">
+                     <children>
+                        <Button layoutX="139.0" layoutY="38.0" mnemonicParsing="false" onAction="#ADDORDaddBttn" style="-fx-background-color: #b59703;" text="Add" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="394.0">
+                     <children>
+                        <Button layoutX="170.0" layoutY="38.0" mnemonicParsing="false" onAction="#ADDORDbackBttn" style="-fx-background-color: #b59703;" text="Back" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+   <left>
+      <HBox prefHeight="700.0" prefWidth="429.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="ADDORDproductsTable" prefHeight="700.0" prefWidth="295.0">
+              <columns>
+                <TableColumn fx:id="ADDORDproductsCol" prefWidth="294.0" text="Products" />
+              </columns>
+            </TableView>
+            <TableView fx:id="ADDORDquantityTable" prefHeight="700.0" prefWidth="135.0">
+              <columns>
+                <TableColumn fx:id="ADDORDquantityCol" prefWidth="134.0" text="Quantity" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+   </left>
+</BorderPane>

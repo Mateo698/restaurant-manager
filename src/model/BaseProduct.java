@@ -31,7 +31,7 @@ public class BaseProduct implements Serializable{
 		return ingredients;
 	}
 	
-	public String getIngredientString() {
+	public String getIngredientsString() {
 		String x = "";
 		for(int i=0;i<ingredients.size();i++) {
 			if(i==ingredients.size()-1) {

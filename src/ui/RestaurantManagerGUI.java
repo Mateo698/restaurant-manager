@@ -4,13 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableListBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,12 +27,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import model.BaseProduct;
 import model.Client;
 import model.Employee;
@@ -318,6 +322,91 @@ public class RestaurantManagerGUI implements Initializable{
     @FXML
     private TableColumn<Ingredient, String> EDITBASEPROingCol;
     
+    @FXML
+    private TextField ADDTYPEnameTxtField;
+    
+    @FXML
+    private TextField EDITTYPEnameTxtField;
+    
+    @FXML
+    private TextField EDITEMPnamesTxtField;
+
+    @FXML
+    private TextField EDITEMPlastNamesTxtField;
+
+    @FXML
+    private TextField EDITEMPidTxtField;
+    
+    @FXML
+    private TextField ADDCLnameTxtField;
+
+    @FXML
+    private TextField ADDCLlastNameTxtFIeld;
+
+    @FXML
+    private TextField ADDCLidTxtField;
+
+    @FXML
+    private TextField ADDCLaddressTxtField;
+
+    @FXML
+    private TextField ADDCLphoneTxtField;
+
+    @FXML
+    private TextArea ADDCLfootnoteTxt;
+    
+    @FXML
+    private TextField EDITCLnameTxtField;
+
+    @FXML
+    private TextField EDITCLlastNameTxtFIeld;
+
+    @FXML
+    private TextField EDITCLidTxtField;
+
+    @FXML
+    private TextField EDITCLaddressTxtField;
+
+    @FXML
+    private TextField EDITCLphoneTxtField;
+
+    @FXML
+    private TextArea EDITCLfootnoteTxt;
+    
+    @FXML
+    private ComboBox<Client> ADDORDclientCB;
+
+    @FXML
+    private ComboBox<Product> ADDORDproductCB;
+
+    @FXML
+    private TextField ADDORDquantityTXtField;
+
+    @FXML
+    private ComboBox<Employee> ADDORDdeliverEmployee;
+
+    @FXML
+    private Label ADDORDdateLabel;
+
+    @FXML
+    private Label ADDORDcodeLabel;
+
+    @FXML
+    private TableView<Product> ADDORDproductsTable;
+
+    @FXML
+    private TableColumn<Product, String> ADDORDproductsCol;
+
+    @FXML
+    private TableView<Integer> ADDORDquantityTable;
+
+    @FXML
+    private TableColumn<Integer, Integer> ADDORDquantityCol;
+    
+    private ArrayList<Product> ADDORDproList;
+    
+    private ArrayList<Integer> ADDORDquantityList;
+    
     private ArrayList<Ingredient> ADDBASEPROlist;
     
     private User localUser;
@@ -336,8 +425,11 @@ public class RestaurantManagerGUI implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	
+    	restaurant.addType(new Type("Principal"));
+    	ADDBASEPROlist = new ArrayList<>();
+    	ADDORDproList = new ArrayList<Product>();
+    	ADDORDquantityList = new ArrayList<Integer>();
+    	popupStage = new Stage();
     }
     
     public void showLogin() throws IOException{
@@ -373,7 +465,6 @@ public class RestaurantManagerGUI implements Initializable{
 
 	    	
 	    	restaurant.addUser(username, password, names, lastNames, ID);
-	    	restaurant.saveData();
 	    	SIGNINpassTxtField.setText("");
 	    	SIGNINusernameTxtField.setText("");
 	    	SIGNINfirstNamesTxtField.setText("");
@@ -436,6 +527,7 @@ public class RestaurantManagerGUI implements Initializable{
     		}
     		if(found) {
     			goToMain();
+    			
     		}
     		else{
     			alertWarnings.setTitle("Problems with the given infomation!");
@@ -465,8 +557,6 @@ public class RestaurantManagerGUI implements Initializable{
     	mP.setController(this);
     	Parent addMainPane = mP.load();
     	MAINmainPane.getChildren().setAll(addMainPane);
-    	
-        
     }
     
 
@@ -524,7 +614,6 @@ public class RestaurantManagerGUI implements Initializable{
     	MAINmainPane.getChildren().setAll(addMain);
     	
     	USERinitializeTableView();
-    	restaurant.saveData();
     }
     
     public void USERinitializeTableView() {
@@ -870,16 +959,17 @@ public class RestaurantManagerGUI implements Initializable{
     
     @FXML
     public void BASEPRODUCTMENUaddBttn(ActionEvent event) throws IOException {
-    	FXMLLoader x = new FXMLLoader(getClass().getResource("AddBaseProduct.fxml"));
-    	x.setController(this);
-    	Parent root = x.load();
+    	FXMLLoader xax = new FXMLLoader(getClass().getResource("AddBaseProductWindow.fxml"));
+    	xax.setController(this);
+    	Parent root = xax.load();
     	Scene e = new Scene(root);
+    	popupStage = new Stage();
     	popupStage.setScene(e);
-    	ADDBASEPROinitializeTableView();
     	popupStage.show();
     	mainStage.hide();
     	ADDBASEPROlist.clear();
     	ADDBASEPROnameTxtField.setText("");
+    	ADDBASEPROinitializeTableView();
     }
     
     public void ADDBASEPROinitializeTableView() {
@@ -889,9 +979,39 @@ public class RestaurantManagerGUI implements Initializable{
     	ADDBASEPROingCol.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
     	ADDBASEPROingTable.setItems(observableList);
     	ObservableList<Type> typeList = FXCollections.observableList(restaurant.getTypes());
-    	ADDBASEPROtypeCB.setItems(typeList);
+    	ADDBASEPROtypeCB.itemsProperty().setValue(typeList);
+    	convertTypeCB();
     	ObservableList<Ingredient> ingList = FXCollections.observableList(restaurant.getIngredients());
-    	ADDBASEPROingredientCB.setItems(ingList);
+    	ADDBASEPROingredientCB.itemsProperty().setValue(ingList);
+    	convertIngCB();
+    }
+    
+    private void convertTypeCB() {
+        ADDBASEPROtypeCB.setConverter(new StringConverter<Type>() {
+            @Override
+            public String toString(Type type) {
+                return type.getName();
+            }
+
+            @Override
+            public Type fromString(final String string) {
+                return ADDBASEPROtypeCB.getItems().stream().filter(type -> type.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+    
+    private void convertIngCB() {
+        ADDBASEPROingredientCB.setConverter(new StringConverter<Ingredient>() {
+            @Override
+            public String toString(Ingredient ing) {
+                return ing.getName();
+            }
+
+            @Override
+            public Ingredient fromString(final String string) {
+                return ADDBASEPROingredientCB.getItems().stream().filter(ing -> ing.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
     }
     
     @FXML
@@ -994,9 +1114,39 @@ public class RestaurantManagerGUI implements Initializable{
     	EDITBASEPROingCol.setCellValueFactory(new PropertyValueFactory<Ingredient,String>("name"));
     	EDITBASEPROingTable.setItems(observableList);
     	ObservableList<Type> typeList = FXCollections.observableList(restaurant.getTypes());
-    	EDITBASEPROtypeCB.setItems(typeList);
+    	EDITBASEPROtypeCB.itemsProperty().setValue(typeList);
+    	convertEditTypeCB();
     	ObservableList<Ingredient> ingList = FXCollections.observableList(restaurant.getIngredients());
-    	EDITBASEPROingredientCB.setItems(ingList);
+    	EDITBASEPROingredientCB.itemsProperty().setValue(ingList);
+    	convertEditIngCB();
+    }
+    
+    private void convertEditTypeCB() {
+        EDITBASEPROtypeCB.setConverter(new StringConverter<Type>() {
+            @Override
+            public String toString(Type type) {
+                return type.getName();
+            }
+
+            @Override
+            public Type fromString(final String string) {
+                return EDITBASEPROtypeCB.getItems().stream().filter(type -> type.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+    
+    private void convertEditIngCB() {
+        EDITBASEPROingredientCB.setConverter(new StringConverter<Ingredient>() {
+            @Override
+            public String toString(Ingredient ing) {
+                return ing.getName();
+            }
+
+            @Override
+            public Ingredient fromString(final String string) {
+                return EDITBASEPROingredientCB.getItems().stream().filter(ing -> ing.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
     }
     
     @FXML
@@ -1006,8 +1156,9 @@ public class RestaurantManagerGUI implements Initializable{
     	EDITBASEPROingredientCB.getSelectionModel().clearSelection();
     	EDITBASEPROingredientCB.setValue(null);
     	ObservableList<Ingredient> ingList = FXCollections.observableList(restaurant.getIngredients());
-    	ADDBASEPROingredientCB.setItems(ingList);
+    	EDITBASEPROingredientCB.itemsProperty().setValue(ingList);
     	ADDBASEPROinitializeTableView();
+    	convertEditIngCB();
     }
 
     @FXML
@@ -1049,8 +1200,56 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    public void TYPEMENUaddBttn(ActionEvent event) {
-    	
+    public void TYPEMENUaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader X = new FXMLLoader(getClass().getResource("AddTypeWindow.fxml"));
+    	X.setController(this);
+    	Parent root = X.load();
+    	Scene e = new Scene(root);
+    	popupStage = new Stage();
+    	popupStage.setScene(e);
+    	popupStage.show();
+    	mainStage.hide();
+    }
+    
+    @FXML
+    void ADDTYPEaddBttn(ActionEvent event) {
+    	if(!ADDTYPEnameTxtField.getText().equals("")) {
+    		String name = ADDTYPEnameTxtField.getText();
+    		boolean found = false;
+    		for(int i=0;i<restaurant.getTypes().size();i++) {
+    			if(name.equals(restaurant.getTypes().get(i).getName())){
+    				found = true;
+    			}
+    		}
+    		if(!found) {
+    			restaurant.addType(new Type(name));
+    			popupStage.close();
+    	    	mainStage.show();
+    	    	TYPEinitializeTableView();
+    		}
+    		else {
+    			Alert alertWarnings = new Alert(AlertType.WARNING);
+    	    	alertWarnings.setTitle("Error");
+    			alertWarnings.setHeaderText("Repeated name");
+    			alertWarnings.setContentText("There is already a Type with that name.");
+    			alertWarnings.show();
+    			ADDTYPEnameTxtField.setText("");
+    		}
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Empty name");
+			alertWarnings.setContentText("Fill all the fields to add a type.");
+			alertWarnings.show();
+			ADDTYPEnameTxtField.setText("");
+    	}
+    }
+
+    @FXML
+    void ADDTYPEbackBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
     }
 
     @FXML
@@ -1064,23 +1263,64 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     public void TYPEMENUdeleteBttn(ActionEvent event) {
-
+    	if(TYPEMENUtable.getSelectionModel().getSelectedItem() != null) {
+    		restaurant.deleteType(TYPEMENUtable.getSelectionModel().getSelectedIndex());
+    		TYPEinitializeTableView();
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("No selected item");
+			alertWarnings.setContentText("Select a item to delete.");
+			alertWarnings.show();
+    	}
     }
 
     @FXML
     public void TYPEMENUdisableBttn(ActionEvent event) {
-
+    	///////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+    
+    @FXML
+    public void TYPEMENUselectedType(MouseEvent event) throws IOException {
+    	FXMLLoader x = new FXMLLoader(getClass().getResource("EditTypeWindow.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	EDITTYPEnameTxtField.setText(TYPEMENUtable.getSelectionModel().getSelectedItem().getName());
+    	popupStage.show();
+    	mainStage.hide();
+    }
+    
+    @FXML
+    void EDITTYPEaddBttn(ActionEvent event) {
+    	if(!EDITTYPEnameTxtField.getText().equals("")) {
+    		restaurant.updateType(TYPEMENUtable.getSelectionModel().getSelectedIndex(),EDITTYPEnameTxtField.getText());
+    		popupStage.close();
+        	mainStage.show();
+        	TYPEinitializeTableView();
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Empty name");
+			alertWarnings.setContentText("Please fill all the fields.");
+			alertWarnings.show();
+    	}
     }
 
     @FXML
-    public void TYPEMENUeditBttn(ActionEvent event) {
-
+    void EDITTYPEbackBttn(ActionEvent event) {
+    	popupStage.hide();
+    	mainStage.show();
     }
+    
     
     @FXML
     public void MAINlogout(ActionEvent event) throws IOException{
     	showLogin();
-    
+    	localUser = null;
     }
     
     
@@ -1096,6 +1336,8 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.setResizable(false);
     	mainStage.hide();
     }
+    
+    
 
     @FXML
     public void EMPMENUdbackBttn(ActionEvent event) throws IOException {
@@ -1119,19 +1361,19 @@ public class RestaurantManagerGUI implements Initializable{
     		else {
     			boolean leave = false;
         		for(int i=0;i<restaurant.getEmployees().size() && !leave;i++) {
-        			if(restaurant.getEmployees().get(i).getNames().equals(auxEmployee.getNames())) {
+        			if(restaurant.getEmployees().get(i).getId().equals(auxEmployee.getId())) {
         				restaurant.deleteEmployee(i);
         				leave = true;
         			}
         		}
-        		EMPMENUtable.refresh();
+        		EMPinitializeTableView();
     		}
     	}
     	else {
     		Alert alertWarnings = new Alert(AlertType.WARNING);
-	    	alertWarnings.setTitle("No user selected");
-			alertWarnings.setHeaderText("You haven't selected a user to delete.");
-			alertWarnings.setContentText("Please select a user to use the delete button.");
+	    	alertWarnings.setTitle("No employee selected");
+			alertWarnings.setHeaderText("You haven't selected a employee.");
+			alertWarnings.setContentText("Please select an employee to use the delete button.");
 			alertWarnings.show();
     	}
     }
@@ -1155,7 +1397,7 @@ public class RestaurantManagerGUI implements Initializable{
         				leave = true;
         			}
         		}
-        		EMPMENUtable.refresh();
+        		EMPinitializeTableView();
     		}
     	}
     	else {
@@ -1167,14 +1409,40 @@ public class RestaurantManagerGUI implements Initializable{
     	}
     }
 
+    
     @FXML
-    public void EMPMENUeditBttn(ActionEvent event) {
-
+    void EMPMENUselectedEmp(MouseEvent event) throws IOException {
+    	FXMLLoader x = new FXMLLoader(getClass().getResource("EditEmployeeWindow"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	EDITEMPnamesTxtField.setText(EMPMENUtable.getSelectionModel().getSelectedItem().getNames());
+    	EDITEMPlastNamesTxtField.setText(EMPMENUtable.getSelectionModel().getSelectedItem().getLastNames());
+    	EDITEMPidTxtField.setText(EMPMENUtable.getSelectionModel().getSelectedItem().getId());
+    	mainStage.show();
     }
     
     @FXML
-    void EMPMENUselectedEmp(MouseEvent event) {
+    void EDITEMPaddBttn(ActionEvent event) {
+    	if(!EDITEMPidTxtField.getText().isEmpty() && !EDITEMPnamesTxtField.getText().isEmpty() && !EDITEMPlastNamesTxtField.getText().isEmpty()) {
+    		restaurant.updateEmployee(EMPMENUtable.getSelectionModel().getSelectedIndex(), EDITEMPnamesTxtField.getText(), EDITEMPlastNamesTxtField.getText(), EDITEMPidTxtField.getText());
+    		popupStage.hide();
+        	mainStage.show();
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Empty fields");
+			alertWarnings.setHeaderText("You haven't filled all the fields.");
+			alertWarnings.setContentText("Please do it, lol.");
+			alertWarnings.show();
+    	}
+    }
 
+    @FXML
+    void EDITEMPbackBttn(ActionEvent event) {
+    	popupStage.hide();
+    	mainStage.show();
     }
 
     @FXML
@@ -1238,10 +1506,52 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.close();
     	mainStage.show();
     }
+    
+    @FXML
+    public void ADDUSERaddBttn(ActionEvent event) {
+    	if(!ADDUSERnamesTxtField.getText().isEmpty() && !ADDUSERpasswordTxtField.getText().isEmpty() && !ADDUSERusernameTxField.getText().isEmpty() && !ADDUSERlastNamesTxtFIeld.getText().isEmpty() && !ADDUSERidTxtField.getText().isEmpty()) {
+    		boolean found = false;
+    		for(int i=0;i<restaurant.getUsers().size() && !found;i++) {
+    			if(restaurant.getUsers().get(i).getUsername().equals(ADDUSERusernameTxField.getText())) {
+    				found = true;
+    			}
+    		}
+    		if(!found) {
+    			restaurant.addUser(ADDUSERusernameTxField.getText(), ADDUSERpasswordTxtField.getText(), ADDUSERnamesTxtField.getText(), ADDUSERlastNamesTxtFIeld.getText(), ADDUSERidTxtField.getText());
+    			popupStage.close();
+    	    	mainStage.show();
+    		}
+    		else {
+    			Alert alertWarnings = new Alert(AlertType.WARNING);
+    	    	alertWarnings.setTitle("Wrong username");
+    			alertWarnings.setHeaderText("There is already a user with that username.");
+    			alertWarnings.setContentText("Please change it.");
+    			alertWarnings.show();
+    		}
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Empty fields");
+			alertWarnings.setHeaderText("You haven't filled all the fields.");
+			alertWarnings.setContentText("Please do it, lol.");
+			alertWarnings.show();
+    	}
+    }
 
     @FXML
-    public void USERMENUaddBttn(ActionEvent event) {
-    	
+    public void ADDUSERbackBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
+    }
+
+    @FXML
+    public void USERMENUaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader x = new FXMLLoader(getClass().getResource("AddUserWindow.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	mainStage.hide();
     }
 
     @FXML
@@ -1257,29 +1567,14 @@ public class RestaurantManagerGUI implements Initializable{
     	int index = USERMENUtable.getSelectionModel().getSelectedIndex();
     	restaurant.deleteUser(index);
     	USERinitializeTableView();
-    	restaurant.saveData();
     }
 
     @FXML
     public void USERMENUdisableBttn(ActionEvent event) {
-    	
-    }
-
-    @FXML
-    public void USERMENUeditBttn(ActionEvent event) {
-    	
-    	
+    	//////////////////////////////////////////////////////////////////////////////////////
     }
     
-    @FXML
-    public void ADDUSERaddBttn(ActionEvent event) {
-    	
-    }
-
-    @FXML
-    public void ADDUSERbackBttn(ActionEvent event) {
-    	
-    }
+    
     
     @FXML
     void USERselectedUser(MouseEvent event) throws IOException {
@@ -1331,12 +1626,38 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.close();
     	mainStage.show();
     	USERMENUtable.refresh();
-    	restaurant.saveData();
     }
 
     @FXML
-    public void CLMENUaddBttn(ActionEvent event) {
+    public void CLMENUaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader x = new FXMLLoader(getClass().getResource("AddClientWindow.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	mainStage.hide();
+    }
+    
+    @FXML
+    void ADDCLaddBttn(ActionEvent event) {
+    	if(!ADDCLnameTxtField.getText().isEmpty() && !ADDCLlastNameTxtFIeld.getText().isEmpty() && !ADDCLphoneTxtField.getText().isEmpty() && !ADDCLaddressTxtField.getText().isEmpty() && !ADDCLidTxtField.getText().isEmpty()) {
+    		restaurant.addClient(ADDCLnameTxtField.getText(), ADDCLlastNameTxtFIeld.getText(), ADDCLidTxtField.getText(), ADDCLaddressTxtField.getText(), ADDCLphoneTxtField.getText(), ADDCLfootnoteTxt.getText(), localUser, localUser);
+    		popupStage.close();
+        	mainStage.show();
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("Empty fields");
+			alertWarnings.setContentText("Please fill the all.");
+			alertWarnings.show();
+    	}
+    }
 
+    @FXML
+    void ADDCLbackBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
     }
     
     
@@ -1351,37 +1672,188 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     public void CLMENUdeletBttn(ActionEvent event) {
-
+    	if(CLMENUtable.getSelectionModel().getSelectedItem() != null) {
+    		restaurant.deleteClient(CLMENUtable.getSelectionModel().getSelectedIndex());
+    	}
+    	else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("No selected client");
+			alertWarnings.setContentText("Please select a client if you want to delete it.");
+			alertWarnings.show();
+    	}
     }
 
     @FXML
     public void CLMENUdisableBttn(ActionEvent event) {
-
+    	/////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     @FXML
-    public void CLMENUeditBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    public void CLMENUselectedClient(MouseEvent event) {
-
+    public void CLMENUselectedClient(MouseEvent event) throws IOException {
+    	FXMLLoader x =  new FXMLLoader(getClass().getResource("EditClientWindow.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	Client auxCl = CLMENUtable.getSelectionModel().getSelectedItem();
+    	EDITCLnameTxtField.setText(auxCl.getName());
+    	EDITCLlastNameTxtFIeld.setText(auxCl.getLastName());
+    	EDITCLidTxtField.setText(auxCl.getId());
+    	EDITCLphoneTxtField.setText(auxCl.getPhoneNumber());
+    	EDITCLaddressTxtField.setText(auxCl.getAddress());
+    	EDITCLfootnoteTxt.setText(auxCl.getFootNote());
+    	popupStage.show();
+    	mainStage.hide();
     }
     
     @FXML
-    public void TYPEMENUselectedType(MouseEvent event) {
+    void EDITCLaddBttn(ActionEvent event) {
+    	restaurant.updateClient(CLMENUtable.getSelectionModel().getSelectedIndex(), EDITCLnameTxtField.getText(), EDITCLlastNameTxtFIeld.getText(), EDITCLidTxtField.getText(), EDITCLaddressTxtField.getText(), EDITCLphoneTxtField.getText(), EDITCLfootnoteTxt.getText(), localUser);
+    	popupStage.show();
+    	mainStage.hide();
+    	CLinitializeTableView();
+    }
 
+    @FXML
+    void EDITCLbackBttn(ActionEvent event) {
+    	popupStage.show();
+    	mainStage.hide();
+    }
+
+    
+    @FXML
+    void ORDERMANaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader x = new FXMLLoader(getClass().getResource("AddOrderWindow.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	ObservableList<Client> clList = FXCollections.observableArrayList(restaurant.getClients());
+    	ADDORDclientCB.itemsProperty().setValue(clList);
+    	convertClientsCB();
+    	
+    	ObservableList<Product> prList = FXCollections.observableArrayList(restaurant.getProducts());
+    	ADDORDproductCB.itemsProperty().setValue(prList);
+    	convertProductsCB();
+    	
+    	ObservableList<Employee> empList = FXCollections.observableArrayList(restaurant.getEmployees());
+    	ADDORDdeliverEmployee.itemsProperty().setValue(empList);
+    	convertEmployeeCB();
+    	
+    	ADDORDinitializeTable();
+    	
+    	ADDORDcodeLabel.setText(generateCode());
+    	
+    	ADDORDdateLabel.setText(generateDate());
+    	popupStage.show();
+    	mainStage.hide();
+    	
+    }
+    
+    private String generateDate() {
+    	 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd/MM/yyyy");  
+    	 Date date = new Date();
+    	 String dateString = formatter.format(date);
+    	 return dateString;
+    }
+    
+    private String generateCode() {
+    	Random rand = new Random();
+    	int code = 0;
+    	boolean created = false;
+    	for(int i=0;!created;i++) {
+    		code = rand.nextInt(10000);
+    		boolean repeated = false;
+    		for(int j=0;j<restaurant.getOrders().size() && !repeated;j++) {
+    			if(restaurant.getOrders().get(j).getCode() == code) {
+    				repeated = true;
+    			}
+    		}
+    		if(!repeated) {
+    			created = true;
+    		}
+    	}
+    	String codeX = code + "";
+    	return codeX;
+    }
+    
+    private void convertEmployeeCB() {
+        ADDORDdeliverEmployee.setConverter(new StringConverter<Employee>() {
+            @Override
+            public String toString(Employee e) {
+                return e.getNames();
+            }
+
+            @Override
+            public Employee fromString(final String string) {
+            	return ADDORDdeliverEmployee.getItems().stream().filter(e -> e.getNames().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+    
+    private void convertClientsCB() {
+        ADDORDclientCB.setConverter(new StringConverter<Client>() {
+            @Override
+            public String toString(Client cl) {
+                return cl.getName();
+            }
+
+            @Override
+            public Client fromString(final String string) {
+            	return ADDORDclientCB.getItems().stream().filter(cl -> cl.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+    
+    private void convertProductsCB() {
+        ADDORDproductCB.setConverter(new StringConverter<Product>() {
+            @Override
+            public String toString(Product pr) {
+                return pr.getName();
+            }
+
+            @Override
+            public Product fromString(final String string) {
+            	return ADDORDproductCB.getItems().stream().filter(pr -> pr.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+    
+    
+    private void ADDORDinitializeTable() {
+    	ObservableList<Product> observableList;
+    	observableList = FXCollections.observableArrayList(ADDORDproList);
+		ADDORDproductsCol.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
+		ADDORDproductsTable.setItems(observableList);
+		
+		ObservableList<Integer> oL;
+    	oL = FXCollections.observableArrayList(ADDORDquantityList);
+		ADDORDquantityCol.setCellValueFactory(new PropertyValueFactory<Integer,Integer>("intValue"));
+		ADDORDquantityTable.setItems(oL);
     }
     
     @FXML
-    void ORDERMANaddBttn(ActionEvent event) {
+    void ADDORDaddProductsBttn(ActionEvent event) {
+    	if(ADDORDproductCB.getSelectionModel().getSelectedItem()!=null && !ADDORDquantityTXtField.getText().isEmpty()) {
+    		int quantity = Integer.parseInt(ADDORDquantityTXtField.getText());
+    		
+    	}
+    }
+    
+    @FXML
+    void ADDORDaddBttn(ActionEvent event) {
+    	
+    }
+
+    @FXML
+    void ADDORDbackBttn(ActionEvent event) {
 
     }
 
     @FXML
     void ORDERMANbackBttn(ActionEvent event) {
-
+    	
     }
 
     @FXML
@@ -1391,7 +1863,7 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     void ORDERMANdisableBttn(ActionEvent event) {
-
+    	///////////////////////////////////////////////////////////////////////////////////////////////////
     }
     
     @FXML
@@ -1437,9 +1909,11 @@ public class RestaurantManagerGUI implements Initializable{
     		popupStage = new Stage();
     		popupStage.setScene(e);;
     		ObservableList<Size> sizeList = FXCollections.observableList(restaurant.getSizes());
-    		ADDPROsizeCB.setItems(sizeList);
+    		ADDPROsizeCB.itemsProperty().setValue(sizeList);
+    		convertSizeCB();
     		ObservableList<BaseProduct> baseProList = FXCollections.observableList(restaurant.getBaseProducts());
-    		ADDPRObaseProCB.setItems(baseProList);
+    		ADDPRObaseProCB.itemsProperty().setValue(baseProList);
+    		convertProCB();
     		popupStage.show();
     		popupStage.setResizable(false);
     		mainStage.hide();
@@ -1447,6 +1921,34 @@ public class RestaurantManagerGUI implements Initializable{
     	}
     }
     
+    private void convertSizeCB() {
+        ADDPROsizeCB.setConverter(new StringConverter<Size>() {
+            @Override
+            public String toString(Size size) {
+                return size.getName();
+            }
+
+            @Override
+            public Size fromString(final String string) {
+            	return ADDPROsizeCB.getItems().stream().filter(size -> size.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+    
+    private void convertProCB() {
+        ADDPRObaseProCB.setConverter(new StringConverter<BaseProduct>() {
+            @Override
+            public String toString(BaseProduct bs) {
+                return bs.getName();
+            }
+
+            @Override
+            public BaseProduct fromString(final String string) {
+            	return ADDPRObaseProCB.getItems().stream().filter(bs -> bs.getName().equals(string)).findFirst().orElse(null);
+            }
+        });
+    }
+
     @FXML
     void ADDPRObackBttn(ActionEvent event) {
     	popupStage.close();
@@ -1467,7 +1969,6 @@ public class RestaurantManagerGUI implements Initializable{
 		
 	}
 	
-
 	
 	public void start() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
@@ -1477,7 +1978,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Scene e = new Scene(root);
     	mainStage.setScene(e);
     	mainStage.show();
-    	restaurant.saveData();
+    	
 	}
   
 }

@@ -6,7 +6,7 @@ public class Product {
 	private BaseProduct baseProduct;
 	private Size productSize;
 	private int amountOrdered;
-	private ArrayList<Date> datesOrdered;
+	private ArrayList<DateClass> datesOrdered;
 	private String name;
 	private double productPrice;
 	
@@ -16,7 +16,7 @@ public class Product {
 		this.amountOrdered =0;
 		this.setProductPrice(productPrice);
 		setName(baseProduct.getName() +"  "+ productSize.getName());
-		ArrayList<Date> datesOrdered = new ArrayList<Date>();
+		ArrayList<DateClass> datesOrdered = new ArrayList<DateClass>();
 	}
 	
 	public String getBaseProductName() {
@@ -43,17 +43,17 @@ public class Product {
 		this.amountOrdered = amountOrdered;
 	}
 
-	public void plusOrdered(Date newDate) {
+	public void plusOrdered(DateClass newDate) {
 		datesOrdered.add(newDate);
 		amountOrdered = datesOrdered.size();
 	}
 	
-	public void setProductsDate(ArrayList<Date> x) {
+	public void setProductsDate(ArrayList<DateClass> x) {
 		datesOrdered = x;
 		amountOrdered = x.size();
 	}
 
-	public ArrayList<Date> getDates(){
+	public ArrayList<DateClass> getDates(){
 		return datesOrdered;
 	}
 	public Size getProductSize() {

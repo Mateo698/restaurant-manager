@@ -133,8 +133,8 @@ public class Restaurant {
 		employees.get(index).setStatus(true);
 	}
 	
-	public void updateEmployee(int index,String name,String lastNames, String ID, int amountOrder) {
-		employees.get(index).updateInfo(name,lastNames,ID,amountOrder);
+	public void updateEmployee(int index,String name,String lastNames, String ID) {
+		employees.get(index).updateInfo(name,lastNames,ID);
 		
 	}
 	
@@ -180,12 +180,12 @@ public class Restaurant {
 		
 	}
 	
-	public void updateClient(int index, String name, String lastName, String id, String addres, String phoneNumber, String footNotes, User originUser, User lastModifiedUser) {
-		clients.get(index).updateInfo(name, lastName, id, addres, phoneNumber, footNotes, originUser, lastModifiedUser);
+	public void updateClient(int index, String name, String lastName, String id, String addres, String phoneNumber, String footNotes, User lastModifiedUser) {
+		clients.get(index).updateInfo(name, lastName, id, addres, phoneNumber, footNotes, lastModifiedUser);
 		
 	}
 	
-	public void addOrder(int code, String footNote,Date originDate,List<Product> products,List<Integer> productsQuantity,Client originClient,Employee originEmployee) {
+	public void addOrder(int code, String footNote,DateClass originDate,List<Product> products,List<Integer> productsQuantity,Client originClient,Employee originEmployee) {
 		orders.add(new Order(code, footNote,originDate,products,productsQuantity,originClient,originEmployee));
 		
 	}
@@ -334,8 +334,8 @@ public class Restaurant {
 		String[] toTime = parts2[0].split(":");
 		String[] toDate = parts2[1].split("/");
 		ArrayList<Employee> ordersBetween = new ArrayList<Employee>();
-		Date fromRealDate = new Date(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
-		Date toRealDate = new Date(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
+		DateClass fromRealDate = new DateClass(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
+		DateClass toRealDate = new DateClass(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
 		for(int i=0;i<employees.size();i++) {
 			Employee auxEmp = employees.get(i);
 			ArrayList<Order> auxOrder = auxEmp.getDeliveredOrder();
@@ -367,8 +367,8 @@ public class Restaurant {
 		String[] fromDate = parts1[1].split("/");
 		String[] toTime = parts2[0].split(":");
 		String[] toDate = parts2[1].split("/");
-		Date fromRealDate = new Date(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
-		Date toRealDate = new Date(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
+		DateClass fromRealDate = new DateClass(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
+		DateClass toRealDate = new DateClass(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
 		ArrayList<Order> auxOrder = new ArrayList<Order>();
 		for(int i=0;i<orders.size();i++) {
 			if(orders.get(i).getOriginTime().compareTo(toRealDate)<0 && orders.get(i).getOriginTime().compareTo(fromRealDate)>0) {
@@ -398,12 +398,12 @@ public class Restaurant {
 		String[] fromDate = parts1[1].split("/");
 		String[] toTime = parts2[0].split(":");
 		String[] toDate = parts2[1].split("/");
-		Date fromRealDate = new Date(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
-		Date toRealDate = new Date(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
+		DateClass fromRealDate = new DateClass(Integer.parseInt(fromTime[0]),Integer.parseInt(fromTime[1]),Integer.parseInt(fromDate[0]),Integer.parseInt(fromDate[1]),Integer.parseInt(fromDate[2]));
+		DateClass toRealDate = new DateClass(Integer.parseInt(toTime[0]),Integer.parseInt(toTime[1]),Integer.parseInt(toDate[0]),Integer.parseInt(toDate[1]),Integer.parseInt(toDate[2]));
 		ArrayList<Product> auxPro = new ArrayList<Product>();
 		for(int i=0;i<products.size();i++) {
 			Product aux = products.get(i);
-			ArrayList<Date> datesAux = new ArrayList<Date>();
+			ArrayList<DateClass> datesAux = new ArrayList<DateClass>();
 			for(int j=0;j<aux.getDates().size();j++) {
 				if(aux.getDates().get(j).compareTo(toRealDate)<0 && aux.getDates().get(j).compareTo(fromRealDate)>0) {
 					datesAux.add(aux.getDates().get(j));
@@ -431,6 +431,21 @@ public class Restaurant {
 
 	public void deleteBaseProduct(int selectedIndex) {
 		baseProducts.remove(selectedIndex);
+		
+	}
+
+	public void addType(Type type) {
+		types.add(type);
+		
+	}
+
+	public void deleteType(int selectedIndex) {
+		types.remove(selectedIndex);
+		
+	}
+
+	public void updateType(int i, String text) {
+		types.get(i).setName(text);
 		
 	}
 

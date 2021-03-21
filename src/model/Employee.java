@@ -30,16 +30,19 @@ public class Employee implements Serializable{
 		return deliveredOrders;
 	}
 	
+	public int getAmountDeliveredOrders() {
+		return deliveredOrders.size();
+	}
+	
 	public void setDeliveredOrder(ArrayList<Order> x) {
 		deliveredOrders = x;
 		amountOrder = x.size();
 	}
 
-	public void updateInfo(String n, String ln, String id, int ao) {
+	public void updateInfo(String n, String ln, String id) {
 		setNames(n);
 		setLastNames(ln);
 		setId(id);
-		setAmountOrder(ao);
 	}
 	
 	public void setStatus(boolean newStatus) {
