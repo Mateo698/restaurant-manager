@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -37,6 +38,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import model.BaseProduct;
 import model.Client;
+import model.DateClass;
 import model.Employee;
 import model.Ingredient;
 import model.Order;
@@ -409,6 +411,41 @@ public class RestaurantManagerGUI implements Initializable{
     
     private ArrayList<Ingredient> ADDBASEPROlist;
     
+    @FXML
+    private ComboBox<Client> EDITORDclientCB;
+
+    @FXML
+    private ComboBox<Product> EDITORDproductCB;
+
+    @FXML
+    private TextField EDITORDquantityTXtField;
+
+    @FXML
+    private ComboBox<Employee> EDITORDdeliverEmployeeCB;
+
+    @FXML
+    private Label EDITORDdateLabel;
+
+    @FXML
+    private Label EDITORDcodeLabel;
+
+    @FXML
+    private TableView<Product> EDITORDproductsTable;
+
+    @FXML
+    private TableColumn<Product, String> EDITORDproductsCol;
+
+    @FXML
+    private TableView<Integer> EDITORDquantityTable;
+
+    @FXML
+    private TableColumn<Integer, Integer> EDITORDquantityCol;
+    
+    private ArrayList<Product> EDITORDproList;
+    
+    private ArrayList<Integer> EDITORDquantityList;
+    
+    
     private User localUser;
     
     private Restaurant restaurant;
@@ -422,7 +459,6 @@ public class RestaurantManagerGUI implements Initializable{
     	try {
 			restaurant.loadData();
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	restaurant.addType(new Type("Principal"));
@@ -629,8 +665,8 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void MAINopenREPORTEMP(ActionEvent event) throws IOException {
-    	FXMLLoader usrLoader = new FXMLLoader(getClass().getResource("EmployeeReport.fxml"));
+    public void MAINopenREPORTEMP(ActionEvent event) throws IOException {
+    	FXMLLoader usrLoader = new FXMLLoader(getClass().getResource("EmplooyeReport.fxml"));
     	usrLoader.setController(this);
     	Parent addMain = usrLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
@@ -642,7 +678,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void EMPREPORTbackBttn(ActionEvent event) throws IOException {
+    public void EMPREPORTbackBttn(ActionEvent event) throws IOException {
     	FXMLLoader lP = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	lP.setController(this);
     	Parent addMain = lP.load();
@@ -650,7 +686,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void EMPREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
+    public void EMPREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
     	String from = EMPREPORTfromTxtFIeld.getText();
     	String to = EMPREPORTtoTxtField.getText();
     	if(from.equals("") || to.equals("")) {
@@ -678,12 +714,11 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void MAINopenREPORTORDER(ActionEvent event) throws IOException {
+    public void MAINopenREPORTORDER(ActionEvent event) throws IOException {
     	FXMLLoader  x = new FXMLLoader(getClass().getResource("OrderReport.fxml"));
     	x.setController(this);
     	Parent root = x.load();
-    	Scene e = new Scene(root);
-    	mainStage.setScene(e);
+    	MAINmainPane.getChildren().setAll(root);
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
     	LocalDateTime now = LocalDateTime.now();  
     	String date = dtf.format(now);
@@ -692,16 +727,15 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void ORDERREPORTbackBttn(ActionEvent event) throws IOException {
+    public void ORDERREPORTbackBttn(ActionEvent event) throws IOException {
     	FXMLLoader  x = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	x.setController(this);
     	Parent root = x.load();
-    	Scene e = new Scene(root);
-    	mainStage.setScene(e);
+    	MAINmainPane.getChildren().setAll(root);
     }
 
     @FXML
-    void ORDERREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
+    public void ORDERREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
     	String from = ORDERREPORTfromTxtFIeld.getText();
     	String to = ORDERREPORTtoTxtField.getText();
     	if(from.equals("") || to.equals("")) {
@@ -728,12 +762,11 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void MAINopenREPORTPRO(ActionEvent event) throws IOException {
+    public void MAINopenREPORTPRO(ActionEvent event) throws IOException {
     	FXMLLoader  x = new FXMLLoader(getClass().getResource("ProductsReport.fxml"));
     	x.setController(this);
     	Parent root = x.load();
-    	Scene e = new Scene(root);
-    	mainStage.setScene(e);
+    	MAINmainPane.getChildren().setAll(root);
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
     	LocalDateTime now = LocalDateTime.now();  
     	String date = dtf.format(now);
@@ -742,16 +775,15 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void PROREPORTbackBttn(ActionEvent event) throws IOException {
+    public void PROREPORTbackBttn(ActionEvent event) throws IOException {
     	FXMLLoader  x = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
     	x.setController(this);
     	Parent root = x.load();
-    	Scene e = new Scene(root);
-    	mainStage.setScene(e);
+    	MAINmainPane.getChildren().setAll(root);
     }
 
     @FXML
-    void PROREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
+    public void PROREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
     	String from = PROREPORTfromTxtFIeld.getText();
     	String to = PROREPORTtoTxtField.getText();
     	if(from.equals("") || to.equals("")) {
@@ -779,7 +811,7 @@ public class RestaurantManagerGUI implements Initializable{
     
 
     @FXML
-    void MAINopenORDERMANAGER(ActionEvent event) throws IOException {
+    public void MAINopenORDERMANAGER(ActionEvent event) throws IOException {
     	FXMLLoader orderLoader = new FXMLLoader(getClass().getResource("OrderManager.fxml"));
     	orderLoader.setController(this);
     	Parent addMain = orderLoader.load();
@@ -1015,7 +1047,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void ADDBASEPROaddIngBttn(ActionEvent event) {
+    public void ADDBASEPROaddIngBttn(ActionEvent event) {
     	Ingredient selected = ADDBASEPROingredientCB.getSelectionModel().getSelectedItem();
     	ADDBASEPROlist.add(selected);
     	ADDBASEPROingredientCB.getSelectionModel().clearSelection();
@@ -1086,17 +1118,18 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     public void BASEPRODUCTMENUdisableBttn(ActionEvent event) {
-    	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    	
     }
 
     @FXML
-    void BASEPRODUCTselectedItem(MouseEvent event) throws IOException {
+    public void BASEPRODUCTselectedItem(MouseEvent event) throws IOException {
     	if(event.getClickCount() == 2 && BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem()!=null) {
     		FXMLLoader x = new FXMLLoader(getClass().getResource("EditBaseProduct.fxml"));
     		x.setController(this);
     		Parent root = x.load();
     		Scene e = new Scene(root);
     		popupStage.setScene(e);
+    		popupStage.show();
     		mainStage.hide();
     		EDITBASEPROinitializeTableView();
     		EDITBASEPROnameTxtField.setText(BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getName());
@@ -1150,7 +1183,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void EDITBASEPROaddIngBttn(ActionEvent event) {
+    public void EDITBASEPROaddIngBttn(ActionEvent event) {
     	Ingredient selected = ADDBASEPROingredientCB.getSelectionModel().getSelectedItem();
     	ADDBASEPROlist.add(selected);
     	EDITBASEPROingredientCB.getSelectionModel().clearSelection();
@@ -1162,14 +1195,14 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void EDITBASEPRObackBttn(ActionEvent event) {
+    public void EDITBASEPRObackBttn(ActionEvent event) {
     	ADDBASEPROlist.clear();
     	popupStage.hide();
     	mainStage.show();
     }
 
     @FXML
-    void EDITBASEPROdoneBttn(ActionEvent event) {
+    public void EDITBASEPROdoneBttn(ActionEvent event) {
     	int index = BASEPRODUCTMENUtable.getSelectionModel().getSelectedIndex();
     	restaurant.getBaseProducts().get(index).setIngredients(ADDBASEPROlist);
     	restaurant.getBaseProducts().get(index).setName(EDITBASEPROnameTxtField.getText());
@@ -1411,7 +1444,7 @@ public class RestaurantManagerGUI implements Initializable{
 
     
     @FXML
-    void EMPMENUselectedEmp(MouseEvent event) throws IOException {
+    public void EMPMENUselectedEmp(MouseEvent event) throws IOException {
     	FXMLLoader x = new FXMLLoader(getClass().getResource("EditEmployeeWindow"));
     	x.setController(this);
     	Parent root = x.load();
@@ -1424,7 +1457,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void EDITEMPaddBttn(ActionEvent event) {
+    public void EDITEMPaddBttn(ActionEvent event) {
     	if(!EDITEMPidTxtField.getText().isEmpty() && !EDITEMPnamesTxtField.getText().isEmpty() && !EDITEMPlastNamesTxtField.getText().isEmpty()) {
     		restaurant.updateEmployee(EMPMENUtable.getSelectionModel().getSelectedIndex(), EDITEMPnamesTxtField.getText(), EDITEMPlastNamesTxtField.getText(), EDITEMPidTxtField.getText());
     		popupStage.hide();
@@ -1440,7 +1473,7 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void EDITEMPbackBttn(ActionEvent event) {
+    public void EDITEMPbackBttn(ActionEvent event) {
     	popupStage.hide();
     	mainStage.show();
     }
@@ -1520,6 +1553,7 @@ public class RestaurantManagerGUI implements Initializable{
     			restaurant.addUser(ADDUSERusernameTxField.getText(), ADDUSERpasswordTxtField.getText(), ADDUSERnamesTxtField.getText(), ADDUSERlastNamesTxtFIeld.getText(), ADDUSERidTxtField.getText());
     			popupStage.close();
     	    	mainStage.show();
+    	    	USERinitializeTableView();
     		}
     		else {
     			Alert alertWarnings = new Alert(AlertType.WARNING);
@@ -1551,6 +1585,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent root = x.load();
     	Scene e = new Scene(root);
     	popupStage.setScene(e);
+    	popupStage.show();
     	mainStage.hide();
     }
 
@@ -1571,11 +1606,9 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     public void USERMENUdisableBttn(ActionEvent event) {
-    	//////////////////////////////////////////////////////////////////////////////////////
+    	
     }
-    
-    
-    
+
     @FXML
     void USERselectedUser(MouseEvent event) throws IOException {
     	if(event.getClickCount() == 2) {
@@ -1635,6 +1668,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent root = x.load();
     	Scene e = new Scene(root);
     	popupStage.setScene(e);
+    	popupStage.show();
     	mainStage.hide();
     }
     
@@ -1644,6 +1678,7 @@ public class RestaurantManagerGUI implements Initializable{
     		restaurant.addClient(ADDCLnameTxtField.getText(), ADDCLlastNameTxtFIeld.getText(), ADDCLidTxtField.getText(), ADDCLaddressTxtField.getText(), ADDCLphoneTxtField.getText(), ADDCLfootnoteTxt.getText(), localUser, localUser);
     		popupStage.close();
         	mainStage.show();
+        	CLinitializeTableView();
     	}
     	else {
     		Alert alertWarnings = new Alert(AlertType.WARNING);
@@ -1674,6 +1709,7 @@ public class RestaurantManagerGUI implements Initializable{
     public void CLMENUdeletBttn(ActionEvent event) {
     	if(CLMENUtable.getSelectionModel().getSelectedItem() != null) {
     		restaurant.deleteClient(CLMENUtable.getSelectionModel().getSelectedIndex());
+    		CLinitializeTableView();
     	}
     	else {
     		Alert alertWarnings = new Alert(AlertType.WARNING);
@@ -1708,49 +1744,19 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void EDITCLaddBttn(ActionEvent event) {
+    public void EDITCLaddBttn(ActionEvent event) {
     	restaurant.updateClient(CLMENUtable.getSelectionModel().getSelectedIndex(), EDITCLnameTxtField.getText(), EDITCLlastNameTxtFIeld.getText(), EDITCLidTxtField.getText(), EDITCLaddressTxtField.getText(), EDITCLphoneTxtField.getText(), EDITCLfootnoteTxt.getText(), localUser);
-    	popupStage.show();
-    	mainStage.hide();
+    	popupStage.hide();
+    	mainStage.show();
     	CLinitializeTableView();
     }
 
     @FXML
-    void EDITCLbackBttn(ActionEvent event) {
-    	popupStage.show();
-    	mainStage.hide();
+    public void EDITCLbackBttn(ActionEvent event) {
+    	popupStage.hide();
+    	mainStage.show();
     }
 
-    
-    @FXML
-    void ORDERMANaddBttn(ActionEvent event) throws IOException {
-    	FXMLLoader x = new FXMLLoader(getClass().getResource("AddOrderWindow.fxml"));
-    	x.setController(this);
-    	Parent root = x.load();
-    	Scene e = new Scene(root);
-    	popupStage.setScene(e);
-    	ObservableList<Client> clList = FXCollections.observableArrayList(restaurant.getClients());
-    	ADDORDclientCB.itemsProperty().setValue(clList);
-    	convertClientsCB();
-    	
-    	ObservableList<Product> prList = FXCollections.observableArrayList(restaurant.getProducts());
-    	ADDORDproductCB.itemsProperty().setValue(prList);
-    	convertProductsCB();
-    	
-    	ObservableList<Employee> empList = FXCollections.observableArrayList(restaurant.getEmployees());
-    	ADDORDdeliverEmployee.itemsProperty().setValue(empList);
-    	convertEmployeeCB();
-    	
-    	ADDORDinitializeTable();
-    	
-    	ADDORDcodeLabel.setText(generateCode());
-    	
-    	ADDORDdateLabel.setText(generateDate());
-    	popupStage.show();
-    	mainStage.hide();
-    	
-    }
-    
     private String generateDate() {
     	 SimpleDateFormat formatter = new SimpleDateFormat("HH:mm dd/MM/yyyy");  
     	 Date date = new Date();
@@ -1834,46 +1840,260 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
-    void ADDORDaddProductsBttn(ActionEvent event) {
+    public void ADDORDaddProductsBttn(ActionEvent event) {
     	if(ADDORDproductCB.getSelectionModel().getSelectedItem()!=null && !ADDORDquantityTXtField.getText().isEmpty()) {
     		int quantity = Integer.parseInt(ADDORDquantityTXtField.getText());
+    		ADDORDquantityList.add(quantity);
+    		ADDORDquantityTXtField.setText(null);
     		
+    		Product selected = ADDORDproductCB.getSelectionModel().getSelectedItem();
+    		ADDORDproList.add(selected);
+    		ADDORDproductCB.getSelectionModel().clearSelection();
+    		ADDORDproductCB.setValue(null);
+    		
+    		ADDORDinitializeTable();
+    	}
+    	
+    	else {
+    		Alert alert = new Alert(AlertType.WARNING);
+    		
+    		alert.setContentText("Complete the information!");
+    		alert.show();
     	}
     }
     
     @FXML
-    void ADDORDaddBttn(ActionEvent event) {
+    public void ADDORDaddBttn(ActionEvent event) throws IOException{
+    	if(ADDORDclientCB.getSelectionModel().getSelectedItem()!=null && ADDORDdeliverEmployee.getSelectionModel().getSelectedItem()!=null) {
+    		String lblDate = ADDORDdateLabel.getText();
+    		
+    		String[] dParts = lblDate.split(" ");
+    		String dPart1 = dParts[0];
+    		String dPart2 = dParts[1];
+    		
+    		String[] hourNMins = dPart1.split(":");
+    		int dHour = Integer.parseInt(hourNMins[0]);
+    		int dMin = Integer.parseInt(hourNMins[1]);
+    		
+    		String[] dmy = dPart2.split("/");
+    		int dDay = Integer.parseInt(dmy[0]);
+    		int dMonth= Integer.parseInt(dmy[1]);
+    		int dYear= Integer.parseInt(dmy[1]);
+    		
+    		
+    		DateClass date = new DateClass(dHour,dMin,dDay,dMonth,dYear);
+    		int code = Integer.parseInt(ADDORDcodeLabel.getText());
+    		String footNote = "";
+    		List<Product> products = ADDORDproList;
+    		List<Integer> productsQuantity = ADDORDquantityList;
+    		Client cl = ADDORDclientCB.getSelectionModel().getSelectedItem();
+    		Employee emp = ADDORDdeliverEmployee.getSelectionModel().getSelectedItem();
+    		
+    		restaurant.addOrder(code, footNote, date, products, productsQuantity, cl, emp);
+    		ORDERinitializeTableView();
+    		
+    		popupStage.close();
+    		mainStage.show();
+        	
+    	}
+    	
+    	else {
+    		Alert a = new Alert(AlertType.WARNING);
+    		a.setContentText("Complete the information!");
+    		a.show();
+    	}
+
+    }
+
+    @FXML
+    public void ADDORDbackBttn(ActionEvent event) throws IOException {
+    	popupStage.close();
+		mainStage.show();
     	
     }
 
     @FXML
-    void ADDORDbackBttn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void ORDERMANbackBttn(ActionEvent event) {
+    public void ORDERMANaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader x = new FXMLLoader(getClass().getResource("AddOrderWindow.fxml"));
+    	x.setController(this);
+    	Parent root = x.load();
+    	Scene e = new Scene(root);
+    	popupStage.setScene(e);
+    	ObservableList<Client> clList = FXCollections.observableArrayList(restaurant.getClients());
+    	ADDORDclientCB.itemsProperty().setValue(clList);
+    	convertClientsCB();
+    	
+    	ObservableList<Product> prList = FXCollections.observableArrayList(restaurant.getProducts());
+    	ADDORDproductCB.itemsProperty().setValue(prList);
+    	convertProductsCB();
+    	
+    	ObservableList<Employee> empList = FXCollections.observableArrayList(restaurant.getEmployees());
+    	ADDORDdeliverEmployee.itemsProperty().setValue(empList);
+    	convertEmployeeCB();
+    	
+    	ADDORDinitializeTable();
+    	
+    	ADDORDcodeLabel.setText(generateCode());
+    	
+    	ADDORDdateLabel.setText(generateDate());
+    	popupStage.show();
+    	mainStage.hide();
     	
     }
 
     @FXML
-    void ORDERMANdeleteBttn(ActionEvent event) {
-
+    public void EDITORDaddProductsBttn(ActionEvent event) {
+    	if(EDITORDproductCB.getSelectionModel().getSelectedItem()!=null && !EDITORDquantityTXtField.getText().isEmpty()) {
+    		int quantity = Integer.parseInt(EDITORDquantityTXtField.getText());
+    		EDITORDquantityList.add(quantity);
+    		EDITORDquantityTXtField.setText(null);
+    		
+    		Product selected = ADDORDproductCB.getSelectionModel().getSelectedItem();
+    		EDITORDproList.add(selected);
+    		EDITORDproductCB.getSelectionModel().clearSelection();
+    		EDITORDproductCB.setValue(null);
+    		
+    		EDITORDinitializeTableView();
+    	}
+    	
+    	else {
+    		Alert alert = new Alert(AlertType.WARNING);
+    		
+    		alert.setContentText("Complete the information!");
+    		alert.show();
+    	}
     }
 
     @FXML
-    void ORDERMANdisableBttn(ActionEvent event) {
-    	///////////////////////////////////////////////////////////////////////////////////////////////////
+    public void EDITORDbackBttn(ActionEvent event) {
+    	popupStage.close();
+    	mainStage.show();
+    	
+    }
+
+    @FXML
+    public void EDITORDdoneBttn(ActionEvent event) {
+    	if (EDITORDclientCB.getSelectionModel().getSelectedItem()!=null && EDITORDdeliverEmployeeCB.getSelectionModel().getSelectedItem()!=null) {
+    		int index = ORDERMANtable.getSelectionModel().getSelectedIndex();
+    		Client cl = EDITORDclientCB.getSelectionModel().getSelectedItem();
+    		Employee emp = EDITORDdeliverEmployeeCB.getSelectionModel().getSelectedItem();
+    		
+    		restaurant.updateOrder(index, EDITORDproList, EDITORDquantityList, cl, emp);
+    		
+    		popupStage.close();
+    		mainStage.show();
+    		ORDERinitializeTableView();
+		}
     }
     
     @FXML
-    void PROMANaddBttn(ActionEvent event) {
-
+    public void ORDERMANselectedOrder(MouseEvent event) throws IOException{
+    	if(event.getClickCount()==2) {
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("EDITOrderWindow.fxml"));
+    		loader.setController(this);
+    		Parent root = loader.load();
+    		Scene sc = new Scene(root);
+    		popupStage = new Stage();
+    		popupStage.setScene(sc);
+    		popupStage.show();
+    		mainStage.hide();
+    		
+    		EDITORDclientCB.setValue(ORDERMANtable.getSelectionModel().getSelectedItem().getOriginClient());
+    		
+    		ObservableList<Product> productList = FXCollections.observableList(restaurant.getProducts());
+    		EDITORDproductCB.itemsProperty().setValue(productList);
+    		convertProCB();
+    		
+    		ObservableList<Employee> empList = FXCollections.observableList(restaurant.getEmployees());
+    		EDITORDdeliverEmployeeCB.itemsProperty().setValue(empList);
+    		convertEmployeeCB();
+    		
+    		EDITORDdateLabel.setText(ORDERMANtable.getSelectionModel().getSelectedItem().getStringTime());
+    		EDITORDcodeLabel.setText(ORDERMANtable.getSelectionModel().getSelectedItem().getStringCode());
+    		
+    		EDITORDinitializeTableView();
+    	}
+    }
+    
+    public void EDITORDinitializeTableView() {
+		EDITORDproList = ADDORDproList;
+		ObservableList<Product> proList = FXCollections.observableArrayList(EDITORDproList);
+		EDITORDproductsCol.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
+		EDITORDproductsTable.setItems(proList);
+		
+		EDITORDquantityList = ADDORDquantityList;
+		ObservableList<Integer> quantityList = FXCollections.observableArrayList(EDITORDquantityList);
+		EDITORDquantityCol.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("intValue"));
+		EDITORDquantityTable.setItems(quantityList);
+		
+    }
+    
+    @FXML
+    public void ORDERMANbackBttn(ActionEvent event) throws IOException{
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	loader.setController(this);
+    	Parent root = loader.load();
+    	MAINmainPane.getChildren().setAll(root);
+    
     }
 
     @FXML
-    void PROMANbackBttn(ActionEvent event) {
+    public void ORDERMANdeleteBttn(ActionEvent event) {
+    	int index = ORDERMANtable.getSelectionModel().getSelectedIndex();
+    	restaurant.deleteOrder(index);
+    	ORDERinitializeTableView();
+    }
 
+    @FXML
+    public void ORDERMANdisableBttn(ActionEvent event) {
+    	////////////////////////////////////////////////////////////////
+    }
+    
+    @FXML
+    public void PROMANaddBttn(ActionEvent event) throws IOException {
+    	FXMLLoader aux = new FXMLLoader(getClass().getResource("AddProductWindow.fxml"));
+    	aux.setController(this);
+    	Parent root = aux.load();
+    	Scene sc = new Scene(root);
+    	popupStage = new Stage();
+    	popupStage.setScene(sc);
+    	popupStage.show();
+    	mainStage.hide();
+    	
+    	ADDPROinitializeCB();
+    }
+    
+    public void ADDPROinitializeCB() {
+    	ObservableList<Size> sizeList = FXCollections.observableList(restaurant.getSizes());
+    	ADDPROsizeCB.itemsProperty().setValue(sizeList);
+    	convertSizeCB();
+    	
+    	ObservableList<BaseProduct> bproductsList = FXCollections.observableList(restaurant.getBaseProducts());
+    	ADDPRObaseProCB.itemsProperty().setValue(bproductsList);
+    	convertBProductsCB();
+    }
+    
+   private void convertBProductsCB() {
+	   ADDPRObaseProCB.setConverter(new StringConverter<BaseProduct>() {
+	
+		   @Override
+		   public String toString(BaseProduct bp) {
+			   return bp.getName();
+		   }
+		   
+		   @Override
+		   public BaseProduct fromString(final String string) {
+			   return ADDPRObaseProCB.getItems().stream().filter(e -> e.getName().equals(string)).findFirst().orElse(null);
+		   }
+	   });
+   }
+
+    @FXML
+    void PROMANbackBttn(ActionEvent event) throws IOException{
+    	FXMLLoader aux = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	aux.setController(this);
+    	Parent addMain = aux.load();
+    	MAINmainPane.getChildren().setAll(addMain);
     }
 
     @FXML
@@ -1900,7 +2120,7 @@ public class RestaurantManagerGUI implements Initializable{
     
 
     @FXML
-    void PROMANselectedProduct(MouseEvent event) throws IOException {
+    public void PROMANselectedProduct(MouseEvent event) throws IOException {
     	if(event.getClickCount() == 2) {
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("AddProductWindow.fxml"));
     		loader.setController(this);
@@ -1950,16 +2170,17 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    void ADDPRObackBttn(ActionEvent event) {
+    public void ADDPRObackBttn(ActionEvent event) {
     	popupStage.close();
     	mainStage.show();
     }
 
     @FXML
-    void ADDPROdoneBttn(ActionEvent event) {
+    public void ADDPROdoneBttn(ActionEvent event) {
     	restaurant.addProduct(ADDPRObaseProCB.getSelectionModel().getSelectedItem(), ADDPROsizeCB.getSelectionModel().getSelectedItem(), Double.parseDouble(ADDPROpriceTxtField.getText()));
     	popupStage.close();
     	mainStage.show();
+    	PROMANinitializeTable();
     }
 
     
@@ -1980,5 +2201,4 @@ public class RestaurantManagerGUI implements Initializable{
     	mainStage.show();
     	
 	}
-  
 }

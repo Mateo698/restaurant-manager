@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
+	private final Size XLSIZE = new Size("XL");
+	private final Size LSIZE = new Size("L");
+	private final Size MSIZE = new Size("M");
+	private final Size SSIZE = new Size("S");
+	private final Size XSSIZE = new Size("XS");
+	
 	private ArrayList<Employee> employees;
 	private ArrayList<User> users;
 	private ArrayList<Client> clients;
@@ -40,9 +46,6 @@ public class Restaurant {
 		setProducts(new ArrayList<Product>());
 		setSizes(new ArrayList<Size>());
 	}
-	
-//Updated upstream
-	
 
 	public ArrayList<BaseProduct> getBaseProducts() {
 		return baseProducts;
@@ -57,8 +60,8 @@ public class Restaurant {
 		this.baseProducts = products;
 	}
 
-
-
+	
+	
 	public ArrayList<Type> getTypes() {
 		return types;
 	}
@@ -141,10 +144,13 @@ public class Restaurant {
 	public void addUser(String username, String password, String names, String lastNames, String ID) {
 		users.add(new User(username, password, names, lastNames, ID));
 		
+		addEmployee(names, lastNames, ID);
 	}
 	
 	public void deleteUser(int index) {
 		users.remove(index);
+		
+		deleteEmployee(index);
 		
 	}
 	
@@ -195,8 +201,8 @@ public class Restaurant {
 		
 	}
 	
-	public void updateOrder(int index, int code, String status, String footNote) {
-		orders.get(index).updateInfo(code, status, footNote);
+	public void updateOrder(int index,List<Product> products,List<Integer> productsQuantity,Client client,Employee emp) {
+		orders.get(index).updateInfo(products, productsQuantity, client, emp);
 		
 	}
 	
@@ -293,14 +299,19 @@ public class Restaurant {
 		this.products = products;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List<Size> getSizes() {
-		List Lsizes = (List)sizes;
-		return Lsizes;
+		return sizes;
 	}
 
 	public void setSizes(ArrayList<Size> sizes) {
 		this.sizes = sizes;
+		
+		sizes.add(XLSIZE);
+		sizes.add(LSIZE);
+		sizes.add(MSIZE);
+		sizes.add(SSIZE);
+		sizes.add(XSSIZE);
+		
 	}
 
 	public void addProduct(BaseProduct pr,Size sz,double price) {

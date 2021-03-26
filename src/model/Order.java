@@ -32,7 +32,13 @@ public class Order implements Serializable{
 	public int getCode() {
 		return code;
 	}
-
+	
+	public String getStringCode() {
+		String strCode = code + "";
+		
+		return strCode;
+	}
+	
 	public void setCode(int code) {
 		this.code = code;
 	}
@@ -79,10 +85,11 @@ public class Order implements Serializable{
 		}
 	}
 	
-	public void updateInfo(int code, String status, String footNote) {
-		setCode(code);
-		setStatus(status);
-		setFootNote(footNote);
+	public void updateInfo(List<Product> products,List<Integer> productsQuantity,Client client,Employee emp) {
+		setProducts(products);
+		setProductQuantity(productsQuantity);
+		setOriginClient(client);
+		setOriginEmployee(emp);
 		
 	}
 

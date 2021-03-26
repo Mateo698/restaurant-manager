@@ -16,7 +16,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="80.0" prefWidth="600.0" style="-fx-background-color: #b59703;" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Add order">
+            <Label text="Edit order">
                <font>
                   <Font name="Sylfaen" size="37.0" />
                </font>
@@ -40,7 +40,7 @@
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="441.0">
                      <children>
-                        <ComboBox fx:id="ADDORDclientCB" layoutX="36.0" layoutY="38.0" prefWidth="150.0" />
+                        <ComboBox fx:id="EDITORDclientCB" layoutX="36.0" layoutY="38.0" prefWidth="150.0" />
                      </children>
                   </Pane>
                </children>
@@ -68,9 +68,9 @@
                   </Pane>
                   <Pane prefHeight="184.0" prefWidth="392.0">
                      <children>
-                        <ComboBox fx:id="ADDORDproductCB" layoutX="58.0" layoutY="45.0" prefWidth="150.0" />
-                        <Button layoutX="270.0" layoutY="80.0" mnemonicParsing="false" onAction="#ADDORDaddProductsBttn" style="-fx-background-color: #b59703;" text="Add" />
-                        <TextField fx:id="ADDORDquantityTXtField" layoutX="59.0" layoutY="126.0" promptText="Quantity" />
+                        <ComboBox fx:id="EDITORDproductCB" layoutX="58.0" layoutY="45.0" prefWidth="150.0" />
+                        <Button layoutX="270.0" layoutY="80.0" mnemonicParsing="false" onAction="#EDITORDaddProductsBttn" style="-fx-background-color: #b59703;" text="Add" />
+                        <TextField fx:id="EDITORDquantityTXtField" layoutX="59.0" layoutY="126.0" promptText="Quantity" />
                      </children>
                   </Pane>
                </children>
@@ -88,7 +88,7 @@
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="386.0">
                      <children>
-                        <ComboBox fx:id="ADDORDdeliverEmployee" layoutX="50.0" layoutY="38.0" prefWidth="150.0" />
+                        <ComboBox fx:id="EDITORDdeliverEmployeeCB" layoutX="50.0" layoutY="38.0" prefWidth="150.0" />
                      </children>
                   </Pane>
                </children>
@@ -106,7 +106,7 @@
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="394.0">
                      <children>
-                        <Label fx:id="ADDORDdateLabel" layoutX="115.0" layoutY="35.0" text="Date" textFill="WHITE">
+                        <Label fx:id="EDITORDdateLabel" layoutX="115.0" layoutY="35.0" text="Date" textFill="WHITE">
                            <font>
                               <Font size="21.0" />
                            </font>
@@ -128,7 +128,7 @@
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="394.0">
                      <children>
-                        <Label fx:id="ADDORDcodeLabel" layoutX="113.0" layoutY="37.0" text="Code" textFill="WHITE">
+                        <Label fx:id="EDITORDcodeLabel" layoutX="113.0" layoutY="37.0" text="Code" textFill="WHITE">
                            <font>
                               <Font name="Sylfaen" size="21.0" />
                            </font>
@@ -141,12 +141,12 @@
                <children>
                   <Pane prefHeight="100.0" prefWidth="332.0">
                      <children>
-                        <Button layoutX="139.0" layoutY="38.0" mnemonicParsing="false" onAction="#ADDORDaddBttn" style="-fx-background-color: #b59703;" text="Add" />
+                        <Button layoutX="139.0" layoutY="38.0" mnemonicParsing="false" onAction="#EDITORDdoneBttn" style="-fx-background-color: #b59703;" text="Done" />
                      </children>
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="394.0">
                      <children>
-                        <Button layoutX="170.0" layoutY="38.0" mnemonicParsing="false" onAction="#ADDORDbackBttn" style="-fx-background-color: #b59703;" text="Back" />
+                        <Button layoutX="170.0" layoutY="38.0" mnemonicParsing="false" onAction="#EDITORDbackBttn" style="-fx-background-color: #b59703;" text="Back" />
                      </children>
                   </Pane>
                </children>
@@ -157,15 +157,15 @@
    <left>
       <HBox prefHeight="700.0" prefWidth="429.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="ADDORDproductsTable" prefHeight="700.0" prefWidth="295.0">
-              <columns>
-                <TableColumn fx:id="ADDORDproductsCol" prefWidth="294.0" text="Products" />
-              </columns>
+            <TableView fx:id="EDITORDproductsTable" prefHeight="700.0" prefWidth="295.0">
+               <columns>
+                  <TableColumn fx:id="EDITORDproductsCol" prefWidth="294.0" text="Products" />
+               </columns>
             </TableView>
-            <TableView fx:id="ADDORDquantityTable" prefHeight="700.0" prefWidth="135.0">
-              <columns>
-                <TableColumn fx:id="ADDORDquantityCol" prefWidth="134.0" text="Quantity" />
-              </columns>
+            <TableView fx:id="EDITORDquantityTable" prefHeight="700.0" prefWidth="135.0">
+               <columns>
+                  <TableColumn fx:id="EDITORDquantityCol" prefWidth="134.0" text="Quantity" />
+               </columns>
             </TableView>
          </children>
       </HBox>

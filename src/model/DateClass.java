@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class DateClass implements Serializable{
 	private static final long serialVersionUID = 1;
+
 	private int day;
 	private int month;
 	private int year;
@@ -16,7 +17,7 @@ public class DateClass implements Serializable{
 		this.year = year;
 		this.hour = hour;
 		this.minutes = minutes;
-	
+		
 	}
 	
 	public String intoString() {
