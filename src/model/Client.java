@@ -104,21 +104,4 @@ public class Client implements Serializable,Comparable<Client>{
 	public int compareTo(Client o) {
 		return name.compareTo(o.getName());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

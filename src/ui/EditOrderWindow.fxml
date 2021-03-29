@@ -40,7 +40,26 @@
                   </Pane>
                   <Pane prefHeight="100.0" prefWidth="441.0">
                      <children>
-                        <ComboBox fx:id="EDITORDclientCB" layoutX="36.0" layoutY="38.0" prefWidth="150.0" />
+                        <ComboBox fx:id="EDITORDclientCB" layoutX="36.0" layoutY="38.0" prefHeight="25.0" prefWidth="156.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="419.0">
+                     <children>
+                        <Label layoutX="128.0" layoutY="31.0" text="Status" textFill="WHITE">
+                           <font>
+                              <Font name="Sylfaen" size="21.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="441.0">
+                     <children>
+                        <Button layoutX="237.0" layoutY="32.0" mnemonicParsing="false" onAction="#EDITORDupdateStatusBttn" style="-fx-background-color: #b59703;" text="Update" />
+                        <TextField fx:id="EDITORDstatusTxt" editable="false" layoutX="38.0" layoutY="32.0" prefHeight="25.0" prefWidth="159.0" />
                      </children>
                   </Pane>
                </children>

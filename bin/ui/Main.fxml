@@ -41,6 +41,11 @@
                   </Menu>
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" style="-fx-color: #000000;" text="Search">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#MAINopenSEARCHCL" style="-fx-color: #000000;" text="Search clients" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

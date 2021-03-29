@@ -206,6 +206,11 @@ public class Restaurant {
 		
 	}
 	
+	public void updateStatusOrder(int index) {
+		orders.get(index).updateState();
+		
+	}
+	
 	public void saveData() throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(EMP_NAME_FILE));
 	    oos.writeObject(employees);

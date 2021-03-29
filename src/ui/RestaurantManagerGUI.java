@@ -241,7 +241,6 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     private TableColumn<Order, String> ORDERMANempCol;
-    
 
     @FXML
     private TableView<Product> PROMANtable;
@@ -428,7 +427,10 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     private Label EDITORDcodeLabel;
-
+    
+    @FXML
+    private TextField EDITORDstatusTxt;
+    
     @FXML
     private TableView<Product> EDITORDproductsTable;
 
@@ -444,7 +446,32 @@ public class RestaurantManagerGUI implements Initializable{
     private ArrayList<Product> EDITORDproList;
     
     private ArrayList<Integer> EDITORDquantityList;
+
+    @FXML
+    private TextField SEARCHCLnameTxtField;
+
+    @FXML
+    private TableView<Client> SEARCHCLtableView;
+
+    @FXML
+    private TableColumn<Client, String> SEARCHCLnamesCol;
+
+    @FXML
+    private TableColumn<Client, String> SEARCHCLlastnamesCol;
+
+    @FXML
+    private TableColumn<Client, String> SEARCHCLidCol;
+
+    @FXML
+    private TableColumn<Client, String> SEARCHCLaddressCol;
+
+    @FXML
+    private TableColumn<Client, String> SEARCHCLphonenumberCol;
+
+    @FXML
+    private TableColumn<Client, String> SEARCHCLfootnoteCol;
     
+    private ArrayList<Client> SEARCHCLclientsList;
     
     private User localUser;
     
@@ -465,6 +492,7 @@ public class RestaurantManagerGUI implements Initializable{
     	ADDBASEPROlist = new ArrayList<>();
     	ADDORDproList = new ArrayList<Product>();
     	ADDORDquantityList = new ArrayList<Integer>();
+    	SEARCHCLclientsList = new ArrayList<Client>();
     	popupStage = new Stage();
     }
     
@@ -830,12 +858,13 @@ public class RestaurantManagerGUI implements Initializable{
     	ORDERMANdateCol.setCellValueFactory(new PropertyValueFactory<Order,String>("stringTime"));
     	ORDERMANclientCol.setCellValueFactory(new PropertyValueFactory<Order,String>("stringClient"));
     	ORDERMANempCol.setCellValueFactory(new PropertyValueFactory<Order,String>("stringEmployee"));
+    	ORDERMANstatusCol.setCellValueFactory(new PropertyValueFactory<Order,String>("status"));
     	ORDERMANtable.setItems(USRobservableList);
     }
     
 
     @FXML
-    void MAINopenPRODUCTS(ActionEvent event) throws IOException {
+    public void MAINopenPRODUCTS(ActionEvent event) throws IOException {
     	FXMLLoader proLoader = new FXMLLoader(getClass().getResource("ProductManager.fxml"));
     	proLoader.setController(this);
     	Parent addMain = proLoader.load();
@@ -1727,20 +1756,22 @@ public class RestaurantManagerGUI implements Initializable{
 
     @FXML
     public void CLMENUselectedClient(MouseEvent event) throws IOException {
-    	FXMLLoader x =  new FXMLLoader(getClass().getResource("EditClientWindow.fxml"));
-    	x.setController(this);
-    	Parent root = x.load();
-    	Scene e = new Scene(root);
-    	popupStage.setScene(e);
-    	Client auxCl = CLMENUtable.getSelectionModel().getSelectedItem();
-    	EDITCLnameTxtField.setText(auxCl.getName());
-    	EDITCLlastNameTxtFIeld.setText(auxCl.getLastName());
-    	EDITCLidTxtField.setText(auxCl.getId());
-    	EDITCLphoneTxtField.setText(auxCl.getPhoneNumber());
-    	EDITCLaddressTxtField.setText(auxCl.getAddress());
-    	EDITCLfootnoteTxt.setText(auxCl.getFootNote());
-    	popupStage.show();
-    	mainStage.hide();
+    	if(event.getClickCount()==2) {
+    		FXMLLoader x =  new FXMLLoader(getClass().getResource("EditClientWindow.fxml"));
+        	x.setController(this);
+        	Parent root = x.load();
+        	Scene e = new Scene(root);
+        	popupStage.setScene(e);
+        	Client auxCl = CLMENUtable.getSelectionModel().getSelectedItem();
+        	EDITCLnameTxtField.setText(auxCl.getName());
+        	EDITCLlastNameTxtFIeld.setText(auxCl.getLastName());
+        	EDITCLidTxtField.setText(auxCl.getId());
+        	EDITCLphoneTxtField.setText(auxCl.getPhoneNumber());
+        	EDITCLaddressTxtField.setText(auxCl.getAddress());
+        	EDITCLfootnoteTxt.setText(auxCl.getFootNote());
+        	popupStage.show();
+        	mainStage.hide();
+    	}
     }
     
     @FXML
@@ -1764,7 +1795,8 @@ public class RestaurantManagerGUI implements Initializable{
     	 return dateString;
     }
     
-    private String generateCode() {
+    @SuppressWarnings("unused")
+	private String generateCode() {
     	Random rand = new Random();
     	int code = 0;
     	boolean created = false;
@@ -1970,6 +2002,21 @@ public class RestaurantManagerGUI implements Initializable{
     	mainStage.show();
     	
     }
+    
+    @FXML
+    public void EDITORDupdateStatusBttn(ActionEvent event) {
+    	if(EDITORDclientCB.getSelectionModel().getSelectedItem()!=null && EDITORDdeliverEmployeeCB.getSelectionModel().getSelectedItem()!=null && !EDITORDstatusTxt.getText().equals(null)) {
+    		int index = ORDERMANtable.getSelectionModel().getSelectedIndex();
+    		
+    		EDITORDstatusTxt.setText(ORDERMANtable.getSelectionModel().getSelectedItem().getStatus());
+    		
+    		restaurant.updateStatusOrder(index);
+    		
+    		popupStage.close();
+    		mainStage.show();
+    		ORDERinitializeTableView();
+    	}
+    }
 
     @FXML
     public void EDITORDdoneBttn(ActionEvent event) {
@@ -1999,6 +2046,8 @@ public class RestaurantManagerGUI implements Initializable{
     		mainStage.hide();
     		
     		EDITORDclientCB.setValue(ORDERMANtable.getSelectionModel().getSelectedItem().getOriginClient());
+    		
+    		EDITORDstatusTxt.setText(ORDERMANtable.getSelectionModel().getSelectedItem().getStatus());
     		
     		ObservableList<Product> productList = FXCollections.observableList(restaurant.getProducts());
     		EDITORDproductCB.itemsProperty().setValue(productList);
@@ -2182,15 +2231,76 @@ public class RestaurantManagerGUI implements Initializable{
     	mainStage.show();
     	PROMANinitializeTable();
     }
-
     
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    public void MAINopenSEARCHCL(ActionEvent event) throws IOException{
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("SearchClientWindow.fxml"));
+    	loader.setController(this);
+    	Parent root = loader.load();
+    	MAINmainPane.getChildren().setAll(root);
+    	
+    }
+      
+    @FXML
+    public void SEARCHCLsearchClBttn(ActionEvent event) {
+    	String name = SEARCHCLnameTxtField.getText();
 		
-		
-	}
-	
-	
+    	System.out.println(name);
+    	
+    	if(!name.equals(null)) {
+    		ArrayList<Client> aux = restaurant.getClients();
+    		
+    		int pos = -1;
+    		int i = 0;
+    		int j = aux.size()-1;
+    		
+    		while(i<=j && pos<0) {
+    			int m = (i+j)/2;
+    			
+    			if(aux.get(m).getName().equalsIgnoreCase(name)) {
+    				pos = m;
+    				
+    				SEARCHCLclientsList.add(aux.get(pos));
+    		    	SEARCHCLinitializeTableView();
+    			}
+    			else if(name.compareToIgnoreCase(aux.get(m).getName())>0) {
+    				i = m+1;	
+    			}
+    			else {
+    				j = m-1;
+    			}
+    			
+    		}
+    	}
+    }
+    
+    public void SEARCHCLinitializeTableView() {
+    	ObservableList<Client> observableList = FXCollections.observableArrayList(SEARCHCLclientsList);
+    	
+    	SEARCHCLnamesCol.setCellValueFactory(new PropertyValueFactory<Client,String>("name"));
+    	SEARCHCLlastnamesCol.setCellValueFactory(new PropertyValueFactory<Client,String>("lastName"));
+    	SEARCHCLidCol.setCellValueFactory(new PropertyValueFactory<Client,String>("id"));
+    	SEARCHCLaddressCol.setCellValueFactory(new PropertyValueFactory<Client,String>("address"));
+    	SEARCHCLphonenumberCol.setCellValueFactory(new PropertyValueFactory<Client,String>("phoneNumber"));
+    	SEARCHCLfootnoteCol.setCellValueFactory(new PropertyValueFactory<Client,String>("footNote"));
+    	SEARCHCLtableView.setItems(observableList);
+    	
+    }
+
+    @FXML
+    public void SEARCHCLbackBttn(ActionEvent event) throws IOException{
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPaneMain.fxml"));
+    	loader.setController(this);
+    	Parent root = loader.load();
+    	MAINmainPane.getChildren().setAll(root);
+    	
+    }
+    
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    	
+    }
+    
 	public void start() throws IOException {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
     	loader.setController(this);
