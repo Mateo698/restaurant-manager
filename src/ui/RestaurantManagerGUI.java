@@ -1274,6 +1274,32 @@ public class RestaurantManagerGUI implements Initializable{
     }
     
     @FXML
+    public void TYPEMENUorderBttn(ActionEvent event) {
+    	ArrayList<Type> aux = restaurant.getTypes();
+    	
+    	for (int i = 0; i < aux.size(); i++) {
+			String minName = aux.get(i).getName();
+			
+			for(int j = i+1; j<aux.size(); j++) {
+				if(aux.get(j).getName().compareToIgnoreCase(minName)<0) {
+					String temp = aux.get(j).getName();
+					aux.get(j).setName(minName);
+					minName = temp;
+					
+				}
+			}
+			
+			aux.get(i).setName(minName);
+    	}
+    	
+    	restaurant.updateTypeList(aux);
+    	
+    	// Arreglar para que se vea ordenado apenas se le da al button.
+    	
+    	TYPEinitializeTableView();
+    }
+    
+    @FXML
     void ADDTYPEaddBttn(ActionEvent event) {
     	if(!ADDTYPEnameTxtField.getText().equals("")) {
     		String name = ADDTYPEnameTxtField.getText();
@@ -1339,20 +1365,17 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    public void TYPEMENUdisableBttn(ActionEvent event) {
-    	///////////////////////////////////////////////////////////////////////////////////////////////////
-    }
-    
-    @FXML
     public void TYPEMENUselectedType(MouseEvent event) throws IOException {
-    	FXMLLoader x = new FXMLLoader(getClass().getResource("EditTypeWindow.fxml"));
-    	x.setController(this);
-    	Parent root = x.load();
-    	Scene e = new Scene(root);
-    	popupStage.setScene(e);
-    	EDITTYPEnameTxtField.setText(TYPEMENUtable.getSelectionModel().getSelectedItem().getName());
-    	popupStage.show();
-    	mainStage.hide();
+    	if(event.getClickCount()==2) {
+        	FXMLLoader x = new FXMLLoader(getClass().getResource("EditTypeWindow.fxml"));
+        	x.setController(this);
+        	Parent root = x.load();
+        	Scene e = new Scene(root);
+        	popupStage.setScene(e);
+        	EDITTYPEnameTxtField.setText(TYPEMENUtable.getSelectionModel().getSelectedItem().getName());
+        	popupStage.show();
+        	mainStage.hide();
+    	}
     }
     
     @FXML
@@ -2244,8 +2267,6 @@ public class RestaurantManagerGUI implements Initializable{
     @FXML
     public void SEARCHCLsearchClBttn(ActionEvent event) {
     	String name = SEARCHCLnameTxtField.getText();
-		
-    	System.out.println(name);
     	
     	if(!name.equals(null)) {
     		ArrayList<Client> aux = restaurant.getClients();

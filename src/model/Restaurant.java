@@ -464,6 +464,10 @@ public class Restaurant {
 		types.get(i).setName(text);
 		
 	}
+	
+	public void updateTypeList(ArrayList<Type> o) {
+		types = o;
+	}
 
 	  /**public void importData(String fileName) throws IOException{
 	    BufferedReader br = new BufferedReader(new FileReader(fileName));
