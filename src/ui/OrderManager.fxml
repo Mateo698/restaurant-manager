@@ -55,7 +55,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#ORDERMANdisableBttn" style="-fx-background-color: #b59703;" text="Disable" />
+                        <Button mnemonicParsing="false" onAction="#ORDERMANimportBttn" style="-fx-background-color: #b59703;" text="Import" />
                      </children>
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

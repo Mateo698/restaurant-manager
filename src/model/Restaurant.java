@@ -1,9 +1,11 @@
 package model;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,6 +19,8 @@ public class Restaurant {
 	private final Size MSIZE = new Size("M");
 	private final Size SSIZE = new Size("S");
 	private final Size XSSIZE = new Size("XS");
+	
+	private final String SEPARATOR = ",";
 	
 	private ArrayList<Employee> employees;
 	private ArrayList<User> users;
@@ -329,8 +333,8 @@ public class Restaurant {
 		
 	}
 
-	public void addIngredient(String text) {
-		ingredients.add(new Ingredient(text));
+	public void addIngredient(String name) {
+		ingredients.add(new Ingredient(name));
 		
 	}
 
@@ -468,15 +472,82 @@ public class Restaurant {
 	public void updateTypeList(ArrayList<Type> o) {
 		types = o;
 	}
-
-	  /**public void importData(String fileName) throws IOException{
-	    BufferedReader br = new BufferedReader(new FileReader(fileName));
-	    String line = br.readLine();
-	    while(line!=null){
-	      String[] parts = line.split(";");
-	      addContact(parts[0],parts[1]);
-	      line = br.readLine();
-	    }
-	    br.close();
-	  }**/
+	
+	public void importBaseProducts(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		
+		String line = br.readLine();
+		
+		while(line!=null) {
+			String[] parts = line.split(SEPARATOR);
+			
+			Type t = new Type("");
+			ArrayList<Ingredient> ings = new ArrayList<>();
+			
+			ings.add(new Ingredient(""));
+			
+			addBaseProduct(parts[0], ings, t);
+			
+			line = br.readLine();
+		}
+		
+		br.close();
+	}
+	
+	public void exportBaseProducts(String fileName) throws IOException{
+		PrintWriter pw = new PrintWriter(fileName);
+		
+		for (int i = 0; i < baseProducts.size(); i++) {
+			BaseProduct aux = baseProducts.get(i);
+			
+			pw.println(aux.getName() + SEPARATOR);
+		}
+		
+		pw.close();
+	}
+	
+	public void importProducts(String name) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(name));
+		
+		String line = br.readLine();
+		
+		while(line!=null) {
+			
+		}
+		
+		br.close();
+	}
+	
+	public void exportProducts(String name) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(name);
+		
+		for (int i = 0; i < baseProducts.size(); i++) {
+			
+		}
+		
+		pw.close();
+	}
+	
+	public void importOrders(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		
+		String line = br.readLine();
+		
+		while(line!=null) {
+			
+		}
+		
+		br.close();
+	}
+	
+	public void exportOrders(String fileName) throws FileNotFoundException {
+		PrintWriter pw = new PrintWriter(fileName);
+		
+		for (int i = 0; i < baseProducts.size(); i++) {
+			
+		}
+		
+		pw.close();
+	}
+	
 }

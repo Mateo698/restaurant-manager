@@ -1144,10 +1144,53 @@ public class RestaurantManagerGUI implements Initializable{
     		BASEPRODUCTinitializeTableView();
     	}
     }
-
+    
     @FXML
-    public void BASEPRODUCTMENUdisableBttn(ActionEvent event) {
+    public void BASEPRODUCTMENUexportBttn(ActionEvent event) {
+    	FileChooser fc = new FileChooser();
+    	fc.setTitle("Select the base products list");
+    	File f = fc.showSaveDialog(MAINmainPane.getScene().getWindow());
     	
+    	Alert a = new Alert(AlertType.INFORMATION);
+    	a.setTitle("Export base products");
+    	
+    	if(f!=null) {
+    		try {
+    			restaurant.exportBaseProducts(f.getAbsolutePath());
+    			
+    			a.setContentText("Base product data was exported succesfuly");
+		    	a.show();
+    			
+    		} catch(IOException e) {
+    			a.setContentText("Base product data wasn't exported succesfuly");
+		    	a.show();
+    		};
+    	}
+    }
+    
+    @FXML
+    public void BASEPRODUCTMENUimportBttn(ActionEvent event) {
+    	FileChooser fc = new FileChooser();
+    	fc.setTitle("Select the base products list");
+    	File f = fc.showOpenDialog(MAINmainPane.getScene().getWindow());
+    	
+    	Alert a = new Alert(AlertType.INFORMATION);
+    	a.setTitle("Import base products");
+    	
+    	if(f!=null) {
+    		try {
+    			restaurant.importBaseProducts(f.getAbsolutePath());
+    			
+    			a.setContentText("Base product data was imported succesfuly");
+		    	a.show();
+    			
+    		} catch(IOException e) {
+    			a.setContentText("Base product data wasn't imported succesfuly");
+		    	a.show();
+    		};
+    		
+    		BASEPRODUCTinitializeTableView();
+    	}
     }
 
     @FXML
@@ -1213,7 +1256,7 @@ public class RestaurantManagerGUI implements Initializable{
     
     @FXML
     public void EDITBASEPROaddIngBttn(ActionEvent event) {
-    	Ingredient selected = ADDBASEPROingredientCB.getSelectionModel().getSelectedItem();
+    	Ingredient selected = EDITBASEPROingredientCB.getSelectionModel().getSelectedItem();
     	ADDBASEPROlist.add(selected);
     	EDITBASEPROingredientCB.getSelectionModel().clearSelection();
     	EDITBASEPROingredientCB.setValue(null);
@@ -1771,10 +1814,15 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.show();
     	}
     }
-
+    
     @FXML
-    public void CLMENUdisableBttn(ActionEvent event) {
-    	/////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void CLMENUimportBttn(ActionEvent event) {
+
+    }
+    
+    @FXML
+    public void CLMENUexportBttn(ActionEvent event) {
+
     }
 
     @FXML
@@ -2117,10 +2165,24 @@ public class RestaurantManagerGUI implements Initializable{
     }
 
     @FXML
-    public void ORDERMANdisableBttn(ActionEvent event) {
-    	////////////////////////////////////////////////////////////////
+    public void ORDERMANimportBttn(ActionEvent event) {
+    	FileChooser fc = new FileChooser();
+    	fc.setTitle("Select the order list");
+    	File f = fc.showOpenDialog(MAINmainPane.getScene().getWindow());
+    	
+    	Alert a = new Alert(AlertType.INFORMATION);
+    	a.setTitle("Import orders");
+    	
+    	if(f!=null) {
+    		
+    	}
     }
     
+    @FXML
+    public void ORDERMANexportBttn(ActionEvent event) {
+    	
+    }
+        
     @FXML
     public void PROMANaddBttn(ActionEvent event) throws IOException {
     	FXMLLoader aux = new FXMLLoader(getClass().getResource("AddProductWindow.fxml"));
@@ -2186,10 +2248,52 @@ public class RestaurantManagerGUI implements Initializable{
 	}
 
 	@FXML
-    void PROMANdisableBttn(ActionEvent event) {
-
+    public void PROMANimportBttn(ActionEvent event) {
+		FileChooser fc = new FileChooser();
+    	fc.setTitle("Select the products list");
+    	File f = fc.showOpenDialog(MAINmainPane.getScene().getWindow());
+    	
+    	Alert a = new Alert(AlertType.INFORMATION);
+    	a.setTitle("Import products");
+    	
+    	if(f!=null) {
+    		try {
+    			restaurant.importProducts(f.getAbsolutePath());
+    			
+    			a.setContentText("Product data was imported succesfuly");
+		    	a.show();
+    			
+    		} catch(IOException e) {
+    			a.setContentText("Product data wasn't imported succesfuly");
+		    	a.show();
+    		};
+    		
+    		PROMANinitializeTable();
+    	}
     }
-    
+	
+	@FXML
+    public void PROMANexportBttn(ActionEvent event) {
+		FileChooser fc = new FileChooser();
+    	fc.setTitle("Select the products list");
+    	File f = fc.showSaveDialog(MAINmainPane.getScene().getWindow());
+    	
+    	Alert a = new Alert(AlertType.INFORMATION);
+    	a.setTitle("Export products");
+    	
+    	if(f!=null) {
+    		try {
+    			restaurant.exportProducts(f.getAbsolutePath());
+    			
+    			a.setContentText("Product data was exported succesfuly");
+		    	a.show();
+    			
+    		} catch(IOException e) {
+    			a.setContentText("Product data wasn't exported succesfuly");
+		    	a.show();
+    		};
+    	}
+    }
 
     @FXML
     public void PROMANselectedProduct(MouseEvent event) throws IOException {
