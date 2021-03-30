@@ -1817,12 +1817,46 @@ public class RestaurantManagerGUI implements Initializable{
     
     @FXML
     public void CLMENUimportBttn(ActionEvent event) {
-
+    	FileChooser fc = new FileChooser();
+    	fc.setTitle("Select the clients list");
+    	File f = fc.showOpenDialog(MAINmainPane.getScene().getWindow());
+    	
+    	Alert a = new Alert(AlertType.INFORMATION);
+    	a.setTitle("Import clients");
+    	
+    	try {
+    		restaurant.importClients(f.getAbsolutePath());
+    		
+    		a.setContentText("Client data was imported succefuslly");
+    		a.show();
+    		
+    	} catch(IOException e) {
+    		a.setContentText("Client data wasn't imported succefuslly");
+    		a.show();
+    		
+    	}
     }
     
     @FXML
     public void CLMENUexportBttn(ActionEvent event) {
-
+    	FileChooser fc = new FileChooser();
+    	fc.setTitle("Select the clients list");
+    	File f = fc.showSaveDialog(MAINmainPane.getScene().getWindow());
+    	
+    	Alert a = new Alert(AlertType.INFORMATION);
+    	a.setTitle("Export clients");
+    	
+    	try {
+    		restaurant.exportClients(f.getAbsolutePath());
+    		
+    		a.setContentText("Client data was exported succefuslly");
+    		a.show();
+    		
+    	} catch(IOException e) {
+    		a.setContentText("Client data wasn't exported succefuslly");
+    		a.show();
+    		
+    	}
     }
 
     @FXML
@@ -2174,12 +2208,43 @@ public class RestaurantManagerGUI implements Initializable{
     	a.setTitle("Import orders");
     	
     	if(f!=null) {
+    		try {
+    			restaurant.importOrders(f.getAbsolutePath());
+    			
+    			a.setContentText("Order data was imported succesfuly");
+    			a.show();
+    			
+    		} catch(IOException e) {
+    			a.setContentText("Order data wasn't imported succesfuly");
+    			a.show();
+    			
+    		};
     		
+    		ORDERinitializeTableView();
     	}
     }
     
     @FXML
     public void ORDERMANexportBttn(ActionEvent event) {
+    	FileChooser fc = new FileChooser();
+    	fc.setTitle("Export orders");
+    	File f = fc.showSaveDialog(MAINmainPane.getScene().getWindow());
+    	
+    	Alert a = new Alert(AlertType.INFORMATION);
+    	a.setTitle("Import orders");
+
+    	if(f!=null) {
+    		try {
+    			restaurant.exportOrders(f.getAbsolutePath());
+    			
+    			a.setContentText("Order data was exported succesfuly");
+		    	a.show();
+    			
+    		} catch(IOException e) {
+    			a.setContentText("Order data wasn't exported succesfuly");
+		    	a.show();
+    		};
+    	}
     	
     }
         

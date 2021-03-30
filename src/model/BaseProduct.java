@@ -38,7 +38,7 @@ public class BaseProduct implements Serializable{
 				x += ingredients.get(i).getName();
 			}
 			else {
-				x += ingredients.get(i).getName() + ", ";
+				x += ingredients.get(i).getName() + "; ";
 			}
 		}
 		return x;

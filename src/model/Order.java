@@ -62,6 +62,16 @@ public class Order implements Serializable{
 	public List<Product> getProducts() {
 		return products;
 	}
+	
+	public String getStringProducts() {
+		String strProducts = "";
+		
+		for (int i = 0; i < products.size(); i++) {
+			strProducts += products.get(i).getName() + ";";
+		}
+		
+		return strProducts;
+	}
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
@@ -109,6 +119,16 @@ public class Order implements Serializable{
 
 	public List<Integer> getProductQuantity() {
 		return productQuantity;
+	}
+	
+	public String getStringProductQuantity() {
+		String strProdQuantity = "";
+		
+		for (int i = 0; i < productQuantity.size(); i++) {
+			strProdQuantity += productQuantity.get(i) + ";";
+		}
+		
+		return strProdQuantity;
 	}
 
 	public void setProductQuantity(List<Integer> productQuantity) {

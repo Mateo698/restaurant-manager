@@ -473,7 +473,7 @@ public class Restaurant {
 		types = o;
 	}
 	
-	public void importBaseProducts(String fileName) throws IOException{
+	public void importClients(String fileName) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		
 		String line = br.readLine();
@@ -481,10 +481,70 @@ public class Restaurant {
 		while(line!=null) {
 			String[] parts = line.split(SEPARATOR);
 			
-			Type t = new Type("");
+			User ou = new User(null, null, null, null, null);
+			User lmu = new User(null, null, null, null, null);
+			
+			for (int i = 0; i < users.size(); i++) {
+				if(users.get(i).getNames().equalsIgnoreCase(parts[6])) {
+					ou = users.get(i);
+					
+				}
+			}
+			
+			for (int i = 0; i < users.size(); i++) {
+				if(users.get(i).getNames().equalsIgnoreCase(parts[7])) {
+					lmu = users.get(i);
+					
+				}
+			}
+				
+			addClient(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], ou, lmu);
+			
+			line = br.readLine();
+		}
+		
+		br.close();
+	}
+	
+	public void exportClients(String fileName) throws IOException{
+		PrintWriter pw = new PrintWriter(fileName);
+		
+		for (int i = 0; i < clients.size(); i++) {
+			Client aux = clients.get(i);
+			
+			pw.println(aux.getName() + SEPARATOR + aux.getLastName() + SEPARATOR + aux.getId() + SEPARATOR + aux.getAddress() + SEPARATOR + aux.getPhoneNumber() +
+					SEPARATOR + aux.getFootNote() + SEPARATOR + aux.getStringOriginUser() + SEPARATOR + aux.getStringLastModifiedUser());
+		}
+		
+		pw.close();
+	}
+	
+	public void importBaseProducts(String fileName) throws IOException{
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		
+		String line = br.readLine();
+		
+		while(line!=null) {
+			String[] parts = line.split(SEPARATOR);
+			String[] ingParts = parts[1].split(";");
+			
 			ArrayList<Ingredient> ings = new ArrayList<>();
 			
-			ings.add(new Ingredient(""));
+			Type t = new Type("");
+			
+			for(int i = 0; i < ingredients.size(); i++) {
+				if(ingredients.get(i).getName().equalsIgnoreCase(ingParts[i])) {
+					ings.add(ingredients.get(i));
+					
+				}
+			}
+			
+			for (int i = 0; i < types.size(); i++) {
+				if(types.get(i).getName().equalsIgnoreCase(ingParts[i])) {
+					t = types.get(i);
+				
+				}
+			}
 			
 			addBaseProduct(parts[0], ings, t);
 			
@@ -500,7 +560,7 @@ public class Restaurant {
 		for (int i = 0; i < baseProducts.size(); i++) {
 			BaseProduct aux = baseProducts.get(i);
 			
-			pw.println(aux.getName() + SEPARATOR);
+			pw.println(aux.getName() + SEPARATOR + aux.getIngredientsString() + SEPARATOR + aux.getTypeString());
 		}
 		
 		pw.close();
@@ -512,7 +572,26 @@ public class Restaurant {
 		String line = br.readLine();
 		
 		while(line!=null) {
+			String[] parts = line.split(SEPARATOR);
 			
+			BaseProduct bp = new BaseProduct(null, null, null);
+			Size s = new Size(null);
+			double price = Double.parseDouble(parts[2]);
+			
+			for (int i = 0; i < baseProducts.size(); i++) {
+				if(baseProducts.get(i).getName().equalsIgnoreCase(parts[0])) {
+					bp = baseProducts.get(i);
+				}
+			}
+			
+			for (int i = 0; i < baseProducts.size(); i++) {
+				if(sizes.get(i).getName().equalsIgnoreCase(parts[1])) {
+					s = sizes.get(i);
+				
+				}
+			}
+			
+			addProduct(bp, s, price);
 		}
 		
 		br.close();
@@ -522,7 +601,9 @@ public class Restaurant {
 		PrintWriter pw = new PrintWriter(name);
 		
 		for (int i = 0; i < baseProducts.size(); i++) {
+			Product aux = products.get(i);
 			
+			pw.println(aux.getBaseProductName() + SEPARATOR + aux.getSizeName() + SEPARATOR + aux.getProductPrice());
 		}
 		
 		pw.close();
@@ -534,7 +615,51 @@ public class Restaurant {
 		String line = br.readLine();
 		
 		while(line!=null) {
+			String[] parts = line.split(SEPARATOR);
+			String[] pParts = parts[3].split(";");
+			String[] iParts = parts[4].split(";");
 			
+			String[] dParts = parts[2].split(" ");
+				String[] dmy = dParts[0].split("/");
+				String[] hm = dParts[1].split(":");
+				
+			int c = Integer.parseInt(parts[0]);
+			String fn = parts[1];
+			DateClass date = new DateClass(Integer.parseInt(dmy[0]), Integer.parseInt(dmy[1]), Integer.parseInt(dmy[2]), Integer.parseInt(hm[0]), Integer.parseInt(hm[1]));
+			
+			ArrayList<Product> p = new ArrayList<>();
+			ArrayList<Integer> q = new ArrayList<>();
+			
+			Client cl = new Client(null,null,null,null,null,null,null);
+			Employee emp = new Employee(null, null, null);
+			
+			for (int i = 0; i < products.size(); i++) {
+				if(products.get(i).getName().equalsIgnoreCase(pParts[i])) {
+					p.add(products.get(i));
+					
+				}
+			}
+			
+			for (int i = 0; i < iParts.length;i++){
+				q.add(Integer.parseInt(iParts[i]));
+				
+			}
+			
+			for (int i = 0; i < clients.size(); i++) {
+				if(clients.get(i).getName().equalsIgnoreCase(parts[5])) {
+					cl = clients.get(i);
+					
+				}
+			}
+			
+			for (int i = 0; i < employees.size(); i++) {
+				if(employees.get(i).getNames().equalsIgnoreCase(parts[6])) {
+					emp = employees.get(i);
+					
+				}
+			}
+			
+			addOrder(c,fn,date,p,q,cl,emp);
 		}
 		
 		br.close();
@@ -544,7 +669,10 @@ public class Restaurant {
 		PrintWriter pw = new PrintWriter(fileName);
 		
 		for (int i = 0; i < baseProducts.size(); i++) {
+			Order aux = orders.get(i);
 			
+			pw.println(aux.getStringCode() + SEPARATOR + aux.getFootNote() + SEPARATOR + aux.getStringTime() + SEPARATOR + aux.getStringProducts() + 
+					SEPARATOR + aux.getStringProductQuantity() + SEPARATOR + aux.getStringClient() + SEPARATOR + aux.getStringEmployee());
 		}
 		
 		pw.close();

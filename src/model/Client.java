@@ -76,6 +76,12 @@ public class Client implements Serializable,Comparable<Client>{
 	public User getOriginUser() {
 		return originUser;
 	}
+	
+	public String getStringOriginUser() {
+		String strUser = originUser.getNames();
+		
+		return strUser;
+	}
 
 	public void setOriginUser(User originUser) {
 		this.originUser = originUser;
@@ -84,7 +90,13 @@ public class Client implements Serializable,Comparable<Client>{
 	public User getLastModifiedUser() {
 		return lastModifiedUser;
 	}
-
+	
+	public String getStringLastModifiedUser() {
+		String strUser = lastModifiedUser.getNames();
+		
+		return strUser;
+	}
+	
 	public void setLastModifiedUser(User lastModifiedUser) {
 		this.lastModifiedUser = lastModifiedUser;
 	}

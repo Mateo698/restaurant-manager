@@ -71,6 +71,11 @@ public class Product {
 	public void setBaseProduct(BaseProduct baseProduct) {
 		this.baseProduct = baseProduct;
 	}
+	
+	public String getBaseProductStr() {
+		String strProduct = baseProduct.getName();
+		return strProduct;
+	}
 
 	public String getName() {
 		return name;
