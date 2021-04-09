@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Product {
+public class Product implements Serializable{
+	
+	private static final long serialVersionUID = 1;
 	private BaseProduct baseProduct;
 	private Size productSize;
 	private int amountOrdered;
@@ -14,8 +17,9 @@ public class Product {
 		this.setBaseProduct(baseProduct);
 		this.setProductSize(productSize);
 		this.amountOrdered =0;
-		this.setProductPrice(productPrice);
+		this.setPrice(productPrice);
 		setName(baseProduct.getName() +"  "+ productSize.getName());
+		@SuppressWarnings("unused")
 		ArrayList<DateClass> datesOrdered = new ArrayList<DateClass>();
 	}
 	
@@ -27,11 +31,11 @@ public class Product {
 		return productSize.getName();
 	}
 
-	public double getProductPrice() {
+	public double getPrice() {
 		return productPrice;
 	}
 
-	public void setProductPrice(double productPrice) {
+	public void setPrice(double productPrice) {
 		this.productPrice = productPrice;
 	}
 	

@@ -2,18 +2,17 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Restaurant {
+public class Restaurant implements Serializable{
+	
+	private static final long serialVersionUID = 1;
 	private final Size XLSIZE = new Size("XL");
 	private final Size LSIZE = new Size("L");
 	private final Size MSIZE = new Size("M");
@@ -31,13 +30,7 @@ public class Restaurant {
 	private ArrayList<Product> products;
 	private ArrayList<Type> types;
 	private ArrayList<Size> sizes;
-	private String EMP_NAME_FILE = "data/employeees.lol";
-	private String USERS_NAME_FILE = "data/user.lol";
-	private String CLIENTS_NAME_FILE = "data/clients.lol";
-	private String ORDERS_NAME_FILE = "data/orders.lol";
-	private String ING_NAME_FILE = "data/ingredients.lol";
-	private String BPRO_NAME_FILE = "data/baseproducts.lol";
-	private String TYPES_NAME_FILE = "data/types.lol";
+	
 	
 	public Restaurant() {
 		setEmployees(new ArrayList<Employee>());
@@ -215,90 +208,7 @@ public class Restaurant {
 		
 	}
 	
-	public void saveData() throws IOException {
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(EMP_NAME_FILE));
-	    oos.writeObject(employees);
-	    oos.close();
-
-	    oos = new ObjectOutputStream(new FileOutputStream(USERS_NAME_FILE));
-	    oos.writeObject(users);
-	    oos.close();
-
-	    oos = new ObjectOutputStream(new FileOutputStream(CLIENTS_NAME_FILE));
-	    oos.writeObject(clients);
-	    oos.close();
-
-	    oos = new ObjectOutputStream(new FileOutputStream(ORDERS_NAME_FILE));
-	    oos.writeObject(orders);
-	    oos.close();
-
-	    oos = new ObjectOutputStream(new FileOutputStream(ING_NAME_FILE));
-	    oos.writeObject(ingredients);
-	    oos.close();
-
-
-	    oos = new ObjectOutputStream(new FileOutputStream(BPRO_NAME_FILE));
-	    oos.writeObject(baseProducts);
-	    oos.close();
-
-	    oos = new ObjectOutputStream(new FileOutputStream(TYPES_NAME_FILE));
-	    oos.writeObject(types);
-	    oos.close();
-	    
-	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes", "resource" })
-	public void loadData() throws FileNotFoundException, IOException, ClassNotFoundException {
-		File f = new File(EMP_NAME_FILE);
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			employees = (ArrayList)ois.readObject();
-			ois = null;
-			f = null;
-		}
-		f = new File(USERS_NAME_FILE);
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			users = (ArrayList)ois.readObject();
-			ois = null;
-			f = null;
-		}
-		f = new File(CLIENTS_NAME_FILE);
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			clients = (ArrayList)ois.readObject();
-			ois = null;
-			f = null;
-		}
-		f = new File(ING_NAME_FILE);
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			ingredients = (ArrayList)ois.readObject();
-			ois = null;
-			f = null;
-		}
-		f = new File(ORDERS_NAME_FILE);
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			orders = (ArrayList)ois.readObject();
-			ois = null;
-			f = null;
-		}
-		f = new File(TYPES_NAME_FILE);
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			types = (ArrayList)ois.readObject();
-			ois = null;
-			f = null;
-		}
-		f = new File(BPRO_NAME_FILE);
-		if(f.exists()){
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-			baseProducts = (ArrayList)ois.readObject();
-			ois.close();
-		}
-		
-	}
 
 	public ArrayList<Product> getProducts() {
 		return products;
@@ -373,10 +283,10 @@ public class Restaurant {
 	
 	public void exportData(File f,ArrayList<Employee> reportEmp) throws FileNotFoundException{
 	    PrintWriter pw = new PrintWriter(f);
-	    pw.write("Names,LastNames,ID,AmountOrdered");
+	    pw.write("Names,LastNames,ID,AmountOrdered\n");
 	    for(int i=0;i<reportEmp.size();i++){
 	      Employee myEmp = reportEmp.get(i);
-	      pw.println(myEmp.getNames()+","+myEmp.getLastNames()+","+myEmp.getId()+","+myEmp.getAmountOrder());
+	      pw.println(myEmp.getNames()+","+myEmp.getLastNames()+","+myEmp.getId()+","+myEmp.getAmountOrder()+"\n");
 	    }
 
 	    pw.close();
@@ -405,7 +315,7 @@ public class Restaurant {
 	      Order myOrd = reportOrd.get(i);
 	      String products = "";
 	      for(int j=0;j<myOrd.getProducts().size();j++) {
-	    	  products = myOrd.getProducts().get(j).getName() + "," + myOrd.getProductQuantity().get(j) + "," +myOrd.getProducts().get(j).getProductPrice();
+	    	  products = myOrd.getProducts().get(j).getName() + "," + myOrd.getProductQuantity().get(j) + "," +myOrd.getProducts().get(j).getPrice();
 	      }
 	      pw.println(myOrd.getStringClient()+","+myOrd.getOriginClient().getAddress()+","+myOrd.getOriginClient().getPhoneNumber()+","+myOrd.getStringEmployee()+","+myOrd.getStatus()+","+myOrd.getOriginTime().intoString()+","+myOrd.getFootNote()+products);
 	    }
@@ -441,7 +351,7 @@ public class Restaurant {
 	    pw.write("Nombre del producto,Cantidad,Total");
 	    for(int i=0;i<reportPro.size();i++){
 	      Product myPro = reportPro.get(i);
-	      double total = myPro.getAmountOrdered() * myPro.getProductPrice();
+	      double total = myPro.getAmountOrdered() * myPro.getPrice();
 	      pw.println(myPro.getName()+","+myPro.getAmountOrdered()+","+total);
 	    }
 
@@ -603,7 +513,7 @@ public class Restaurant {
 		for (int i = 0; i < baseProducts.size(); i++) {
 			Product aux = products.get(i);
 			
-			pw.println(aux.getBaseProductName() + SEPARATOR + aux.getSizeName() + SEPARATOR + aux.getProductPrice());
+			pw.println(aux.getBaseProductName() + SEPARATOR + aux.getSizeName() + SEPARATOR + aux.getPrice());
 		}
 		
 		pw.close();

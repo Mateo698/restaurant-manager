@@ -2,12 +2,11 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BaseProduct implements Serializable{
 	private static final long serialVersionUID = 1;
 	private String name;
-	private List<Ingredient> ingredients;
+	private ArrayList<Ingredient> ingredients;
 	private Type type;
 	
 	public BaseProduct(String name, ArrayList<Ingredient> ingList, Type type) {
@@ -27,7 +26,7 @@ public class BaseProduct implements Serializable{
 
 
 
-	public List<Ingredient> getIngredients() {
+	public ArrayList<Ingredient> getIngredients() {
 		return ingredients;
 	}
 	
@@ -44,7 +43,7 @@ public class BaseProduct implements Serializable{
 		return x;
 	}
 
-	public void setIngredients(List<Ingredient> ingredients) {
+	public void setIngredients(ArrayList<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
 

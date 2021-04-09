@@ -1,8 +1,12 @@
 package ui;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -481,13 +485,17 @@ public class RestaurantManagerGUI implements Initializable{
     
     private Stage popupStage;
     
+    private String NAME_FILE = "data/restaurant.lol";
+    
     public RestaurantManagerGUI(Restaurant restaurant) {
     	this.restaurant = restaurant;
-    	try {
-			restaurant.loadData();
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
-		}
+    	
+			try {
+				loadData();
+			} catch (ClassNotFoundException | IOException e) {
+				
+			}
+		
     	ADDBASEPROlist = new ArrayList<>();
     	ADDORDproList = new ArrayList<Product>();
     	ADDORDquantityList = new ArrayList<Integer>();
@@ -495,13 +503,33 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage = new Stage();
     }
     
+    public void saveData() throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(NAME_FILE));
+		oos.writeObject(restaurant);
+	    oos.close();
+	}
+	
+	
+	public void loadData() throws FileNotFoundException, IOException, ClassNotFoundException {
+		File f = new File(NAME_FILE);
+	    
+	    if(f.exists()){
+	      ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+	      restaurant = (Restaurant) ois.readObject();
+	      ois.close();
+	  
+	    }
+	    
+	}
+    
+    
     public void showLogin() throws IOException{
     	FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
     	loginLoader.setController(this);
     	Parent addLogin = loginLoader.load();
     	Scene E = new Scene(addLogin);
     	mainStage.setScene(E);
-    	restaurant.saveData();
+    	saveData();
 
     }
     
@@ -511,7 +539,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Parent addLogin = loginLoader.load();
     	Scene E = new Scene(addLogin);
     	mainStage.setScene(E);
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -541,7 +569,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alert.show();
 	    	
 			showLogin();
-			restaurant.saveData();
+			saveData();
 	    }
 	    
 	    else {
@@ -550,7 +578,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.setHeaderText("The information has not been completed.");
 			alertWarnings.setContentText("You have not filled all the fields for the information. Please, do it.");
 			alertWarnings.show();
-			restaurant.saveData();
+			saveData();
 	    }
     	
     	
@@ -568,7 +596,7 @@ public class RestaurantManagerGUI implements Initializable{
     	
     	mainStage.setScene(e);
     	
-    	restaurant.saveData();
+    	saveData();
     }
     
 
@@ -608,7 +636,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.show();
 			
 		}
-    	restaurant.saveData();
+    	saveData();
     }
 
     public void goToMain() throws IOException{
@@ -622,7 +650,7 @@ public class RestaurantManagerGUI implements Initializable{
     	mP.setController(this);
     	Parent addMainPane = mP.load();
     	MAINmainPane.getChildren().setAll(addMainPane);
-    	restaurant.saveData();
+    	saveData();
     }
     
 
@@ -634,7 +662,7 @@ public class RestaurantManagerGUI implements Initializable{
     	MAINmainPane.getChildren().setAll(addMain);
     	
     	CLinitializeTableView();
-    	restaurant.saveData();
+    	saveData();
     }
     
     public void CLinitializeTableView() {
@@ -659,7 +687,7 @@ public class RestaurantManagerGUI implements Initializable{
     	MAINmainPane.getChildren().setAll(addMain);
     	
     	EMPinitializeTableView();
-    	restaurant.saveData();
+    	saveData();
     }
     
     public void EMPinitializeTableView() {
@@ -680,7 +708,7 @@ public class RestaurantManagerGUI implements Initializable{
     	usrLoader.setController(this);
     	Parent addMain = usrLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
-    	restaurant.saveData();
+    	saveData();
     	USERinitializeTableView();
     }
     
@@ -707,7 +735,7 @@ public class RestaurantManagerGUI implements Initializable{
     	String date = dtf.format(now);
     	EMPREPORTfromTxtFIeld.setText("00:00-"+date);
     	EMPREPORTtoTxtField.setText("23:59-"+date);
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -716,14 +744,22 @@ public class RestaurantManagerGUI implements Initializable{
     	lP.setController(this);
     	Parent addMain = lP.load();
     	MAINmainPane.getChildren().setAll(addMain);
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
     public void EMPREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
-    	String from = EMPREPORTfromTxtFIeld.getText();
-    	String to = EMPREPORTtoTxtField.getText();
-    	if(from.equals("") || to.equals("")) {
+    	String from = "";
+    	String to = "";
+    	if(!EMPREPORTfromTxtFIeld.getText().isEmpty()) {
+    		from = EMPREPORTfromTxtFIeld.getText();
+    	}
+    	if(!EMPREPORTtoTxtField.getText().isEmpty()) {
+    		to = EMPREPORTtoTxtField.getText();
+    	}
+    	
+    	
+    	if(!from.equals("") && !to.equals("")) {
     		String[] parts1 = from.split("-");
     		String[] parts2 = to.split("-");
     		ArrayList<Employee> reportEmp = restaurant.generateReport(parts1,parts2);
@@ -758,7 +794,7 @@ public class RestaurantManagerGUI implements Initializable{
     	String date = dtf.format(now);
     	ORDERREPORTfromTxtFIeld.setText("00:00-"+date);
     	ORDERREPORTtoTxtField.setText("29:59-"+date);
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -767,14 +803,14 @@ public class RestaurantManagerGUI implements Initializable{
     	x.setController(this);
     	Parent root = x.load();
     	MAINmainPane.getChildren().setAll(root);
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
     public void ORDERREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
     	String from = ORDERREPORTfromTxtFIeld.getText();
     	String to = ORDERREPORTtoTxtField.getText();
-    	if(from.equals("") || to.equals("")) {
+    	if(!from.equals("") && !to.equals("")) {
     		String[] parts1 = from.split("-");
     		String[] parts2 = to.split("-");
     		ArrayList<Order> reportOrd = restaurant.generateOrderReport(parts1,parts2);
@@ -808,7 +844,7 @@ public class RestaurantManagerGUI implements Initializable{
     	String date = dtf.format(now);
     	ORDERREPORTfromTxtFIeld.setText("00:00-"+date);
     	ORDERREPORTtoTxtField.setText("29:59-"+date);
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -817,14 +853,14 @@ public class RestaurantManagerGUI implements Initializable{
     	x.setController(this);
     	Parent root = x.load();
     	MAINmainPane.getChildren().setAll(root);
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
     public void PROREPORTgenerateReport(ActionEvent event) throws FileNotFoundException {
     	String from = PROREPORTfromTxtFIeld.getText();
     	String to = PROREPORTtoTxtField.getText();
-    	if(from.equals("") || to.equals("")) {
+    	if(!from.equals("") && !to.equals("")) {
     		String[] parts1 = from.split("-");
     		String[] parts2 = to.split("-");
     		ArrayList<Product> reportPro = restaurant.generateProductsReport(parts1,parts2);
@@ -856,7 +892,7 @@ public class RestaurantManagerGUI implements Initializable{
     	MAINmainPane.getChildren().setAll(addMain);
     	
     	ORDERinitializeTableView();
-    	restaurant.saveData();
+    	saveData();
     }
     
     public void ORDERinitializeTableView() {
@@ -882,7 +918,8 @@ public class RestaurantManagerGUI implements Initializable{
     	MAINmainPane.getChildren().setAll(addMain);
     	
     	PROMANinitializeTable();
-    	restaurant.saveData();
+    	
+    	saveData();
     }
 
     @FXML
@@ -913,7 +950,7 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.setScene(e);
     	popupStage.show();
     	mainStage.hide();
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -946,7 +983,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.setContentText("Please fill all the fields.");
 			alertWarnings.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -969,7 +1006,7 @@ public class RestaurantManagerGUI implements Initializable{
     	int index = INGRMENUtable.getSelectionModel().getSelectedIndex();
     	restaurant.deleteIngredient(index);
     	INGRinitializeTableView();
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -990,7 +1027,7 @@ public class RestaurantManagerGUI implements Initializable{
     		EDITINGnameTxtField.setText(auxIng.getName());
     		popupStage.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -1000,7 +1037,7 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.close();
     	mainStage.show();
     	INGRinitializeTableView();
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1015,7 +1052,7 @@ public class RestaurantManagerGUI implements Initializable{
     	productLoader.setController(this);
     	Parent addMain = productLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
-    	
+    	System.out.println(restaurant.getBaseProducts().get(0).getIngredients().get(0).getName());
     	BASEPRODUCTinitializeTableView();
     }
     
@@ -1142,7 +1179,7 @@ public class RestaurantManagerGUI implements Initializable{
     			}
     		}
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1160,7 +1197,7 @@ public class RestaurantManagerGUI implements Initializable{
     		restaurant.deleteBaseProduct(BASEPRODUCTMENUtable.getSelectionModel().getSelectedIndex());
     		BASEPRODUCTinitializeTableView();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -1224,8 +1261,8 @@ public class RestaurantManagerGUI implements Initializable{
     		EDITBASEPROinitializeTableView();
     		EDITBASEPROnameTxtField.setText(BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getName());
         	EDITBASEPROtypeCB.setValue(BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getType());
-    		ADDBASEPROlist = (ArrayList<Ingredient>) BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getIngredients();
-    		
+    		int selected = BASEPRODUCTMENUtable.getSelectionModel().getSelectedIndex();
+    		ADDBASEPROlist = restaurant.getBaseProducts().get(selected).getIngredients();
     	}
     }
     
@@ -1300,7 +1337,7 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.hide();
     	mainStage.show();
     	BASEPRODUCTinitializeTableView();
-    	restaurant.saveData();
+    	saveData();
     }
     
 
@@ -1394,7 +1431,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.show();
 			ADDTYPEnameTxtField.setText("");
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1425,7 +1462,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.setContentText("Select a item to delete.");
 			alertWarnings.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1457,7 +1494,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.setContentText("Please fill all the fields.");
 			alertWarnings.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1587,7 +1624,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.setContentText("Please do it, lol.");
 			alertWarnings.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1648,7 +1685,7 @@ public class RestaurantManagerGUI implements Initializable{
     			}
     		}
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
 
@@ -1688,7 +1725,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.setContentText("Please do it, lol.");
 			alertWarnings.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1757,7 +1794,7 @@ public class RestaurantManagerGUI implements Initializable{
     			mainStage.hide();
     		}
     	}
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -1779,7 +1816,7 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.close();
     	mainStage.show();
     	USERMENUtable.refresh();
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1808,7 +1845,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.setContentText("Please fill the all.");
 			alertWarnings.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -1840,7 +1877,7 @@ public class RestaurantManagerGUI implements Initializable{
 			alertWarnings.setContentText("Please select a client if you want to delete it.");
 			alertWarnings.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -1863,7 +1900,7 @@ public class RestaurantManagerGUI implements Initializable{
     		a.show();
     		
     	}
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -1914,7 +1951,7 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.hide();
     	mainStage.show();
     	CLinitializeTableView();
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -2027,7 +2064,7 @@ public class RestaurantManagerGUI implements Initializable{
     		alert.setContentText("Complete the information!");
     		alert.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -2070,7 +2107,7 @@ public class RestaurantManagerGUI implements Initializable{
     		a.setContentText("Complete the information!");
     		a.show();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -2152,7 +2189,7 @@ public class RestaurantManagerGUI implements Initializable{
     		mainStage.show();
     		ORDERinitializeTableView();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -2168,7 +2205,7 @@ public class RestaurantManagerGUI implements Initializable{
     		mainStage.show();
     		ORDERinitializeTableView();
 		}
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
@@ -2229,7 +2266,7 @@ public class RestaurantManagerGUI implements Initializable{
     	int index = ORDERMANtable.getSelectionModel().getSelectedIndex();
     	restaurant.deleteOrder(index);
     	ORDERinitializeTableView();
-    	restaurant.saveData();
+    	saveData();
     }
 
     @FXML
@@ -2334,7 +2371,7 @@ public class RestaurantManagerGUI implements Initializable{
     	int index = PROMANtable.getSelectionModel().getSelectedIndex();
     	restaurant.deleteProduct(index);
     	PROMANinitializeTable();
-    	restaurant.saveData();
+    	saveData();
     }
 
     private void PROMANinitializeTable() {
@@ -2370,7 +2407,7 @@ public class RestaurantManagerGUI implements Initializable{
     		
     		PROMANinitializeTable();
     	}
-    	restaurant.saveData();
+    	saveData();
     }
 	
 	@FXML
@@ -2458,7 +2495,7 @@ public class RestaurantManagerGUI implements Initializable{
     	popupStage.close();
     	mainStage.show();
     	PROMANinitializeTable();
-    	restaurant.saveData();
+    	saveData();
     }
     
     @FXML
