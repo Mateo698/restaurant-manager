@@ -16,6 +16,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+
+import javafx.beans.property.ListPropertyBase;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,6 +50,7 @@ import model.Employee;
 import model.Ingredient;
 import model.Order;
 import model.Product;
+import model.Quantity;
 import model.Restaurant;
 import model.Size;
 import model.Type;
@@ -211,6 +215,10 @@ public class RestaurantManagerGUI implements Initializable{
     private TableColumn<BaseProduct, String> BASEPRODUCTMANtypeCol;
     
     @FXML
+    private TextArea ADDORDfootnote;
+
+    
+    @FXML
     private TextField EDITUSERusernameTxtField;
 
     @FXML
@@ -229,7 +237,7 @@ public class RestaurantManagerGUI implements Initializable{
     private TableView<Order> ORDERMANtable;
 
     @FXML
-    private TableColumn<Order, Integer> ORDERMANcodeCol;
+    private TableColumn<Order, String> ORDERMANcodeCol;
 
     @FXML
     private TableColumn<Order, String> ORDERMANstatusCol;
@@ -403,14 +411,14 @@ public class RestaurantManagerGUI implements Initializable{
     private TableColumn<Product, String> ADDORDproductsCol;
 
     @FXML
-    private TableView<Integer> ADDORDquantityTable;
+    private TableView<Quantity> ADDORDquantityTable;
 
     @FXML
-    private TableColumn<Integer, Integer> ADDORDquantityCol;
+    private TableColumn<Quantity, Integer> ADDORDquantityCol;
     
     private ArrayList<Product> ADDORDproList;
     
-    private ArrayList<Integer> ADDORDquantityList;
+    private ArrayList<Quantity> ADDORDquantityList;
     
     private ArrayList<Ingredient> ADDBASEPROlist;
     
@@ -442,14 +450,14 @@ public class RestaurantManagerGUI implements Initializable{
     private TableColumn<Product, String> EDITORDproductsCol;
 
     @FXML
-    private TableView<Integer> EDITORDquantityTable;
+    private TableView<Quantity> EDITORDquantityTable;
 
     @FXML
-    private TableColumn<Integer, Integer> EDITORDquantityCol;
+    private TableColumn<Quantity, Integer> EDITORDquantityCol;
     
     private ArrayList<Product> EDITORDproList;
     
-    private ArrayList<Integer> EDITORDquantityList;
+    private ArrayList<Quantity> EDITORDquantityList;
 
     @FXML
     private TextField SEARCHCLnameTxtField;
@@ -498,8 +506,9 @@ public class RestaurantManagerGUI implements Initializable{
 		
     	ADDBASEPROlist = new ArrayList<>();
     	ADDORDproList = new ArrayList<Product>();
-    	ADDORDquantityList = new ArrayList<Integer>();
+    	ADDORDquantityList = new ArrayList<Quantity>();
     	SEARCHCLclientsList = new ArrayList<Client>();
+    	
     	popupStage = new Stage();
     }
     
@@ -842,8 +851,8 @@ public class RestaurantManagerGUI implements Initializable{
     	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");  
     	LocalDateTime now = LocalDateTime.now();  
     	String date = dtf.format(now);
-    	ORDERREPORTfromTxtFIeld.setText("00:00-"+date);
-    	ORDERREPORTtoTxtField.setText("29:59-"+date);
+    	PROREPORTfromTxtFIeld.setText("00:00-"+date);
+    	PROREPORTtoTxtField.setText("29:59-"+date);
     	saveData();
     }
     
@@ -899,7 +908,7 @@ public class RestaurantManagerGUI implements Initializable{
     	ObservableList<Order> USRobservableList;
     	USRobservableList = FXCollections.observableArrayList(restaurant.getOrders());
     	
-    	ORDERMANcodeCol.setCellValueFactory(new PropertyValueFactory<Order,Integer>("username"));
+    	ORDERMANcodeCol.setCellValueFactory(new PropertyValueFactory<Order,String>("code"));
     	ORDERMANstatusCol.setCellValueFactory(new PropertyValueFactory<Order,String>("status"));
     	ORDERMANfootnoteCol.setCellValueFactory(new PropertyValueFactory<Order,String>("footnote"));
     	ORDERMANdateCol.setCellValueFactory(new PropertyValueFactory<Order,String>("stringTime"));
@@ -908,6 +917,22 @@ public class RestaurantManagerGUI implements Initializable{
     	ORDERMANstatusCol.setCellValueFactory(new PropertyValueFactory<Order,String>("status"));
     	ORDERMANtable.setItems(USRobservableList);
     }
+    
+    @FXML
+    void ORDERMANupdateBttn(ActionEvent event) {
+    	if(ORDERMANtable.getSelectionModel().getSelectedItem() != null) {
+    		ORDERMANtable.getSelectionModel().getSelectedItem().updateState();
+    		ORDERinitializeTableView();
+    		ORDERMANtable.refresh();
+    	}else {
+    		Alert alertWarnings = new Alert(AlertType.WARNING);
+	    	alertWarnings.setTitle("Error");
+			alertWarnings.setHeaderText("No selected order");
+			alertWarnings.setContentText("Selec a order to update it");
+			alertWarnings.show();
+    	}
+    }
+
     
 
     @FXML
@@ -1052,7 +1077,7 @@ public class RestaurantManagerGUI implements Initializable{
     	productLoader.setController(this);
     	Parent addMain = productLoader.load();
     	MAINmainPane.getChildren().setAll(addMain);
-    	System.out.println(restaurant.getBaseProducts().get(0).getIngredients().get(0).getName());
+
     	BASEPRODUCTinitializeTableView();
     }
     
@@ -1258,11 +1283,12 @@ public class RestaurantManagerGUI implements Initializable{
     		popupStage.setScene(e);
     		popupStage.show();
     		mainStage.hide();
-    		EDITBASEPROinitializeTableView();
+    		
     		EDITBASEPROnameTxtField.setText(BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getName());
         	EDITBASEPROtypeCB.setValue(BASEPRODUCTMENUtable.getSelectionModel().getSelectedItem().getType());
     		int selected = BASEPRODUCTMENUtable.getSelectionModel().getSelectedIndex();
     		ADDBASEPROlist = restaurant.getBaseProducts().get(selected).getIngredients();
+    		EDITBASEPROinitializeTableView();
     	}
     }
     
@@ -1317,7 +1343,7 @@ public class RestaurantManagerGUI implements Initializable{
     	EDITBASEPROingredientCB.setValue(null);
     	ObservableList<Ingredient> ingList = FXCollections.observableList(restaurant.getIngredients());
     	EDITBASEPROingredientCB.itemsProperty().setValue(ingList);
-    	ADDBASEPROinitializeTableView();
+    	EDITBASEPROinitializeTableView();
     	convertEditIngCB();
     }
 
@@ -1326,6 +1352,7 @@ public class RestaurantManagerGUI implements Initializable{
     	ADDBASEPROlist.clear();
     	popupStage.hide();
     	mainStage.show();
+    	BASEPRODUCTinitializeTableView();
     }
 
     @FXML
@@ -1970,13 +1997,15 @@ public class RestaurantManagerGUI implements Initializable{
     @SuppressWarnings("unused")
 	private String generateCode() {
     	Random rand = new Random();
-    	int code = 0;
+    	int cod = 0;
+    	String code = "";
     	boolean created = false;
     	for(int i=0;!created;i++) {
-    		code = rand.nextInt(10000);
+    		cod = rand.nextInt(10000);
+    		code = String.valueOf(cod);
     		boolean repeated = false;
     		for(int j=0;j<restaurant.getOrders().size() && !repeated;j++) {
-    			if(restaurant.getOrders().get(j).getCode() == code) {
+    			if(restaurant.getOrders().get(j).getCode().equals(code)) {
     				repeated = true;
     			}
     		}
@@ -1984,8 +2013,8 @@ public class RestaurantManagerGUI implements Initializable{
     			created = true;
     		}
     	}
-    	String codeX = code + "";
-    	return codeX;
+    	
+    	return code;
     }
     
     private void convertEmployeeCB() {
@@ -2037,16 +2066,16 @@ public class RestaurantManagerGUI implements Initializable{
 		ADDORDproductsCol.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
 		ADDORDproductsTable.setItems(observableList);
 		
-		ObservableList<Integer> oL;
+		ObservableList<Quantity> oL;
     	oL = FXCollections.observableArrayList(ADDORDquantityList);
-		ADDORDquantityCol.setCellValueFactory(new PropertyValueFactory<Integer,Integer>("intValue"));
+		ADDORDquantityCol.setCellValueFactory(new PropertyValueFactory<Quantity,Integer>("quantity"));
 		ADDORDquantityTable.setItems(oL);
     }
     
     @FXML
     public void ADDORDaddProductsBttn(ActionEvent event) throws IOException {
     	if(ADDORDproductCB.getSelectionModel().getSelectedItem()!=null && !ADDORDquantityTXtField.getText().isEmpty()) {
-    		int quantity = Integer.parseInt(ADDORDquantityTXtField.getText());
+    		Quantity quantity = new Quantity(Integer.parseInt(ADDORDquantityTXtField.getText()));
     		ADDORDquantityList.add(quantity);
     		ADDORDquantityTXtField.setText(null);
     		
@@ -2087,18 +2116,24 @@ public class RestaurantManagerGUI implements Initializable{
     		
     		
     		DateClass date = new DateClass(dHour,dMin,dDay,dMonth,dYear);
-    		int code = Integer.parseInt(ADDORDcodeLabel.getText());
-    		String footNote = "";
+    		String code = ADDORDcodeLabel.getText();
+    		String footNote = ADDORDfootnote.getText();
     		List<Product> products = ADDORDproList;
-    		List<Integer> productsQuantity = ADDORDquantityList;
+    		List<Integer> productsQuantity = new ArrayList<Integer>();
+    		for(int i=0;i<ADDORDquantityList.size();i++) {
+    			productsQuantity.add(ADDORDquantityList.get(i).getQuantity());
+    		}
     		Client cl = ADDORDclientCB.getSelectionModel().getSelectedItem();
     		Employee emp = ADDORDdeliverEmployee.getSelectionModel().getSelectedItem();
+    		
     		
     		restaurant.addOrder(code, footNote, date, products, productsQuantity, cl, emp);
     		ORDERinitializeTableView();
     		
     		popupStage.close();
     		mainStage.show();
+    		ADDORDquantityList = new ArrayList<Quantity>();
+    		ADDORDproList = new ArrayList<Product>();
         	
     	}
     	
@@ -2149,7 +2184,7 @@ public class RestaurantManagerGUI implements Initializable{
     @FXML
     public void EDITORDaddProductsBttn(ActionEvent event) {
     	if(EDITORDproductCB.getSelectionModel().getSelectedItem()!=null && !EDITORDquantityTXtField.getText().isEmpty()) {
-    		int quantity = Integer.parseInt(EDITORDquantityTXtField.getText());
+    		Quantity quantity = new Quantity(Integer.parseInt(EDITORDquantityTXtField.getText()));
     		EDITORDquantityList.add(quantity);
     		EDITORDquantityTXtField.setText(null);
     		
@@ -2198,8 +2233,12 @@ public class RestaurantManagerGUI implements Initializable{
     		int index = ORDERMANtable.getSelectionModel().getSelectedIndex();
     		Client cl = EDITORDclientCB.getSelectionModel().getSelectedItem();
     		Employee emp = EDITORDdeliverEmployeeCB.getSelectionModel().getSelectedItem();
+    		List<Integer> aux = new ArrayList<Integer>();
+    		for(int i=0;i<EDITORDquantityList.size();i++) {
+    			aux.add(EDITORDquantityList.get(index).getQuantity());
+    		}
     		
-    		restaurant.updateOrder(index, EDITORDproList, EDITORDquantityList, cl, emp);
+    		restaurant.updateOrder(index, EDITORDproList, aux, cl, emp);
     		
     		popupStage.close();
     		mainStage.show();
@@ -2246,8 +2285,8 @@ public class RestaurantManagerGUI implements Initializable{
 		EDITORDproductsTable.setItems(proList);
 		
 		EDITORDquantityList = ADDORDquantityList;
-		ObservableList<Integer> quantityList = FXCollections.observableArrayList(EDITORDquantityList);
-		EDITORDquantityCol.setCellValueFactory(new PropertyValueFactory<Integer, Integer>("intValue"));
+		ObservableList<Quantity> quantityList = FXCollections.observableArrayList(EDITORDquantityList);
+		EDITORDquantityCol.setCellValueFactory(new PropertyValueFactory<Quantity, Integer>("quantity"));
 		EDITORDquantityTable.setItems(quantityList);
 		
     }
@@ -2573,6 +2612,6 @@ public class RestaurantManagerGUI implements Initializable{
     	Scene e = new Scene(root);
     	mainStage.setScene(e);
     	mainStage.show();
-    	
+    	System.out.println(restaurant.getEmployees().get(1).getAmountDeliveredOrders());
 	}
 }

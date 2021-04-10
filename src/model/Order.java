@@ -9,7 +9,7 @@ public class Order implements Serializable{
 	private static final String SENT = "SENT";
 	private static final String DELIVERED = "DELIVERED";
 	private static final long serialVersionUID = 1;
-	private int code;
+	private String code;
 	private DateClass originTime;
 	private String status;
 	private String footNote;
@@ -18,7 +18,7 @@ public class Order implements Serializable{
 	private Client originClient;
 	private Employee originEmployee;
 	
-	public Order(int code, String footNote,DateClass originDate,List<Product> products,List<Integer> productsQuantity,Client originClient,Employee originEmployee) {
+	public Order(String code, String footNote,DateClass originDate,List<Product> products,List<Integer> productsQuantity,Client originClient,Employee originEmployee) {
 		this.code = code;
 		this.status = REQUESTED;
 		this.footNote = footNote;
@@ -29,7 +29,7 @@ public class Order implements Serializable{
 		this.setOriginEmployee(originEmployee);
 	}
 
-	public int getCode() {
+	public String getCode() {
 		return code;
 	}
 	
@@ -39,7 +39,7 @@ public class Order implements Serializable{
 		return strCode;
 	}
 	
-	public void setCode(int code) {
+	public void setCode(String code) {
 		this.code = code;
 	}
 
@@ -51,7 +51,7 @@ public class Order implements Serializable{
 		this.status = status;
 	}
 
-	public String getFootNote() {
+	public String getFootnote() {
 		return footNote;
 	}
 

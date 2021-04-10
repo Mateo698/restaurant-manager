@@ -188,9 +188,10 @@ public class Restaurant implements Serializable{
 		
 	}
 	
-	public void addOrder(int code, String footNote,DateClass originDate,List<Product> products,List<Integer> productsQuantity,Client originClient,Employee originEmployee) {
-		orders.add(new Order(code, footNote,originDate,products,productsQuantity,originClient,originEmployee));
-		
+	public void addOrder(String code, String footNote,DateClass originDate,List<Product> products,List<Integer> productsQuantity,Client originClient,Employee originEmployee) {
+		Order newOrd = new Order(code, footNote,originDate,products,productsQuantity,originClient,originEmployee);
+		orders.add(newOrd);
+		originEmployee.addOrder(newOrd);
 	}
 	
 	public void deleteOrder(int index) {
@@ -317,7 +318,7 @@ public class Restaurant implements Serializable{
 	      for(int j=0;j<myOrd.getProducts().size();j++) {
 	    	  products = myOrd.getProducts().get(j).getName() + "," + myOrd.getProductQuantity().get(j) + "," +myOrd.getProducts().get(j).getPrice();
 	      }
-	      pw.println(myOrd.getStringClient()+","+myOrd.getOriginClient().getAddress()+","+myOrd.getOriginClient().getPhoneNumber()+","+myOrd.getStringEmployee()+","+myOrd.getStatus()+","+myOrd.getOriginTime().intoString()+","+myOrd.getFootNote()+products);
+	      pw.println(myOrd.getStringClient()+","+myOrd.getOriginClient().getAddress()+","+myOrd.getOriginClient().getPhoneNumber()+","+myOrd.getStringEmployee()+","+myOrd.getStatus()+","+myOrd.getOriginTime().intoString()+","+myOrd.getFootnote()+products);
 	    }
 
 	    pw.close();
@@ -533,7 +534,7 @@ public class Restaurant implements Serializable{
 				String[] dmy = dParts[0].split("/");
 				String[] hm = dParts[1].split(":");
 				
-			int c = Integer.parseInt(parts[0]);
+			String c = parts[0];
 			String fn = parts[1];
 			DateClass date = new DateClass(Integer.parseInt(dmy[0]), Integer.parseInt(dmy[1]), Integer.parseInt(dmy[2]), Integer.parseInt(hm[0]), Integer.parseInt(hm[1]));
 			
@@ -581,7 +582,7 @@ public class Restaurant implements Serializable{
 		for (int i = 0; i < baseProducts.size(); i++) {
 			Order aux = orders.get(i);
 			
-			pw.println(aux.getStringCode() + SEPARATOR + aux.getFootNote() + SEPARATOR + aux.getStringTime() + SEPARATOR + aux.getStringProducts() + 
+			pw.println(aux.getStringCode() + SEPARATOR + aux.getFootnote() + SEPARATOR + aux.getStringTime() + SEPARATOR + aux.getStringProducts() + 
 					SEPARATOR + aux.getStringProductQuantity() + SEPARATOR + aux.getStringClient() + SEPARATOR + aux.getStringEmployee());
 		}
 		

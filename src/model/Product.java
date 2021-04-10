@@ -19,8 +19,8 @@ public class Product implements Serializable{
 		this.amountOrdered =0;
 		this.setPrice(productPrice);
 		setName(baseProduct.getName() +"  "+ productSize.getName());
-		@SuppressWarnings("unused")
-		ArrayList<DateClass> datesOrdered = new ArrayList<DateClass>();
+		
+		datesOrdered = new ArrayList<DateClass>();
 	}
 	
 	public String getBaseProductName() {
