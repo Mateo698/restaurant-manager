@@ -25,7 +25,5 @@ public class Main extends Application{
 		restaurantMan.start();
 	}
 	
-	public void xD() {
-		
-	}
+	
 }

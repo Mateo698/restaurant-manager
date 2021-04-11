@@ -771,6 +771,7 @@ public class RestaurantManagerGUI implements Initializable{
     	if(!from.equals("") && !to.equals("")) {
     		String[] parts1 = from.split("-");
     		String[] parts2 = to.split("-");
+    		System.out.println(parts1[0]+"  "+parts1[1]+"  "+parts2[0]+"  "+parts2[1]);
     		ArrayList<Employee> reportEmp = restaurant.generateReport(parts1,parts2);
     		FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
     		FileChooser fc = new FileChooser();
@@ -1861,9 +1862,10 @@ public class RestaurantManagerGUI implements Initializable{
     void ADDCLaddBttn(ActionEvent event) throws IOException {
     	if(!ADDCLnameTxtField.getText().isEmpty() && !ADDCLlastNameTxtFIeld.getText().isEmpty() && !ADDCLphoneTxtField.getText().isEmpty() && !ADDCLaddressTxtField.getText().isEmpty() && !ADDCLidTxtField.getText().isEmpty()) {
     		restaurant.addClient(ADDCLnameTxtField.getText(), ADDCLlastNameTxtFIeld.getText(), ADDCLidTxtField.getText(), ADDCLaddressTxtField.getText(), ADDCLphoneTxtField.getText(), ADDCLfootnoteTxt.getText(), localUser, localUser);
-    		popupStage.close();
+    		popupStage.hide();
         	mainStage.show();
         	CLinitializeTableView();
+        	CLMENUtable.refresh();
     	}
     	else {
     		Alert alertWarnings = new Alert(AlertType.WARNING);
@@ -2112,7 +2114,7 @@ public class RestaurantManagerGUI implements Initializable{
     		String[] dmy = dPart2.split("/");
     		int dDay = Integer.parseInt(dmy[0]);
     		int dMonth= Integer.parseInt(dmy[1]);
-    		int dYear= Integer.parseInt(dmy[1]);
+    		int dYear= Integer.parseInt(dmy[2]);
     		
     		
     		DateClass date = new DateClass(dHour,dMin,dDay,dMonth,dYear);
@@ -2612,6 +2614,7 @@ public class RestaurantManagerGUI implements Initializable{
     	Scene e = new Scene(root);
     	mainStage.setScene(e);
     	mainStage.show();
-    	System.out.println(restaurant.getEmployees().get(1).getAmountDeliveredOrders());
+    	System.out.println(restaurant.getEmployees().get(1).getDeliveredOrder().get(0).getStringTime());
+    	System.out.println(restaurant.getOrders().get(0).getStringTime());
 	}
 }
